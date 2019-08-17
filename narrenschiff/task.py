@@ -1,12 +1,11 @@
 class AmbiguousOptions(Exception):
-    """
-    Use when tasks have undefined YAML tags.
-    """
+    """Use when tasks have undefined YAML tags."""
 
     pass
 
 
 class Task:
+    """Parse the smallest unit of the course."""
 
     def __init__(self, task):
         self.name = task.pop('name', None)

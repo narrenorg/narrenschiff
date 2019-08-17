@@ -4,10 +4,10 @@ import yaml
 
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
-from jinja2 import select_autoescape
 
 
 class TemplateException(Exception):
+    """Use for exceptions regarding template manipulation."""
 
     pass
 

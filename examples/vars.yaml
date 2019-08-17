@@ -1,0 +1,8 @@
+marry: lamb
+john: smith
+secret:
+  ENV_VAR: dummy
+colors:
+  - red
+  - green
+  - blue

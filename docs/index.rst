@@ -10,6 +10,8 @@ Welcome to narrenschiff's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   for_users
+   for_developers
 
 
 Indices and tables

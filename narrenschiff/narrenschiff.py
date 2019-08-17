@@ -9,7 +9,12 @@ from narrenschiff.templating import Template
 
 @click.group()
 def narrenschiff():
-    """Base command."""
+    """
+    Base command.
+
+    :return: Void
+    :rtype: ``None``
+    """
     pass
 
 

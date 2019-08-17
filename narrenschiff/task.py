@@ -5,7 +5,18 @@ class AmbiguousOptions(Exception):
 
 
 class Task:
-    """Parse the smallest unit of the course."""
+    """
+    Parse the smallest unit of the course.
+
+    Each dictionary item from the task list should be wrapped with this class::
+
+        course = [{'name': 'Kustomize', 'kustomization': 'examples/app/'}]
+        tasks = [Task(t) for t in course]
+
+        task = tasks[0]
+        task.name  # --> 'Kustomize'
+        taks.kustomization  # --> instance of Kustomization class
+    """
 
     def __init__(self, task):
         self.name = task.pop('name', None)

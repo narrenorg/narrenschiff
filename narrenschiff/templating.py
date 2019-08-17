@@ -13,6 +13,7 @@ class TemplateException(Exception):
 
 
 class Template:
+    """Load and manipulate templates and template environemtn."""
 
     def __init__(self, path):
         """

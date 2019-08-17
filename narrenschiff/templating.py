@@ -61,15 +61,16 @@ class Template:
 
         1. Load ``vars.yaml`` if it exists
         2. Load all files from the ``vars/`` directory if it exists
-        3. Load and decrypt all variables from ``vault.yaml``
-        4. Merge all files
+        3. Load and decrypt all variables from ``chest.yaml``
+        4. Load all files from the ``chest/`` directory if it exists
+        5. Merge all files
 
         **Important:** Files must not contain duplicate values!
         """
         var_files = self.find_var_files('vars')
-        vault_files = self.find_var_files('vault')
+        chest_files = self.find_var_files('chest')
 
-        vars = [*self._load_vars(var_files), *self._load_vars(vault_files)]
+        vars = [*self._load_vars(var_files), *self._load_vars(chest_files)]
 
         vars_temp = []
         for var in vars:
@@ -108,7 +109,7 @@ class Template:
         """
         Find all files containing variables for the templates.
 
-        :param filename: The name of the var file (``vars`` or ``vault``)
+        :param filename: The name of the var file (``vars`` or ``chest``)
         :type filename: ``str``
         :return: List of paths to var files.
         :rtype: ``list`` of ``str``
@@ -118,7 +119,7 @@ class Template:
         for file in var_files:
             file_path = '{}/{}'.format(self.template_directory, file)
 
-            if file == 'vars' or file == 'vault':
+            if file == 'vars' or file == 'chest':
                 paths.extend(self.walk_directory(file_path))
                 continue
 
@@ -145,7 +146,7 @@ class Template:
         """
         Find duplicate keys.
 
-        :param values: List of keys from var and vault files.
+        :param values: List of keys from var and chest files.
         :type values: ``list`` of ``str``
         :return: List of duplicates
         :rtype: ``list`` of ``str``

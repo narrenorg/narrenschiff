@@ -39,7 +39,16 @@ class Template:
         self.vars = {}
 
     def render(self, path):
-        pass
+        """
+        Render template on the given path.
+
+        :param path: Path to the template file
+        :type path: ``str``
+        :return: Rendered template
+        :rtype: ``str``
+        """
+        template = self.env.get_template(path)
+        return template.render(**self.load_vars())
 
     def load_vars(self):
         """

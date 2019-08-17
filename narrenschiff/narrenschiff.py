@@ -1,3 +1,5 @@
+import os
+
 import click
 import yaml
 
@@ -13,12 +15,10 @@ def narrenschiff():
 @narrenschiff.command()
 @click.option('--chart', help='Path to your YAML chart.')
 def deploy(chart):
-    # Load tasks file
-    with open(chart, 'r') as f:
-        tasks = yaml.load(f, Loader=yaml.FullLoader)
-
     template = Template(chart)
-    click.echo(template.load_vars())
+    tasks_raw = template.render(os.path.basename(chart))
+    tasks = yaml.load(tasks_raw, Loader=yaml.FullLoader)
+    click.echo(tasks)
     # Load task files
     # Template tasks files
     # Individual task will call template endinge for the given dir or file

@@ -40,7 +40,7 @@ class Task:
 
         **Important:** A *module* in this context means the "`narrenschiff`"
         module. This is a module that deals with executing the command
-        described in ``tasks.yaml`` file i.e. the "`chart`".
+        described in ``tasks.yaml`` file i.e. the "`course`" file.
         """
         path = 'narrenschiff.modules.{}'.format(module.lower())
         klass = module.capitalize()

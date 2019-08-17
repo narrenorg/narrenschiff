@@ -23,7 +23,7 @@ class Template:
         :return: Void
         :rtype: ``None``
 
-        Directory containing the ``chart`` (e.g. ``tasks.yaml``) file will
+        Directory containing the ``course`` (e.g. ``tasks.yaml``) file will
         be the directory from where the templates are taken to be rendered.
         """
         if not (path.endswith('.yml') or path.endswith('.yaml')):

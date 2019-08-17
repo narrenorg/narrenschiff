@@ -13,10 +13,10 @@ def narrenschiff():
 
 
 @narrenschiff.command()
-@click.option('--chart', help='Path to your YAML chart.')
-def deploy(chart):
-    template = Template(chart)
-    tasks_raw = template.render(os.path.basename(chart))
+@click.option('--set-course', 'course', help='Path to your YAML course file.')
+def deploy(course):
+    template = Template(course)
+    tasks_raw = template.render(os.path.basename(course))
     tasks = yaml.load(tasks_raw, Loader=yaml.FullLoader)
     click.echo(tasks)
     # Load task files

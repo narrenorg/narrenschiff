@@ -10,6 +10,7 @@ narrenschiff = {editable = true,path = "."}
 [packages]
 click = "*"
 pyyaml = "*"
+jinja2 = "*"
 
 [requires]
 python_version = "3.6"

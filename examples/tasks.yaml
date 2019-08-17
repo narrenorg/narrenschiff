@@ -1,0 +1,32 @@
+- name: Deploy config map
+  kubectl:
+    command: apply
+    args:
+      filename: examples/files/configmap.yaml
+
+- name: Apply namespaces and RBAC settings
+  kubectl:
+    command: apply
+    args:
+      filename:
+        - examples/files/namespaces.yaml
+        - examples/files/rbac.yaml
+
+# In future
+# - name: Apply namespaces and RBAC settings
+#   kubectl:
+#     command: apply
+#     args:
+#       filename: "examples/files/{{ item }}.yaml"
+#   with_items:
+#     - namespaces
+#     - rbac
+
+- name: Display pods in kube-system
+  kubectl:
+    command: get pods
+    args:
+      namespace: kube-system
+
+- name: Deploy app
+  kustomization: examples/files/app/

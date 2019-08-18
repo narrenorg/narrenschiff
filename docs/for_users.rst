@@ -65,6 +65,13 @@ The basic directory layout of the should resemble something like this::
 
 You can use ``vars.yaml`` and ``chest.yaml`` to define variables for you project. ``vars.yaml`` file or ``vars/`` directory contain unencrypted variables. ``chest.yaml`` file or ``chest/`` directory is a place to stash your *treasure* (i.e. keys, secrets, passwords, etc.). Both ``vars/`` and ``chest/`` directories can have arbitrary nesting and files within them can have arbitrary names. However, all variable names contained across these files **must** be unique!
 
+Chest files have flat dictionary structure. No nesting of the keys is allowed (at the moment at least):
+
+.. code-block:: yaml
+
+  db_password: 6Wziywgso3YsosQNfMeufodDZxEaOyujHM+ch9Pxe5u1u2ZO5e7G9bPOhEIVYo8n
+  hash_key: uSn/rKMdbMArR0SnWcbtP1Z64/Y8LI8LNOZGbVZUmm5ioFLV/NwP6OcyTNGgMSGi
+
 The app is deployed using ``narrenschiff`` tool::
 
   narrenschiff deploy --set-course project/tasks.yaml

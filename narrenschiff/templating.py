@@ -5,6 +5,9 @@ import yaml
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
+from narrenschiff.chest import Keychain
+from narrenschiff.chest import AES256Cipher
+
 
 class TemplateException(Exception):
     """Use for exceptions regarding template manipulation."""
@@ -71,7 +74,10 @@ class Template:
         var_files = self.find_var_files('vars')
         chest_files = self.find_var_files('chest')
 
-        vars = [*self._load_vars(var_files), *self._load_vars(chest_files)]
+        cleartext_vars = self._load_vars(var_files)
+        ciphertext_vars = self._load_vars(chest_files)
+        vars = [*cleartext_vars, *ciphertext_vars]
+        # vars = [*self._load_vars(var_files), *self._load_secrets(chest_files)]
 
         vars_temp = []
         for var in vars:
@@ -83,7 +89,14 @@ class Template:
             raise TemplateException(exception.format(', '.join(duplicates)))
 
         variables = {}
-        for var in vars:
+        for var in cleartext_vars:
+            variables.update(var)
+
+        keychain = Keychain()
+        cipher = AES256Cipher(keychain)
+        for var in ciphertext_vars:
+            for key, val in var.items():
+                var[key] = cipher.decrypt(val)
             variables.update(var)
 
         return variables
@@ -92,7 +105,7 @@ class Template:
         """
         Load content of var files into a list.
 
-        :param filepaths: List of file paths of var and valut files
+        :param filepaths: List of file paths of var files
         :type filepaths: ``list`` of ``str``
         :return: List of dictionary values
         :rtype: ``list`` of ``dict``
@@ -105,6 +118,18 @@ class Template:
             with open(filepath, 'r') as f:
                 vars.append(yaml.load(f, Loader=yaml.FullLoader))
         return [var for var in vars if var]
+
+    def _load_secrets(self, filepath):
+        """
+        Load content of chest files into a list.
+
+        :param filepaths: List of file paths chest files
+        :type filepaths: ``list`` of ``str``
+        :return: List of dictionary values
+        :rtype: ``list`` of ``dict``
+        """
+        self._load_vars(filepath)
+        pass
 
     def find_var_files(self, filename):
         """

@@ -83,6 +83,8 @@ After you execute this, the following happens:
 3. Course file is supplied with collected variables and executed
 4. Tasks are executed in sequential order, each YAML file is supplied with collected variables
 
+You can either use ``chest.yaml`` or ``chest.yml`` file per *course project*, but not both. A *course project* is a directory where course file is located.
+
 Treasure is encrypted using password (``key``) and salt (``spice``). These are stored in simple text files. The root of the project should contain the ``.narrenschiff.yaml`` configuration file that stores paths to these files. Keep in mind that while ``.narrenschiff.yaml`` should be source controlled, password and salt file should never be committed to your repo! Here is the example of the configuration file:
 
 .. code-block:: yaml

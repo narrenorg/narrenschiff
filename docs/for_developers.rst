@@ -9,5 +9,6 @@ Manual for Contributors
    task
    templating
    chest
+   common
    modules
    cli

@@ -1,7 +1,11 @@
+import os
 import click
 
+from narrenschiff.chest import Chest
 from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
+
+from narrenschiff.common import get_chest_file_path
 
 
 @click.group()
@@ -19,8 +23,9 @@ def chest(ctx):
 @chest.command()
 @click.option('--treasure', help='Variable name')
 @click.option('--value', help='Value')
+@click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
-def take(keychain, treasure, value):
+def take(keychain, treasure, value, location):
     """
     Display value from the chest file.
 
@@ -33,16 +38,19 @@ def take(keychain, treasure, value):
     :return: Void
     :rtype: ``None``
     """
-    pass
+    path = get_chest_file_path(location)
+    chest = Chest(keychain, path)
+    click.echo(chest.show(treasure))
 
 
 @chest.command()
 @click.option('--treasure', help='Variable name')
 @click.option('--value', help='Value')
+@click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
-def hide(keychain, treasure, value):
+def hide(keychain, treasure, value, location):
     """
-    Dynamically update chest file.
+    Dynamically update chest file. Override old value if exists.
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -53,7 +61,9 @@ def hide(keychain, treasure, value):
     :return: Void
     :rtype: ``None``
     """
-    pass
+    path = get_chest_file_path(location)
+    chest = Chest(keychain, path)
+    chest.update(treasure, value)
 
 
 @chest.command()

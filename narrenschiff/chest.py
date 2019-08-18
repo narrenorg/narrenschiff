@@ -52,7 +52,7 @@ class Keychain:
         :return: Path to configuraiton file
         :rtype: ``str``
         """
-        project = os.path.dirname(os.path.abspath(__file__))
+        project = os.path.dirname(os.path.abspath(__file__))  # os.getcwd()
         project_root = os.path.abspath(os.path.join(project, os.pardir))
         narrenschiff = os.path.join(project_root, '.narrenschiff')
 
@@ -168,4 +168,59 @@ class AES256Cipher:
 class Chest:
     """Manipulate chest file."""
 
-    pass
+    def __init__(self, keychain, path):
+        """
+        Unlock treasure chest.
+
+        :param keychain: Object containing key and spice
+        :type keychain: :class:`narrenschiff.chest.Keychain`
+        :param path: Path to the chest file
+        :type path: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
+        self.keychain = keychain
+        self.path = path
+        self.chest = self.load_chest_file()
+
+    def load_chest_file(self):
+        """
+        Load chest file with encrypted values.
+
+        :return: Serialized YAML object
+        :rtype: ``dict``
+        """
+        with open(self.path, 'r') as f:
+            chest = yaml.load(f, Loader=yaml.FullLoader)
+        return chest if chest else {}
+
+    def update(self, variable, value):
+        """
+        Add or update chest file.
+
+        :param variable: Variable name to update
+        :type variable: ``str``
+        :param value: Value of the variable
+        :type value: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
+        cipher = AES256Cipher(self.keychain)
+        self.chest[variable] = cipher.encrypt(value).decode('utf-8')
+
+        with open(self.path, 'w') as f:
+            f.write(yaml.dump(self.chest))
+
+    def show(self, variable):
+        """
+        Show decrypted value of the variable.
+
+        :param variable: Variable name
+        :type variable: ``str``
+        :param value: Value of the variable
+        :type value: ``str``
+        :return: Decrypted value
+        :rtype: ``str``
+        """
+        cipher = AES256Cipher(self.keychain)
+        return cipher.decrypt(self.chest[variable])

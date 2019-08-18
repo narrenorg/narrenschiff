@@ -1,0 +1,7 @@
+flake8
+sphinx
+sphinx-rtd-theme
+click
+pyyaml
+jinja2
+cryptography

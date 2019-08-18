@@ -9,3 +9,4 @@ Manual for Contributors
    task
    templating
    modules
+   cli

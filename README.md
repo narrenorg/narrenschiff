@@ -6,3 +6,45 @@
 Ansible-like configuration management for the Kubernetes.
 
 ![Hieronymus Bosch, Das Narrenschiff](docs/_static/hieronymus_bosch.jpg)
+
+## Quickstart
+
+Install the tool, and write your `course` file:
+
+```yaml
+# dev/tasks.yaml
+- name: Deploy config map
+  kubectl:
+    command: apply
+    args:
+      filename: "{{ files_path }}/configmap.yaml"
+
+- name: Apply namespaces and RBAC settings
+  kubectl:
+    command: apply
+    args:
+      filename:
+        - dev/files/namespaces.yaml
+        - dev/files/rbac.yaml
+        - dev/files/statefulset.yaml  # <-- you need db_password for this
+```
+
+Add variables in vars files:
+
+```yaml
+# dev/vars.yaml
+files_path: dev/files
+```
+
+And hide your treasure in the chest!
+
+```sh
+touch dev/chest.yaml
+narrenschiff chest hide --treasure 'db_password' --value 'password' --location 'dev/'
+```
+
+Use `Jinja2` templating to be more flexible with your manifests. When yore ready, deploy:
+
+```sh
+narrenschiff deploy --set-course dev/tasks.yaml
+```

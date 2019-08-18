@@ -1,0 +1,3 @@
+# Example of configuration file
+key: ./password.txt  # path to file containing password for encrypting files
+spice: ./salt.txt  # path to file containing salt (salt should be random and long)

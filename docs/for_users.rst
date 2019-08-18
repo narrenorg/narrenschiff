@@ -83,6 +83,15 @@ After you execute this, the following happens:
 3. Course file is supplied with collected variables and executed
 4. Tasks are executed in sequential order, each YAML file is supplied with collected variables
 
+Treasure is encrypted using password (``key``) and salt (``spice``). These are stored in simple text files. The root of the project should contain the ``.narrenschiff.yaml`` configuration file that stores paths to these files. Keep in mind that while ``.narrenschiff.yaml`` should be source controlled, password and salt file should never be committed to your repo! Here is the example of the configuration file:
+
+.. code-block:: yaml
+
+  # .narrenschiff.yaml
+  key: ./password.txt  # path to file containing password for encrypting files
+  spice: ./salt.txt  # path to file containing salt (salt should be random and long)
+
+
 .. _Jinja2: https://jinja.palletsprojects.com/en/2.10.x/
 
 Glossary
@@ -98,3 +107,9 @@ Glossary
 
   chest
     File or files in which your treasure is stored.
+
+  key
+    Master password for encrypting strings
+
+  spice
+    Salt used for encrypting strings

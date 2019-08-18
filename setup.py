@@ -5,7 +5,7 @@ setup(
     version='0.0.1',
     py_modules=['narrenschiff'],
     install_requires=[
-        'Click', 'PyYAML'
+        'click', 'PyYAML', 'Jinja2', 'cryptography'
     ],
     entry_points="""
         [console_scripts]

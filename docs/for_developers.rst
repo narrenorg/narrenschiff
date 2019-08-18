@@ -8,5 +8,6 @@ Manual for Contributors
    narrenschiff
    task
    templating
+   chest
    modules
    cli

@@ -24,6 +24,8 @@ author = 'Petar Nikolovski'
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
 
+# -- Read the Docs overrides -------------------------------------------------
+master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 

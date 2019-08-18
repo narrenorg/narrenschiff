@@ -77,7 +77,6 @@ class Template:
         cleartext_vars = self._load_vars(var_files)
         ciphertext_vars = self._load_vars(chest_files)
         vars = [*cleartext_vars, *ciphertext_vars]
-        # vars = [*self._load_vars(var_files), *self._load_secrets(chest_files)]
 
         vars_temp = []
         for var in vars:

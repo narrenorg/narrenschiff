@@ -56,8 +56,6 @@ class Keychain:
         project_root = os.path.abspath(os.path.join(project, os.pardir))
         narrenschiff = os.path.join(project_root, '.narrenschiff')
 
-        path = ''
-
         narrenschiff_yaml = '.'.join([narrenschiff, 'yaml'])
         narrenschiff_yml = '.'.join([narrenschiff, 'yml'])
 

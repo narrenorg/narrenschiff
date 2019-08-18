@@ -1,4 +1,3 @@
-import os
 import click
 
 from narrenschiff.chest import Chest

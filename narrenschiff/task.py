@@ -1,3 +1,7 @@
+import subprocess
+import datetime
+
+
 class AmbiguousOptions(Exception):
     """Use when tasks have undefined YAML tags."""
 
@@ -18,7 +22,7 @@ class Task:
         taks.kustomization  # --> instance of Kustomization class
     """
 
-    def __init__(self, task):
+    def __init__(self, task, template):
         self.name = task.pop('name', None)
 
         if len(task) > 1:
@@ -29,7 +33,7 @@ class Task:
         command_name = list(task.keys())[0]
         command_args = task.pop(command_name)
         Command = self._dynamic_module_import(command_name)
-        self.command = Command(command_args)
+        self.command = Command(command_args, template)
 
     def __str__(self):
         return self.name
@@ -56,3 +60,35 @@ class Task:
         klass = module.capitalize()
         mod = __import__(path, fromlist=[klass])
         return getattr(mod, klass)
+
+
+class TasksEngine:
+    """Run course."""
+
+    def __init__(self, tasks):
+        """
+        Construct a :class:`narrenschiff.task.TasksEngine` class.
+
+        :param tasks: List of tasks
+        :type tasks: ``list`` of :class:`narrenschiff.task.Task`
+        :return: Void
+        :rtype: ``None``
+        """
+        self.tasks = tasks
+        self.width = int(subprocess.check_output(['tput', 'cols']).decode())
+
+    def run(self):
+        """
+        Start executing tasks.
+
+        :return: Void
+        :rtype: ``None``
+        """
+        print()
+        for task in self.tasks:
+            width = int(self.width) - 41 - len(task.name)
+            current_time = datetime.datetime.now()
+            fill = '*' * width
+            print('* [', current_time, '] * [', task.name, ']', fill, '\n')
+            task.command.execute()
+            print()

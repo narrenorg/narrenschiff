@@ -3,6 +3,7 @@
     command: apply
     args:
       filename: "{{ files_path }}/configmap.yaml"
+      namespace: development
 
 - name: Apply namespaces and RBAC settings
   kubectl:
@@ -11,6 +12,7 @@
       filename:
         - examples/files/namespaces.yaml
         - examples/files/rbac.yaml
+      namespace: default
 
 # In future
 # - name: Apply namespaces and RBAC settings

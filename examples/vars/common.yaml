@@ -1,4 +1,5 @@
-files_path: "examples/files"
+# files_path: "examples/files"
+# files_path: ""
 targetPort: 5000
 # targetPort: 80  -> Two same values in one file will override
 

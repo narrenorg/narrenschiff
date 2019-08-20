@@ -10,5 +10,6 @@ Manual for Contributors
    templating
    chest
    common
+   filters
    modules
    cli

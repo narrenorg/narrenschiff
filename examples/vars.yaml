@@ -6,3 +6,6 @@ colors:
   - red
   - green
   - blue
+
+example_domain_name: narrenschiff.example.com
+app_image: k8s.gcr.io/nginx:1.7.9

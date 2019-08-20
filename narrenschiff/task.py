@@ -1,5 +1,6 @@
 import subprocess
 import datetime
+import click
 
 
 class AmbiguousOptions(Exception):
@@ -85,10 +86,13 @@ class TasksEngine:
         :rtype: ``None``
         """
         print()
-        for task in self.tasks:
-            width = int(self.width) - 41 - len(task.name)
-            current_time = datetime.datetime.now()
-            fill = '*' * width
-            print('* [', current_time, '] * [', task.name, ']', fill, '\n')
-            task.command.execute()
-            print()
+        try:
+            for task in self.tasks:
+                width = int(self.width) - 41 - len(task.name)
+                current_time = datetime.datetime.now()
+                fill = '*' * width
+                print('* [', current_time, '] * [', task.name, ']', fill, '\n')
+                task.command.execute()
+                print()
+        except subprocess.CalledProcessError as e:
+           click.secho('Task encountered an error! Exiting...', fg='red', err=True)

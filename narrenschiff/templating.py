@@ -1,5 +1,6 @@
 import os
 
+import re
 import yaml
 
 from jinja2 import Environment
@@ -141,6 +142,7 @@ class Template:
         """
         paths = []
         var_files = [s.format(filename) for s in ['{}.yaml', '{}.yml', '{}']]
+
         for file in var_files:
             file_path = '{}/{}'.format(self.template_directory, file)
 
@@ -164,7 +166,8 @@ class Template:
         paths = []
         for root, dirs, files in os.walk(directory):
             for file in files:
-                paths.append(os.path.join(root, file))
+                if re.search(r'ya?ml$', file, re.I):
+                    paths.append(os.path.join(root, file))
         return paths
 
     def find_duplicates(self, values):

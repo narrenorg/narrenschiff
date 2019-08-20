@@ -33,10 +33,12 @@ Basic unit of ``narrenschiff`` is ``course`` or ``courses`` i.e. file or files s
       command: apply
       args:
         filename:
-          - examples/files/namespaces.yaml
-          - examples/files/rbac.yaml
+          - namespaces.yaml  # filenames are referenced relative to files/ dir
+          - rbac.yaml
 
 Each YAML file in the project is treated as a template file i.e. each ``course`` can have template variables. Template language that is powering ``courses`` is Jinja2_.
+
+File paths are referenced relative to the ``files/`` directory in the *course project* root. ``files/`` is reserved for Jinja2 templates of Kubernetes manifest files.
 
 The basic directory layout of the should resemble something like this::
 

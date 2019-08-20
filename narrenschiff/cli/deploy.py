@@ -22,12 +22,10 @@ def deploy(course):
     :return: Void
     :rtype: ``None``
     """
-    # Load and template tasks files
     template = Template(course)
     tasks_raw = template.render(os.path.basename(course))
-    tasks = yaml.load(tasks_raw, Loader=yaml.FullLoader)
+    tasks_yaml = yaml.load(tasks_raw, Loader=yaml.FullLoader)
 
-    template.render_all_files()
-    # template.clear_templates()
-    # engine = TasksEngine([Task(task, template) for task in tasks])
-    # engine.run()
+    tasks = [Task(task, template) for task in tasks_yaml]
+    engine = TasksEngine(tasks, template)
+    engine.run()

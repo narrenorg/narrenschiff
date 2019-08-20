@@ -28,6 +28,6 @@ def deploy(course):
     tasks = yaml.load(tasks_raw, Loader=yaml.FullLoader)
 
     template.render_all_files()
-    template.clear_templates()
+    # template.clear_templates()
     # engine = TasksEngine([Task(task, template) for task in tasks])
     # engine.run()

@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-dummy
+data:
+  apache.conf: |
+    Listen 80
+    <VirtualHost *:80>
+        DocumentRoot "/www/example1"
+        ServerName {{ example_domain_name }}
+
+        # Other directives here
+    </VirtualHost>
+
+    <VirtualHost *:80>
+        DocumentRoot "/www/example2"
+        ServerName www.example.org
+
+        # Other directives here
+    </VirtualHost>

@@ -27,5 +27,7 @@ def deploy(course):
     tasks_raw = template.render(os.path.basename(course))
     tasks = yaml.load(tasks_raw, Loader=yaml.FullLoader)
 
-    engine = TasksEngine([Task(task, template) for task in tasks])
-    engine.run()
+    template.render_all_files()
+    template.clear_templates()
+    # engine = TasksEngine([Task(task, template) for task in tasks])
+    # engine.run()

@@ -1,10 +1,13 @@
 import os
+import uuid
+import shutil
 
 import yaml
 
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
+from narrenschiff.filters import b64enc
 from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
 
@@ -40,6 +43,10 @@ class Template:
         loader = FileSystemLoader(self.template_directory)
         self.env = Environment(loader=loader)
 
+        # Add filters
+        self.env.filters['b64enc'] = b64enc
+
+        self.tmp = ''
         self.vars = {}
 
     def render(self, path):
@@ -184,3 +191,34 @@ class Template:
             else:
                 duplicates.append(val)
         return duplicates
+
+    def render_all_files(self):
+        """
+        Render all templates from the directory.
+
+        :return: Void
+        :rtype: ``None``
+
+        Templates are copied to ``/tmp`` and location of rendered templates
+        is saved in ``self.tmp``.
+        """
+        self.tmp = os.path.join('/tmp', str(uuid.uuid4()))
+        os.makedirs(self.tmp)
+        files_root = os.path.join(self.template_directory, 'files')
+        for root, dirs, files in os.walk(files_root):
+            root_path = root.replace(files_root, '')
+            root_path = root_path[1:] if root_path else root_path
+            os.makedirs(os.path.join(self.tmp, root_path), exist_ok=True)
+            for file in files:
+                rendered = self.render(os.path.join('files', root_path, file))
+                with open(os.path.join(self.tmp, root_path, file), 'w') as f:
+                    f.write(rendered)
+
+    def clear_templates(self):
+        """
+        Delete all templates from the ``/tmp`` directory.
+
+        :return: Void
+        :rtype: ``None``
+        """
+        shutil.rmtree(self.tmp)

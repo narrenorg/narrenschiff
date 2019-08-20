@@ -5,9 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 flake8 = "*"
-narrenschiff = {editable = true,path = "."}
+narrenschiff = {path = ".",editable = true}
 sphinx = "*"
 sphinx-rtd-theme = "*"
+ipdb = "*"
 
 [packages]
 click = "*"

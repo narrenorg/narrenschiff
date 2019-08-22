@@ -2,7 +2,8 @@
   kubectl:
     command: apply
     args:
-      filename: "{{ files_path }}/configmap.yaml"
+      # filename: "{{ files_path }}/configmap.yaml"
+      filename: configmap.yaml  # relative paths must **not** start with /
       namespace: development
 
 - name: Apply namespaces and RBAC settings
@@ -10,8 +11,8 @@
     command: apply
     args:
       filename:
-        - examples/files/namespaces.yaml
-        - examples/files/rbac.yaml
+        - app/deployment.yaml
+        - app/secret.yaml
       namespace: default
 
 # In future

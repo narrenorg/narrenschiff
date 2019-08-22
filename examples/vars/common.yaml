@@ -1,4 +1,16 @@
-files_path: "examples/files"
+# files_path: "examples/files"
+# files_path: ""
 targetPort: 5000
 # targetPort: 80  -> Two same values in one file will override
 cluster_name: "strange-cluster"
+
+init_namespaces:
+  - development
+  - qa
+  - staging
+  - production
+
+app_envs:
+  APP_DEBUG: "true"  # Booleans must be quoted!!!
+  APP_PORT: 5000
+  APP_HOSTS: '*'

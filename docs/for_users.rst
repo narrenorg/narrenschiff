@@ -33,10 +33,12 @@ Basic unit of ``narrenschiff`` is ``course`` or ``courses`` i.e. file or files s
       command: apply
       args:
         filename:
-          - examples/files/namespaces.yaml
-          - examples/files/rbac.yaml
+          - namespaces.yaml  # filenames are referenced relative to files/ dir
+          - rbac.yaml
 
 Each YAML file in the project is treated as a template file i.e. each ``course`` can have template variables. Template language that is powering ``courses`` is Jinja2_.
+
+File paths are referenced relative to the ``files/`` directory in the *course project* root. ``files/`` is reserved for Jinja2 templates of Kubernetes manifest files.
 
 The basic directory layout of the should resemble something like this::
 
@@ -63,7 +65,7 @@ The basic directory layout of the should resemble something like this::
 
 ``files/`` directory is a directory reserved for your Kubernetes manifest files. With ``narrenschiff`` you can use Jinja2 templating language to inject variables into the manifests.
 
-You can use ``vars.yaml`` and ``chest.yaml`` to define variables for you project. ``vars.yaml`` file or ``vars/`` directory contain unencrypted variables. ``chest.yaml`` file or ``chest/`` directory is a place to stash your *treasure* (i.e. keys, secrets, passwords, etc.). Both ``vars/`` and ``chest/`` directories can have arbitrary nesting and files within them can have arbitrary names. However, all variable names contained across these files **must** be unique!
+You can use ``vars.yaml`` and ``chest.yaml`` to define variables for you project. ``vars.yaml`` file or ``vars/`` directory contain unencrypted variables. ``chest.yaml`` file or ``chest/`` directory is a place to stash your *treasure* (i.e. keys, secrets, passwords, etc.). Both ``vars/`` and ``chest/`` directories can have arbitrary nesting and files within them can have arbitrary names. However, all variable names contained across these files **must** be unique! All boolean valus must be quoted.
 
 Chest files have flat dictionary structure. No nesting of the keys is allowed (at the moment at least):
 

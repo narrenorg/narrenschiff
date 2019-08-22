@@ -14,9 +14,19 @@ class NarrenschiffModule(ABC):
     from this class.
     """
 
-    def __init__(self, command, templating_env):
+    def __init__(self, command, template):
+        """
+        Construct a module that executes command.
+
+        :param command: Arguments for the module used to construct a command
+        :type command: ``str``, ``int``, ``list``, or ``dict``
+        :param template: Template environment of the course project
+        :type template: :class:`narrenschiff.templating.Template`
+        :return: Void
+        :rtype: ``None``
+        """
         self.command = command
-        self.templating_env = templating_env
+        self.template = template
 
     def __str__(self):
         return self.__class__.__name__.lower()

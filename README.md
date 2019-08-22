@@ -26,16 +26,16 @@ Install the tool, and write your `course` file:
     command: apply
     args:
       filename:
-        - dev/files/namespaces.yaml
-        - dev/files/rbac.yaml
-        - dev/files/statefulset.yaml  # <-- you need db_password for this
+        - app/namespaces.yaml
+        - app/rbac.yaml
+        - app/statefulset.yaml  # <-- you need db_password for this
 ```
 
 Add variables in vars files:
 
 ```yaml
 # dev/vars.yaml
-files_path: dev/files
+files_path: app/configuration
 ```
 
 And hide your treasure in the chest!

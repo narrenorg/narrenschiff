@@ -8,7 +8,7 @@ import yaml
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
-from narrenschiff.filters import b64enc
+from narrenschiff.filters import filters
 from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
 
@@ -45,7 +45,8 @@ class Template:
         self.env = Environment(loader=loader)
 
         # Add filters
-        self.env.filters['b64enc'] = b64enc
+        for name, func in filters.items():
+            self.env.filters[name] = func
 
         self.tmp = ''
         self.vars = {}

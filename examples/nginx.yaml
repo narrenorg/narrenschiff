@@ -1,0 +1,49 @@
+- name: Set namespace
+  kubectl:
+    command: apply
+    args:
+      filename: nginx/namespace.yaml
+
+- name: Deploy nginx container with basic auth
+  kubectl:
+    command: apply
+    args:
+      filename:
+        - nginx/app/secret.yaml
+        - nginx/app/configmap.yaml
+        - nginx/app/deployment.yaml
+      namespace: {{ nginx.namespace }}
+
+- name: Display pods from narrenschiff test namespace
+  kubectl:
+    command: get pods
+    args:
+      namespace: {{ nginx.namespace }}
+
+- name: Get services
+  kubectl:
+    command: get services
+    args:
+      namespace: {{ nginx.namespace }}
+
+- name: Get deployments
+  kubectl:
+    command: get deployments
+    args:
+      namespace: {{ nginx.namespace }}
+
+- name: Delete nginx container with basic auth
+  kubectl:
+    command: delete
+    args:
+      filename:
+        - nginx/app/secret.yaml
+        - nginx/app/configmap.yaml
+        - nginx/app/deployment.yaml
+      namespace: {{ nginx.namespace }}
+
+- name: Delete namespace
+  kubectl:
+    command: delete
+    args:
+      filename: nginx/namespace.yaml

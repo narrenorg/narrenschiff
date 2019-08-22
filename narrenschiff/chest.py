@@ -52,8 +52,7 @@ class Keychain:
         :return: Path to configuraiton file
         :rtype: ``str``
         """
-        project = os.path.dirname(os.path.abspath(__file__))  # os.getcwd()
-        project_root = os.path.abspath(os.path.join(project, os.pardir))
+        project_root = os.getcwd()
         narrenschiff = os.path.join(project_root, '.narrenschiff')
 
         narrenschiff_yaml = '.'.join([narrenschiff, 'yaml'])

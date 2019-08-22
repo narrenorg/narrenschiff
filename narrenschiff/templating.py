@@ -12,8 +12,138 @@ from narrenschiff.chest import AES256Cipher
 
 class TemplateException(Exception):
     """Use for exceptions regarding template manipulation."""
-
     pass
+
+
+class VarsFileNotFoudError(Exception):
+    pass
+
+
+class Vars:
+
+    def __init__(self, name, template_directory):
+        """
+        Initialize Var objects
+
+        :param name: ``str`` name used for file search 
+        """
+        self.name = name
+        self.template_directory = template_directory
+
+    def _find_var_files(self):
+        """
+        Find all files containing variables for the templates.
+
+        :return: List of paths to var files.
+        :rtype: ``list`` of ``str``
+        """
+        paths = []
+
+        has_dir = False
+        has_file = False
+
+        # Find name.yaml or name.yml file
+        # yaml has presendance
+        for ext in ['yaml', 'yml']:
+            file_path = os.path.join(self.template_directory, "{}.{}".format(self.name, ext))
+            if os.path.isfile(file_path):
+                has_file = True
+                break
+
+        # Find name directory
+        if os.path.isdir(self.name):
+            paths.extend(self._walk_directory(file_path))
+            has_dir = True
+
+        if has_file:
+            paths.append(file_path)
+
+        if not has_file or has_dir:
+            raise VarsFileNotFoundError
+
+        return paths
+
+    def _walk_directory(self, directory):
+        """
+        Walk the directory.
+
+        :param directory: Absolute path to the directory
+        :type directory: ``str``
+        :return: List of files
+        :rtype: ``list`` of ``str``
+        """
+        paths = []
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                if re.search(r'ya?ml$', file, re.I):
+                    paths.append(os.path.join(root, file))
+        return paths
+
+    def _load_vars(self, filepaths):
+        """
+        Load content of var files into a list.
+
+        :param filepaths: List of file paths of var files
+        :type filepaths: ``list`` of ``str``
+        :return: List of dictionary values
+        :rtype: ``list`` of ``dict``
+
+        **Important:** Empty files return ``None``. This method filters out
+        those values.
+        """
+        vars = []
+        for filepath in filepaths:
+            with open(filepath, 'r') as f:
+                vars.append(yaml.load(f, Loader=yaml.FullLoader))
+        return [var for var in vars if var]
+
+    def load_vars(self):
+        """
+        Load variables.
+
+        :return: Variables to be used for template rendering
+        :rtype: ``dict``
+        """
+        var_files = self._find_var_files()
+        plain_vars = self._load_vars(var_files)
+
+        return plain_vars
+
+
+class PlainVars(Vars):
+
+    NAME = 'vars'
+
+    def __init__(self, template_directory):
+        super().__init__(name=PlainVars.NAME, template_directory=template_directory)
+
+
+class ChestVars(Vars):
+
+    NAME = 'chest'
+
+    def __init__(self, template_directory):
+        super().__init__(name=ChestVars.NAME, template_directory=template_directory)
+
+    def load_vars(self):
+        var_files = self._find_var_files()
+        ciphertext_vars = self._load_vars(var_files)
+
+        keychain = Keychain()
+        cipher = AES256Cipher(keychain)
+        for var in ciphertext_vars:
+            for key, val in var.items():
+                var[key] = cipher.decrypt(val)
+
+        return ciphertext_vars
+
+
+class SecretmapVars(Vars):
+
+    NAME = 'secretmap'
+
+    def __init__(self, template_directory):
+        super().__init__(name=SecretmapVars.NAME, template_directory=template_directory)
 
 
 class Template:
@@ -72,12 +202,12 @@ class Template:
 
         **Important:** Files must not contain duplicate values!
         """
-        var_files = self.find_var_files('vars')
-        chest_files = self.find_var_files('chest')
 
-        cleartext_vars = self._load_vars(var_files)
-        ciphertext_vars = self._load_vars(chest_files)
-        vars = [*cleartext_vars, *ciphertext_vars]
+        vars = [
+            *PlainVars(self.template_directory).load_vars(),
+            *ChestVars(self.template_directory).load_vars(),
+            *SecretmapVars(self.template_directory).load_vars(),
+        ]
 
         vars_temp = []
         for var in vars:
@@ -89,86 +219,10 @@ class Template:
             raise TemplateException(exception.format(', '.join(duplicates)))
 
         variables = {}
-        for var in cleartext_vars:
-            variables.update(var)
-
-        keychain = Keychain()
-        cipher = AES256Cipher(keychain)
-        for var in ciphertext_vars:
-            for key, val in var.items():
-                var[key] = cipher.decrypt(val)
-            variables.update(var)
+        for dct in vars:
+            variables.update(dct)
 
         return variables
-
-    def _load_vars(self, filepaths):
-        """
-        Load content of var files into a list.
-
-        :param filepaths: List of file paths of var files
-        :type filepaths: ``list`` of ``str``
-        :return: List of dictionary values
-        :rtype: ``list`` of ``dict``
-
-        **Important:** Empty files return ``None``. This method filters out
-        those values.
-        """
-        vars = []
-        for filepath in filepaths:
-            with open(filepath, 'r') as f:
-                vars.append(yaml.load(f, Loader=yaml.FullLoader))
-        return [var for var in vars if var]
-
-    def _load_secrets(self, filepath):
-        """
-        Load content of chest files into a list.
-
-        :param filepaths: List of file paths chest files
-        :type filepaths: ``list`` of ``str``
-        :return: List of dictionary values
-        :rtype: ``list`` of ``dict``
-        """
-        self._load_vars(filepath)
-        pass
-
-    def find_var_files(self, filename):
-        """
-        Find all files containing variables for the templates.
-
-        :param filename: The name of the var file (``vars`` or ``chest``)
-        :type filename: ``str``
-        :return: List of paths to var files.
-        :rtype: ``list`` of ``str``
-        """
-        paths = []
-        var_files = [s.format(filename) for s in ['{}.yaml', '{}.yml', '{}']]
-
-        for file in var_files:
-            file_path = '{}/{}'.format(self.template_directory, file)
-
-            if file == 'vars' or file == 'chest':
-                paths.extend(self.walk_directory(file_path))
-                continue
-
-            if os.path.exists(file_path):
-                paths.append(file_path)
-        return paths
-
-    def walk_directory(self, directory):
-        """
-        Walk the directory.
-
-        :param directory: Absolute path to the directory
-        :type directory: ``str``
-        :return: List of files
-        :rtype: ``list`` of ``str``
-        """
-        paths = []
-        for root, dirs, files in os.walk(directory):
-            for file in files:
-                if re.search(r'ya?ml$', file, re.I):
-                    paths.append(os.path.join(root, file))
-        return paths
 
     def find_duplicates(self, values):
         """

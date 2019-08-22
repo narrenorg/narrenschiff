@@ -11,4 +11,5 @@ class Gcloud(NarrenschiffModule):
         command = self.command.get('command')
 
         cmd = ' '.join([Gcloud.gcloud_cmd, command])
-        subprocess.check_call(cmd, shell=True)
+        print(cmd)
+        # subprocess.check_call(cmd, shell=True)

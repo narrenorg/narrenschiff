@@ -1,0 +1,6 @@
+- name: Wait for a pod
+  wait_for_pod:
+    namespace: cert-manager
+    threshold_replicas: 1  # This is 1 in e.g. 1/2
+    grep_pod_name: cert-manager-webhook  # not a full name, only a part
+    # timeout: 10

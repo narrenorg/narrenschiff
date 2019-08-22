@@ -18,7 +18,7 @@ class TemplateException(Exception):
     pass
 
 
-class VarsFileNotFoudError(Exception):
+class VarsFileNotFoundError(Exception):
     pass
 
 
@@ -28,7 +28,7 @@ class Vars:
         """
         Initialize Var objects
 
-        :param name: ``str`` name used for file search 
+        :param name: ``str`` name used for file search
         """
         self.name = name
         self.template_directory = template_directory
@@ -54,14 +54,15 @@ class Vars:
                 break
 
         # Find name directory
-        if os.path.isdir(self.name):
-            paths.extend(self._walk_directory(file_path))
+        directory_path = os.path.join(self.template_directory, self.name)
+        if os.path.isdir(directory_path):
+            paths.extend(self._walk_directory(directory_path))
             has_dir = True
 
         if has_file:
             paths.append(file_path)
 
-        if not has_file or has_dir:
+        if not has_file and not has_dir:
             raise VarsFileNotFoundError
 
         return paths
@@ -179,7 +180,7 @@ class Template:
             self.env.filters[name] = func
 
         self.tmp = ''
-        self.vars = {}
+        self.vars = self.load_vars()
 
     def render(self, path):
         """
@@ -191,7 +192,7 @@ class Template:
         :rtype: ``str``
         """
         template = self.env.get_template(path)
-        return template.render(**self.load_vars())
+        return template.render(**self.vars)
 
     def load_vars(self):
         """

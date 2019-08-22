@@ -58,7 +58,9 @@ class Task:
         described in ``tasks.yaml`` file i.e. the "`course`" file.
         """
         path = 'narrenschiff.modules.{}'.format(module.lower())
-        klass = module.capitalize()
+        klass = ''.join(
+            '{}{}'.format(s[0].capitalize(), s[1:]) for s in module.split('_')
+        )
         mod = __import__(path, fromlist=[klass])
         return getattr(mod, klass)
 

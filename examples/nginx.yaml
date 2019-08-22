@@ -14,6 +14,25 @@
         - nginx/app/deployment.yaml
       namespace: {{ nginx.namespace }}
 
+- name: Add jetstack repository
+  kubectl:
+    command: apply
+    args:
+      filename: https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
+      namespace: {{ nginx.namespace }}
+
+# # You can mix urls with file paths
+# - name: Test
+#   kubectl:
+#     command: apply
+#     args:
+#       filename:
+#         - nginx/app/secret.yaml
+#         - nginx/app/configmap.yaml
+#         - nginx/app/deployment.yaml
+#         - https://raw.githubusercontent.com/jetstack/cert-manager/release-0.8/deploy/manifests/00-crds.yaml
+#       namespace: {{ nginx.namespace }}
+
 - name: Display pods from narrenschiff test namespace
   kubectl:
     command: get pods

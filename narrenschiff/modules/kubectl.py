@@ -1,9 +1,11 @@
 import os
 import subprocess
 from contextlib import suppress
+from urllib.parse import urlparse
 
 import click
 
+from narrenschiff.common import flatten
 from narrenschiff.modules.common import NarrenschiffModule
 
 
@@ -62,15 +64,14 @@ class Kubectl(NarrenschiffModule):
         :return: Void
         :rtype: ``None``
         """
-        try:
-            filename = self.command['args']['filename']
-            path = os.path.join(self.template.tmp, filename)
-            self.command['args']['filename'] = path
-        except TypeError:
-            filenames = self.command['args']['filename']
+        with suppress(KeyError):
+            filenames = flatten(list((self.command['args']['filename'],)))
+
             paths = []
             for filename in filenames:
+                if urlparse(filename).scheme:
+                    paths.append(filename)
+                    continue
                 paths.append(os.path.join(self.template.tmp, filename))
+
             self.command['args']['filename'] = paths
-        except KeyError:
-            pass

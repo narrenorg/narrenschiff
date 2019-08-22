@@ -1,4 +1,5 @@
 import os
+from contextlib import suppress
 
 
 class AmbiguousConfiguration(Exception):
@@ -32,3 +33,22 @@ def get_chest_file_path(location):
     if candidate_length == 0:
         raise AmbiguousConfiguration('Chest file does not exist')
     return candidate[0]
+
+
+def flatten(lst):
+    """
+    Flatten list.
+
+    :param lst: A list to be flattened
+    :type lst: ``list``
+    :return: Flattened list
+    :rtype: ``list``
+    """
+    flattened = []
+    for element in lst:
+        if isinstance(element, str):
+            flattened.append(element)
+        else:
+            with suppress(TypeError):
+                flattened.extend(element)
+    return flattened

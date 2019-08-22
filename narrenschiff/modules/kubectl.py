@@ -1,5 +1,8 @@
 import os
+import subprocess
 from contextlib import suppress
+
+import click
 
 from narrenschiff.modules.common import NarrenschiffModule
 
@@ -8,6 +11,12 @@ class Kubectl(NarrenschiffModule):
     """``kubectl`` module."""
 
     kubectl = 'kubectl'
+
+    # This should probably be class with consts
+    # color = {
+    #     'changed': 'yellow',
+    #     'ok': 'green'
+    # }
 
     # TODO: Implement templating (echo -e 'lorem\n  ipsum' | cat - | kubectl -)
     def execute(self):
@@ -21,7 +30,17 @@ class Kubectl(NarrenschiffModule):
             flags.append("--{} '{}'".format(key, args[key]))
 
         cmd = ' '.join([Kubectl.kubectl, command, *flags])
-        print(cmd)
+
+        process = subprocess.run(
+            cmd,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        output = process.stdout if process.stdout else process.stderr
+        color = 'green' if process.stdout else 'red'
+        click.secho(output.decode('utf-8'), fg=color)
 
     def update_filename_argument(self):
         """

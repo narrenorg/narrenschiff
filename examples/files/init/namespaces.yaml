@@ -1,4 +1,4 @@
-{% for namespace in init_namespaces %}
+{% for namespace in init_namespaces -%}
 ---
 apiVersion: v1
 kind: Namespace

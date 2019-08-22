@@ -1,5 +1,6 @@
 marry: lamb
 john: smith
+cluster_name: amazing-cluster
 secret:
   ENV_VAR: dummy
 colors:

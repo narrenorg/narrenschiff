@@ -34,4 +34,4 @@ class Helm(NarrenschiffModule):
             sets = ' '.join(['--set {}'.format(s) for s in args_set])
 
         cmd = ' '.join([Helm.helm_cmd, command, chart, opts, args, sets])
-        subprocess.run(cmd, shell=True, check=Trye)
+        subprocess.run(cmd, shell=True, check=True)

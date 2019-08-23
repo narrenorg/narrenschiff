@@ -7,6 +7,7 @@ import click
 
 from narrenschiff.common import flatten
 from narrenschiff.modules.common import NarrenschiffModule
+from narrenschiff.templating import Template
 
 
 class Kubectl(NarrenschiffModule):
@@ -72,6 +73,6 @@ class Kubectl(NarrenschiffModule):
                 if urlparse(filename).scheme:
                     paths.append(filename)
                     continue
-                paths.append(os.path.join(self.template.tmp, filename))
+                paths.append(os.path.join(Template().tmp, filename))
 
             self.command['args']['filename'] = paths

@@ -1,0 +1,5 @@
+- name: Import gcloud
+  import_course: "examples/gcloud.yaml"
+
+- name: Import tasks1
+  import_course: "examples/tasks.yaml"

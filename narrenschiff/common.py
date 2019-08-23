@@ -1,11 +1,28 @@
 import os
 from contextlib import suppress
+import re
 
 
 class AmbiguousConfiguration(Exception):
     """Warn that something is wrong with configuration."""
 
     pass
+
+
+class Singleton(type):
+    """
+    Define an Instance operation that lets clients access its unique
+    instance.
+    """
+
+    def __init__(cls, name, bases, attrs, **kwargs):
+        super().__init__(name, bases, attrs)
+        cls._instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
 
 
 def get_chest_file_path(location):
@@ -52,3 +69,7 @@ def flatten(lst):
             with suppress(TypeError):
                 flattened.extend(element)
     return flattened
+
+
+def is_yaml(filename):
+    return bool(re.search(r'ya?ml$', filename, re.I))

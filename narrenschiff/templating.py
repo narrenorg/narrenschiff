@@ -11,6 +11,7 @@ from jinja2 import FileSystemLoader
 from narrenschiff.filters import filters
 from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
+from narrenschiff.common import is_yaml
 
 
 class TemplateException(Exception):
@@ -79,7 +80,7 @@ class Vars:
         paths = []
         for root, dirs, files in os.walk(directory):
             for file in files:
-                if re.search(r'ya?ml$', file, re.I):
+                if is_yaml(file):
                     paths.append(os.path.join(root, file))
         return paths
 
@@ -269,9 +270,10 @@ class Template:
             root_path = root_path[1:] if root_path else root_path
             os.makedirs(os.path.join(self.tmp, root_path), exist_ok=True)
             for file in files:
-                rendered = self.render(os.path.join('files', root_path, file))
-                with open(os.path.join(self.tmp, root_path, file), 'w') as f:
-                    f.write(rendered)
+                if is_yaml(file):
+                    rendered = self.render(os.path.join('files', root_path, file))
+                    with open(os.path.join(self.tmp, root_path, file), 'w') as f:
+                        f.write(rendered)
 
     def clear_templates(self):
         """

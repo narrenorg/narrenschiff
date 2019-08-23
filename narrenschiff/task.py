@@ -68,7 +68,7 @@ class Task:
 class TasksEngine:
     """Run course."""
 
-    def __init__(self, tasks, template):
+    def __init__(self, tasks):#, template):
         """
         Construct a :class:`narrenschiff.task.TasksEngine` class.
 
@@ -80,7 +80,6 @@ class TasksEngine:
         :rtype: ``None``
         """
         self.tasks = tasks
-        self.template = template
         self.width = int(subprocess.check_output(['tput', 'cols']).decode())
 
     def run(self):
@@ -90,7 +89,6 @@ class TasksEngine:
         :return: Void
         :rtype: ``None``
         """
-        self.template.render_all_files()
         print()
         try:
             for task in self.tasks:
@@ -102,4 +100,3 @@ class TasksEngine:
                 print()
         except subprocess.CalledProcessError as e:
            click.secho('Task encountered an error! Exiting...', fg='red', err=True)
-        self.template.clear_templates()

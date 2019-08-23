@@ -1,5 +1,6 @@
 import os
 from contextlib import suppress
+import re
 
 
 class AmbiguousConfiguration(Exception):
@@ -52,3 +53,7 @@ def flatten(lst):
             with suppress(TypeError):
                 flattened.extend(element)
     return flattened
+
+
+def is_yaml(filename):
+    return bool(re.search(r'ya?ml$', filename, re.I))

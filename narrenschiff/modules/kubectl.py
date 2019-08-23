@@ -32,17 +32,18 @@ class Kubectl(NarrenschiffModule):
             flags.append("--{} '{}'".format(key, args[key]))
 
         cmd = ' '.join([Kubectl.kubectl, command, *flags])
+        print(cmd)
 
-        process = subprocess.run(
-            cmd,
-            shell=True,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-        output = process.stdout if process.stdout else process.stderr
-        color = 'green' if process.stdout else 'red'
-        click.secho(output.decode('utf-8'), fg=color)
+        # process = subprocess.run(
+            # cmd,
+            # shell=True,
+            # check=True,
+            # stdout=subprocess.PIPE,
+            # stderr=subprocess.PIPE
+        # )
+        # output = process.stdout if process.stdout else process.stderr
+        # color = 'green' if process.stdout else 'red'
+        # click.secho(output.decode('utf-8'), fg=color)
 
     def update_filename_argument(self):
         """

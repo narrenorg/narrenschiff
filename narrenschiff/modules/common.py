@@ -38,4 +38,5 @@ class NarrenschiffModule(ABC):
 
     @abstractmethod
     def execute(self):
+        """Parse command and its arguments, and execute the module."""
         pass

@@ -22,7 +22,9 @@ def deploy(course):
     :return: Void
     :rtype: ``None``
     """
-    template = Template(course)
+    template = Template()
+    template.set_course(course)
+
     tasks = _import_course(course, template)
 
     template.render_all_files()
@@ -47,7 +49,7 @@ def _import_course(course, template):
             for new_task in new_tasks:
                 tasks.append(new_task)
         else:
-            tasks.append(Task(task, template))
+            tasks.append(Task(task))
 
     return tasks
 

@@ -23,7 +23,7 @@ class Task:
         taks.kustomization  # --> instance of Kustomization class
     """
 
-    def __init__(self, task, template):
+    def __init__(self, task):
         self.name = task.pop('name', None)
 
         if len(task) > 1:
@@ -34,7 +34,7 @@ class Task:
         command_name = list(task.keys())[0]
         command_args = task.pop(command_name)
         Command = self._dynamic_module_import(command_name)
-        self.command = Command(command_args, template)
+        self.command = Command(command_args)
 
     def __str__(self):
         return self.name

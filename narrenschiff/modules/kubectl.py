@@ -7,6 +7,7 @@ import click
 
 from narrenschiff.common import flatten
 from narrenschiff.modules.common import NarrenschiffModule
+from narrenschiff.templating import Template
 
 
 class Kubectl(NarrenschiffModule):
@@ -32,18 +33,17 @@ class Kubectl(NarrenschiffModule):
             flags.append("--{} '{}'".format(key, args[key]))
 
         cmd = ' '.join([Kubectl.kubectl, command, *flags])
-        print(cmd)
 
-        # process = subprocess.run(
-            # cmd,
-            # shell=True,
-            # check=True,
-            # stdout=subprocess.PIPE,
-            # stderr=subprocess.PIPE
-        # )
-        # output = process.stdout if process.stdout else process.stderr
-        # color = 'green' if process.stdout else 'red'
-        # click.secho(output.decode('utf-8'), fg=color)
+        process = subprocess.run(
+            cmd,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        output = process.stdout if process.stdout else process.stderr
+        color = 'green' if process.stdout else 'red'
+        click.secho(output.decode('utf-8'), fg=color)
 
     def update_filename_argument(self):
         """
@@ -73,6 +73,6 @@ class Kubectl(NarrenschiffModule):
                 if urlparse(filename).scheme:
                     paths.append(filename)
                     continue
-                paths.append(os.path.join(self.template.tmp, filename))
+                paths.append(os.path.join(Template().tmp, filename))
 
             self.command['args']['filename'] = paths

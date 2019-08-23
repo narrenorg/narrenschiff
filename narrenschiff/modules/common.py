@@ -14,7 +14,7 @@ class NarrenschiffModule(ABC):
     from this class.
     """
 
-    def __init__(self, command, template):
+    def __init__(self, command):
         """
         Construct a module that executes command.
 
@@ -26,7 +26,6 @@ class NarrenschiffModule(ABC):
         :rtype: ``None``
         """
         self.command = command
-        self.template = template
 
     def __str__(self):
         return self.__class__.__name__.lower()

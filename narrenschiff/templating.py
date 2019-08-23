@@ -12,6 +12,7 @@ from narrenschiff.filters import filters
 from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
 from narrenschiff.common import is_yaml
+from narrenschiff.common import Singleton
 
 
 class TemplateException(Exception):
@@ -151,10 +152,10 @@ class SecretmapVars(Vars):
         super().__init__(name=SecretmapVars.NAME, template_directory=template_directory)
 
 
-class Template:
+class Template(metaclass=Singleton):
     """Load and manipulate templates and template environemtn."""
 
-    def __init__(self, path):
+    def set_course(self, path):
         """
         Prepare Jinja2 templating environment.
 

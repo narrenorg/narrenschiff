@@ -101,5 +101,6 @@ class TasksEngine:
                 task.command.execute()
                 print()
         except subprocess.CalledProcessError as e:
-           click.secho('Task encountered an error! Exiting...', fg='red', err=True)
+            warning = 'Task encountered an error! Exiting...'
+            click.secho(warning, fg='red', err=True)
         self.template.clear_templates()

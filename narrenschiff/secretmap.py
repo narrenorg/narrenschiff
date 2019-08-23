@@ -1,15 +1,29 @@
-from .chest import AES256Cipher
 import os
 import yaml
+
+from narrenschiff.chest import AES256Cipher
+
 
 class CourseLocationError(Exception):
     pass
 
+
 class SecretmapCommand:
+    """Manage secret maps. Secret maps are paths to encrypted files."""
 
     FILENAME = 'secretmap.yaml'
 
     def __init__(self, keychain, directory):
+        """
+        Construct a :class:`narrenschiff.secretmap.SecretmapCommand`.
+
+        :param keychain: Keychain contains key and spice
+        :type keychain: :class:`narrenschiff.chest.Keychain`
+        :param directory: Path to directory containing secretmap
+        :type directory: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
         if os.path.isfile(directory):
             self.directory = os.path.dirname(directory)
         elif os.path.isdir(directory):
@@ -22,7 +36,16 @@ class SecretmapCommand:
 
     def upsert(self, src, dest, treasure):
         """
-        Encrypts file and inserts data to config file
+        Encrypts file and inserts data to config file.
+
+        :param src: Source filepath for encryption
+        :type src: ``str``
+        :param dest: Destination filepath of the encrypted file
+        :type dest: ``str``
+        :param treasure: Name of the variable
+        :type treasure: ``str``
+        :return: Void
+        :rtype: ``None``
         """
         with open(src, 'r') as f:
             cipher = AES256Cipher(self.keychain)
@@ -43,7 +66,14 @@ class SecretmapCommand:
 
     def decrypt(self, dest, treasure):
         """
-        Decrypts file and stores it to given destination
+        Decrypts file and stores it to given destination.
+
+        :param dest: Destination filepath of the decrypted file
+        :type dest: ``str``
+        :param treasure: Name of the variable
+        :type treasure: ``str``
+        :return: Void
+        :rtype: ``None``
         """
         config = self._read_config()
         src_abspath = config[treasure]

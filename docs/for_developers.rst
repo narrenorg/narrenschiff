@@ -9,6 +9,7 @@ Manual for Contributors
    task
    templating
    chest
+   secretmap
    common
    filters
    modules

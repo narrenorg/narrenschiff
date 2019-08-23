@@ -1,10 +1,7 @@
 import click
 
-from narrenschiff.secretmap import SecretmapCommand
 from narrenschiff.chest import Keychain
-from narrenschiff.chest import AES256Cipher
-
-from narrenschiff.common import get_chest_file_path
+from narrenschiff.secretmap import SecretmapCommand
 
 
 @click.group()
@@ -32,9 +29,9 @@ def hide(keychain, source, destination, treasure, location):
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
     :param source: Source filepath for encryption
-    :type treasure: ``str``
-    :param treasure: Destination filepath of the encrypted file
-    :type treasure: ``str``
+    :type source: ``str``
+    :param destination: Destination filepath of the encrypted file
+    :type destination: ``str``
     :param treasure: Name of the variable
     :type treasure: ``str``
     :param location: Location of the secretmap file
@@ -44,6 +41,7 @@ def hide(keychain, source, destination, treasure, location):
     """
     secretmap = SecretmapCommand(keychain=keychain, directory=location)
     secretmap.upsert(src=source, dest=destination, treasure=treasure)
+
 
 @secretmap.command()
 @click.option('--destination', help='Destination of the encrypted file')
@@ -56,8 +54,8 @@ def take(keychain, destination, treasure, location):
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
-    :param treasure: Destination filepath of the encrypted file
-    :type treasure: ``str``
+    :param destination: Destination filepath of the decrypted file
+    :type destination: ``str``
     :param treasure: Name of the variable
     :type treasure: ``str``
     :param location: Location of the secretmap file

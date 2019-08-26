@@ -22,7 +22,7 @@ def secretmap(ctx):
 @click.option('--treasure', help='Variable name')
 @click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
-def hide(keychain, source, destination, treasure, location):
+def stash(keychain, source, destination, treasure, location):
     """
     Encrypt and stash file.
 
@@ -48,9 +48,9 @@ def hide(keychain, source, destination, treasure, location):
 @click.option('--treasure', help='Variable name')
 @click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
-def take(keychain, destination, treasure, location):
+def loot(keychain, destination, treasure, location):
     """
-    Encrypt and stash file.
+    Decrypt file from stash.
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`

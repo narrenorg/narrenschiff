@@ -42,7 +42,7 @@ And hide your treasure in the chest!
 
 ```sh
 touch dev/chest.yaml
-narrenschiff chest hide --treasure 'db_password' --value 'password' --location 'dev/'
+narrenschiff chest stash --treasure 'db_password' --value 'password' --location 'dev/'
 ```
 
 Use `Jinja2` templating to be more flexible with your manifests. When yore ready, deploy:

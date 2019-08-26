@@ -2,7 +2,6 @@ import os
 import uuid
 import shutil
 
-import re
 import yaml
 
 from jinja2 import Environment
@@ -17,18 +16,22 @@ from narrenschiff.common import Singleton
 
 class TemplateException(Exception):
     """Use for exceptions regarding template manipulation."""
+
     pass
 
 
 class VarsFileNotFoundError(Exception):
+    """Missing files containing variables."""
+
     pass
 
 
 class Vars:
+    """Manipulate files containing variables."""
 
     def __init__(self, name, template_directory):
         """
-        Initialize Var objects
+        Initialize :class:`narrenschiff.templating.Vars` objects.
 
         :param name: ``str`` name used for file search
         """
@@ -50,7 +53,8 @@ class Vars:
         # Find name.yaml or name.yml file
         # yaml has presendance
         for ext in ['yaml', 'yml']:
-            file_path = os.path.join(self.template_directory, "{}.{}".format(self.name, ext))
+            file_name = "{}.{}".format(self.name, ext)
+            file_path = os.path.join(self.template_directory, file_name)
             if os.path.isfile(file_path):
                 has_file = True
                 break
@@ -117,19 +121,25 @@ class Vars:
 
 
 class PlainVars(Vars):
+    """Load cleartext variable files."""
 
     NAME = 'vars'
 
     def __init__(self, template_directory):
-        super().__init__(name=PlainVars.NAME, template_directory=template_directory)
+        super().__init__(
+            name=PlainVars.NAME, template_directory=template_directory
+        )
 
 
 class ChestVars(Vars):
+    """Load chest files."""
 
     NAME = 'chest'
 
     def __init__(self, template_directory):
-        super().__init__(name=ChestVars.NAME, template_directory=template_directory)
+        super().__init__(
+            name=ChestVars.NAME, template_directory=template_directory
+        )
 
     def load_vars(self):
         var_files = self._find_var_files()
@@ -145,15 +155,18 @@ class ChestVars(Vars):
 
 
 class SecretmapVars(Vars):
+    """Load secretmap files."""
 
     NAME = 'secretmap'
 
     def __init__(self, template_directory):
-        super().__init__(name=SecretmapVars.NAME, template_directory=template_directory)
+        super().__init__(
+            name=SecretmapVars.NAME, template_directory=template_directory
+        )
 
 
 class Template(metaclass=Singleton):
-    """Load and manipulate templates and template environemtn."""
+    """Load and manipulate templates and template environment."""
 
     def set_course(self, path):
         """

@@ -68,7 +68,7 @@ class Task:
 class TasksEngine:
     """Run course."""
 
-    def __init__(self, tasks):#, template):
+    def __init__(self, tasks):
         """
         Construct a :class:`narrenschiff.task.TasksEngine` class.
 
@@ -98,7 +98,7 @@ class TasksEngine:
                 print('* [', current_time, '] * [', task.name, ']', fill, '\n')
                 task.command.execute()
                 print()
-        except subprocess.CalledProcessError as e:
+        except subprocess.CalledProcessError as e:  # noqa
             warning = 'Task encountered an error! Exiting...'
             click.secho(warning, fg='red', err=True)
         self.template.clear_templates()

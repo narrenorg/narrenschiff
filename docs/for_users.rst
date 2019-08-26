@@ -102,6 +102,7 @@ Treasure is encrypted using password (``key``) and salt (``spice``). These are s
   key: ./password.txt  # path to file containing password for encrypting files
   spice: ./salt.txt  # path to file containing salt (salt should be random and long)
 
+You can also encrypt files and bring them into your source code. Files are encrypted, and stored at desired location, and relative path to the file is saved in `secretmap` file.
 
 .. _Jinja2: https://jinja.palletsprojects.com/en/2.10.x/
 
@@ -124,3 +125,6 @@ Glossary
 
   spice
     Salt used for encrypting strings
+
+  secretmap
+    Encrypted file

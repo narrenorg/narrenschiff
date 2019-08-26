@@ -24,7 +24,7 @@ def chest(ctx):
 @click.option('--value', help='Value')
 @click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
-def take(keychain, treasure, value, location):
+def loot(keychain, treasure, value, location):
     """
     Display value from the chest file.
 
@@ -47,7 +47,7 @@ def take(keychain, treasure, value, location):
 @click.option('--value', help='Value')
 @click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
-def hide(keychain, treasure, value, location):
+def stash(keychain, treasure, value, location):
     """
     Dynamically update chest file. Override old value if exists.
 

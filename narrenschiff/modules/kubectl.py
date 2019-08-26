@@ -15,12 +15,6 @@ class Kubectl(NarrenschiffModule):
 
     kubectl = 'kubectl'
 
-    # This should probably be class with consts
-    # color = {
-    #     'changed': 'yellow',
-    #     'ok': 'green'
-    # }
-
     # TODO: Implement templating (echo -e 'lorem\n  ipsum' | cat - | kubectl -)
     def execute(self):
         command = self.command.get('command')

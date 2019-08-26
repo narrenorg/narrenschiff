@@ -37,7 +37,14 @@ def deploy(course):
 
 def _import_course(course, template):
     """
-    Recursively load all courses and return tasks
+    Recursively load all courses and return tasks.
+
+    :param course: Path to the course file
+    :type course: ``str``
+    :param template: Template environment
+    :type template: :class:`narrenschiff.templating.Template`
+    :return: All tasks from the original, and the included course files
+    :rtype: ``list`` of :class:`narrenschiff.task.Task`
     """
     tasks_yaml = _import_current_tasks(course, template)
 
@@ -56,7 +63,14 @@ def _import_course(course, template):
 
 def _import_current_tasks(course, template):
     """
-    Render tasks
+    Render tasks from the course.
+
+    :param course: Path to the course file
+    :type course: ``str``
+    :param template: Template environment
+    :type template: :class:`narrenschiff.templating.Template`
+    :return: Tasks as a list of dictionaries
+    :rtype: ``list`` of ``dict``
     """
     tasks_raw = template.render(os.path.basename(course))
     tasks_yaml = yaml.load(tasks_raw, Loader=yaml.FullLoader)

@@ -22,13 +22,4 @@ class Gcloud(NarrenschiffModule):
         # It's OK to pipe to stdout instead of catching with check in the
         # tasks engine - though it would create problems with commands that
         # require user input
-        subprocess.run(
-            cmd,
-            shell=True,
-            check=True,
-            # stdout=subprocess.PIPE,
-            # stderr=subprocess.PIPE
-        )
-        # output = process.stdout if process.stdout else process.stderr
-        # color = 'green' if process.stdout else 'red'
-        # click.secho(output.decode('utf-8'), fg=color)
+        subprocess.run(cmd, shell=True, check=True)

@@ -1,5 +1,6 @@
 import os
 from setuptools import setup
+from setuptools import find_packages
 
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r') as readme:
@@ -9,7 +10,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r') as readme:
 setup(
     name='narrenschiff',
     version=os.getenv('CI_COMMIT_TAG'),
-    packages=['narrenschiff'],
+    packages=find_packages(),
     description='k8s deployment and configuration management tool',
     long_description=README,
     url='https://example.com',

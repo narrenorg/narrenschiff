@@ -6,9 +6,9 @@
       - tiller-tls
       - tiller-tls-verify
     args:
-      tiller-tls-cert: certs/tiller.cert.pem
-      tiller-tls-key: certs/tiller.key.pem
-      tls-ca-cert: certs/ca.cert.pem
+      tiller-tls-cert: "{{ tiller_cert_pem | secretmap }}"
+      tiller-tls-key: "{{ tiller_key_pem | secretmap }}"
+      tls-ca-cert: "{{ ca_cert_pem | secretmap }}"
       service-account: tiller
       tiller-namespace: kube-system
 
@@ -24,10 +24,9 @@
       - tls
       - atomic
     args:
-      tls-ca-cert: "{{ tls_ca_pem }}"
-      tls-ca-cert: "certs/ca.cert.pem"
-      tls-cert: "certs/helm.cert.pem"
-      tls-key: "certs/helm.key.pem"
+      tls-ca-cert: "{{ ca_cert_pem | secretmap }}"
+      tls-cert: "{{ helm_cert_pem | secretmap }}"
+      tls-key: "{{ helm_key_pem | secretmap }}"
       version: "0.1.0"
       namespace: "development"
       name: "pypiserver"

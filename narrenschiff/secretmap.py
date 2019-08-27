@@ -1,14 +1,18 @@
 import os
 import yaml
+import uuid
+import shutil
+from contextlib import suppress
 
 from narrenschiff.chest import AES256Cipher
+from narrenschiff.common import Singleton
 
 
 class CourseLocationError(Exception):
     pass
 
 
-class SecretmapCommand:
+class SecretmapCommand(metaclass=Singleton):
     """Manage secret maps. Secret maps are paths to encrypted files."""
 
     FILENAME = 'secretmap.yaml'
@@ -33,6 +37,7 @@ class SecretmapCommand:
 
         self.filepath = os.path.join(directory, SecretmapCommand.FILENAME)
         self.keychain = keychain
+        self.tmp = os.path.join('/tmp', str(uuid.uuid4()))
 
     def upsert(self, src, dest, treasure):
         """
@@ -61,7 +66,7 @@ class SecretmapCommand:
             f.write(enc_file_core)
 
         config = self._read_config()
-        config[treasure] = dest_abspath
+        config[treasure] = dest
         self._write_config(config)
 
     def decrypt(self, dest, treasure):
@@ -76,14 +81,38 @@ class SecretmapCommand:
         :rtype: ``None``
         """
         config = self._read_config()
-        src_abspath = config[treasure]
+        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
 
-        with open(src_abspath, 'r') as f:
+        with open(src, 'r') as f:
             cipher = AES256Cipher(self.keychain)
             enc_file_core = cipher.decrypt(f.read())
 
         with open(dest, 'w') as f:
             f.write(enc_file_core)
+
+    def render_all_files(self):
+        """
+        Decrypt and copy all files at the given destination.
+        """
+        os.makedirs(self.tmp)
+        for key, value in self._read_config().items():
+            basepath = os.path.dirname(value)
+
+            with suppress(FileExistsError):
+                os.makedirs(os.path.join(self.tmp, basepath))
+
+            destination = os.path.join(self.tmp, value)
+            if not os.path.exists(destination):
+                self.decrypt(destination, key)
+
+    def clear_all_files(self):
+        """
+        Delete all decrypted files.
+
+        :return: Void
+        :rtype: ``None``
+        """
+        shutil.rmtree(self.tmp)
 
     def _read_config(self):
         with open(self.filepath, 'r') as f:

@@ -1,3 +1,4 @@
+import os
 import base64
 
 
@@ -25,7 +26,20 @@ def rtrim(value):
     return value.rstrip()
 
 
+def secretmap(value):
+    """
+    Label path with ``/secretmap``.
+
+    :param value: Path
+    :type value: ``str``
+    :return: Labeled path
+    :rtype: ``str``
+    """
+    return os.path.join('{{secretmap}}', value)
+
+
 filters = {
     'b64enc': b64enc,
     'rtrim': rtrim,
+    'secretmap': secretmap,
 }

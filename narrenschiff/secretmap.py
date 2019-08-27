@@ -61,7 +61,7 @@ class SecretmapCommand:
             f.write(enc_file_core)
 
         config = self._read_config()
-        config[treasure] = dest_abspath
+        config[treasure] = dest
         self._write_config(config)
 
     def decrypt(self, dest, treasure):
@@ -76,9 +76,9 @@ class SecretmapCommand:
         :rtype: ``None``
         """
         config = self._read_config()
-        src_abspath = config[treasure]
+        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
 
-        with open(src_abspath, 'r') as f:
+        with open(src, 'r') as f:
             cipher = AES256Cipher(self.keychain)
             enc_file_core = cipher.decrypt(f.read())
 

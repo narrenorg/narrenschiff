@@ -1,3 +1,9 @@
+# Unreleased - 27.8.2019.
+
+## Fixed
+
+* Secretmap file is now storing _relative_ paths
+
 # 0.0.5 - 27.8.2019.
 
 ## Fixed

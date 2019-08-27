@@ -25,7 +25,6 @@
       - atomic
     args:
       tls-ca-cert: "{{ tls_ca_pem }}"
-      tls-ca-cert: "certs/ca.cert.pem"
       tls-cert: "certs/helm.cert.pem"
       tls-key: "certs/helm.key.pem"
       version: "0.1.0"

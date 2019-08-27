@@ -32,7 +32,7 @@ class Keychain:
         :param path: Path to the file
         :type path: ``str``
         """
-        with open(path, 'r') as f:
+        with open(os.path.expanduser(path), 'r') as f:
             secret = f.readlines()[0]
         return secret.rstrip()
 

@@ -1,3 +1,9 @@
+# 0.1.1 - 27.8.2019.
+
+## Fixed
+
+* Print stack trace when error is encountered
+
 # 0.1.0 - 27.8.2019.
 
 ## Added

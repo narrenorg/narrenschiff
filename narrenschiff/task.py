@@ -99,5 +99,6 @@ class TasksEngine:
                 task.command.execute()
                 print()
         except subprocess.CalledProcessError as e:  # noqa
+            click.secho(e, fg='red')
             warning = 'Task encountered an error! Exiting...'
             click.secho(warning, fg='red', err=True)

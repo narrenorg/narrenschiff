@@ -21,10 +21,10 @@ class Kubectl(NarrenschiffModule):
 
         self.sanitize_filenames()
         self.update_filename_argument()
-        args = self.command.get('args')
+        args = self.command.get('args', {})
         flags = []
-        for key in args:
-            flags.append("--{} '{}'".format(key, args[key]))
+        for key, value in args.items():
+            flags.append("--{} '{}'".format(key, value))
 
         cmd = ' '.join([Kubectl.kubectl, command, *flags])
 

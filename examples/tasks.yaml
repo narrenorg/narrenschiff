@@ -31,5 +31,9 @@
     args:
       namespace: kube-system
 
+- name: Create the namespace for cert-manager
+  kubectl:
+    command: create namespace cert-manager
+
 - name: Deploy app
-  kustomization: examples/files/app/
+  kustomization: app/

@@ -1,8 +1,10 @@
+import os
 import click
 import subprocess
 
 from narrenschiff.modules.common import NarrenschiffModule
 from narrenschiff.modules.common import NarrenschiffModuleException
+from narrenschiff.templating import Template
 
 
 class Kustomization(NarrenschiffModule):
@@ -13,7 +15,8 @@ class Kustomization(NarrenschiffModule):
             exception = 'This module does not support additional arguments'
             raise NarrenschiffModuleException(exception)
 
-        cmd = 'kubectl apply -k "{}"'.format(self.command)
+        path = os.path.join(Template().tmp, self.command)
+        cmd = 'kubectl apply -k "{}"'.format(path)
 
         process = subprocess.run(
             cmd,

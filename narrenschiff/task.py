@@ -101,4 +101,3 @@ class TasksEngine:
         except subprocess.CalledProcessError as e:  # noqa
             warning = 'Task encountered an error! Exiting...'
             click.secho(warning, fg='red', err=True)
-        self.template.clear_templates()

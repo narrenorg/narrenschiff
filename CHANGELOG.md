@@ -1,3 +1,9 @@
+# 0.0.4 - 27.8.2019.
+
+# Fixed
+
+* Secertmap config failing to write filepath when the config file is empty
+
 # 0.0.3 - 27.8.2019.
 
 # Fixed

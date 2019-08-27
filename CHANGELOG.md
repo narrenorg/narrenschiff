@@ -1,4 +1,8 @@
-# Unreleased - 27.8.2019.
+# 0.1.0 - 27.8.2019.
+
+## Added
+
+* Secretmap now decrypts and copies files to `/tmp`
 
 ## Fixed
 

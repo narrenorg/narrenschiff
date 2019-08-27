@@ -6,6 +6,8 @@ import yaml
 from narrenschiff.task import Task
 from narrenschiff.task import TasksEngine
 from narrenschiff.templating import Template
+from narrenschiff.chest import Keychain
+from narrenschiff.secretmap import SecretmapCommand
 
 
 @click.command()
@@ -25,15 +27,18 @@ def deploy(course):
     template = Template()
     template.set_course(course)
 
+    secretmap = SecretmapCommand(Keychain(), os.path.dirname(course))
+
     tasks = _import_course(course, template)
 
     template.render_all_files()
+    secretmap.render_all_files()
 
     engine = TasksEngine(tasks)
     engine.run()
 
     template.clear_templates()
-
+    secretmap.clear_all_files()
 
 def _import_course(course, template):
     """

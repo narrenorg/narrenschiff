@@ -40,6 +40,7 @@ def deploy(course):
     template.clear_templates()
     secretmap.clear_all_files()
 
+
 def _import_course(course, template):
     """
     Recursively load all courses and return tasks.

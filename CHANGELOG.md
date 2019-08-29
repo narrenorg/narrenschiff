@@ -1,3 +1,9 @@
+# 0.2.0 - 29.8.2019.
+
+## Added
+
+* Secretmap can now dynamically edit the file in the preferred editor. The preferred editor on the OS is set with the `EDITOR` environment variable (defaults to `vi`)
+
 # 0.1.1 - 27.8.2019.
 
 ## Fixed

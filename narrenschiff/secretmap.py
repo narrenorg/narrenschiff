@@ -2,10 +2,12 @@ import os
 import yaml
 import uuid
 import shutil
+import subprocess
 from contextlib import suppress
 
 from narrenschiff.chest import AES256Cipher
 from narrenschiff.common import Singleton
+from narrenschiff.common import DeleteFile
 
 
 class CourseLocationError(Exception):
@@ -58,7 +60,7 @@ class Secretmap(metaclass=Singleton):
 
         dest_abspath = os.path.abspath(os.path.join(self.directory, dest))
         try:
-            os.mkdir(os.path.dirname(dest_abspath), 0o755)
+            os.makedirs(os.path.dirname(dest_abspath), 0o755)
         except FileExistsError:
             pass
 
@@ -113,6 +115,29 @@ class Secretmap(metaclass=Singleton):
         :rtype: ``None``
         """
         shutil.rmtree(self.tmp)
+
+    def edit(self, treasure):
+        """
+        Edit an encrypted file.
+
+        :param treasure: Name of the variable
+        :type treasure: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
+        config = self._read_config()
+        filename = os.path.basename(config[treasure])
+        destination = os.path.join('/tmp', filename)
+        self.decrypt(destination, treasure)
+
+        editor = os.getenv('EDITOR', 'vi')
+        cmd = '{} {}'.format(editor, destination)
+        subprocess.run(cmd, shell=True)
+
+        self.upsert(destination, config[treasure], treasure)
+
+        tmp_file = DeleteFile(destination)
+        tmp_file.delete()
 
     def _read_config(self):
         with open(self.filepath, 'r') as f:

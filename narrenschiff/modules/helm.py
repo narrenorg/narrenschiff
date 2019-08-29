@@ -28,11 +28,9 @@ class Helm(NarrenschiffModule):
         if options:
             opts = ' '.join(map(lambda opt: '--{}'.format(opt), options))
 
-        try:
+        with suppress(AttributeError, TypeError):
             values = ','.join(self.command.get('args').get('values'))
             self.command['args']['values'] = values
-        except (AttributeError, TypeError):
-            values = ''
 
         args = ' '.join(
             ['--{} {}'.format(key, value)

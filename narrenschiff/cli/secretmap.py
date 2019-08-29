@@ -1,7 +1,7 @@
 import click
 
 from narrenschiff.chest import Keychain
-from narrenschiff.secretmap import SecretmapCommand
+from narrenschiff.secretmap import Secretmap
 
 
 @click.group()
@@ -39,7 +39,7 @@ def stash(keychain, source, destination, treasure, location):
     :return: Void
     :rtype: ``None``
     """
-    secretmap = SecretmapCommand(keychain=keychain, directory=location)
+    secretmap = Secretmap(keychain=keychain, directory=location)
     secretmap.upsert(src=source, dest=destination, treasure=treasure)
 
 
@@ -63,6 +63,29 @@ def loot(keychain, destination, treasure, location):
     :return: Void
     :rtype: ``None``
     """
-
-    secretmap = SecretmapCommand(keychain=keychain, directory=location)
+    secretmap = Secretmap(keychain=keychain, directory=location)
     secretmap.decrypt(dest=destination, treasure=treasure)
+
+
+@secretmap.command()
+@click.option(
+    '--treasure',
+    help='Variable name from the secretmap file of the file you want to edit'
+)
+@click.option('--location', help='Relative path to course project directory')
+@click.pass_obj
+def alter(keychain, treasure, location):
+    """
+    Encrypt and edit the file. After edits, the file is encrypted again.
+
+    :param keychain: Object containing key and spice
+    :type keychain: :class:`narrenschiff.chest.Keychain`
+    :param treasure: Name of the variable
+    :type treasure: ``str``
+    :param location: Location of the secretmap file
+    :type location: ``str``
+    :return: Void
+    :rtype: ``None``
+    """
+    secretmap = Secretmap(keychain=keychain, directory=location)
+    secretmap.edit(treasure)

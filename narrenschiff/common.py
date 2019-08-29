@@ -1,6 +1,7 @@
 import os
-from contextlib import suppress
 import re
+import subprocess
+from contextlib import suppress
 
 
 class AmbiguousConfiguration(Exception):
@@ -23,6 +24,49 @@ class Singleton(type):
         if cls._instance is None:
             cls._instance = super().__call__(*args, **kwargs)
         return cls._instance
+
+
+class DeleteFile:
+    """Delete file from the file system, ideally in secure manner."""
+
+    def __init__(self, path):
+        """
+        Make an instance of :class:`narrenschiff.common.DeleteFile` class.
+
+        :param path: Absolute path to the file that needs to be deleted
+        :type path: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
+        self.path = path
+
+    def delete(self):
+        """Delete the file."""
+        try:
+            subprocess.run(['shred', self.path])
+        except Exception:
+            self._placebo_delete(passes=3)
+
+        os.remove(self.path)
+
+    def _placebo_delete(self, passes=1):
+        """
+        Overwrite file before deletaion. This is executed in case the OS
+        does not have the ``shred`` command line utility. This may not work for
+        modern systems that use journaling file systems, copy-on-write file
+        systems, wear leveling, or similar.
+
+        :param passes: Number of times file will be overwritten
+        :type passes: ``int``
+        :return: Void
+        :rtype: ``None``
+        """
+        length = os.path.getsize(self.path)
+        with open(self.path, 'wb') as f:
+            for _ in range(passes):
+                f.seek(0)
+                f.write(os.urandom(length))
+                os.fsync(f)
 
 
 def get_chest_file_path(location):

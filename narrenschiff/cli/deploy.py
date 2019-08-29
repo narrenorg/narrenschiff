@@ -7,7 +7,7 @@ from narrenschiff.task import Task
 from narrenschiff.task import TasksEngine
 from narrenschiff.templating import Template
 from narrenschiff.chest import Keychain
-from narrenschiff.secretmap import SecretmapCommand
+from narrenschiff.secretmap import Secretmap
 
 
 @click.command()
@@ -27,7 +27,7 @@ def deploy(course):
     template = Template()
     template.set_course(course)
 
-    secretmap = SecretmapCommand(Keychain(), os.path.dirname(course))
+    secretmap = Secretmap(Keychain(), os.path.dirname(course))
 
     tasks = _import_course(course, template)
 

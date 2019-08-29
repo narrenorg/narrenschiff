@@ -12,14 +12,14 @@ class CourseLocationError(Exception):
     pass
 
 
-class SecretmapCommand(metaclass=Singleton):
+class Secretmap(metaclass=Singleton):
     """Manage secret maps. Secret maps are paths to encrypted files."""
 
     FILENAME = 'secretmap.yaml'
 
     def __init__(self, keychain, directory):
         """
-        Construct a :class:`narrenschiff.secretmap.SecretmapCommand`.
+        Construct a :class:`narrenschiff.secretmap.Secretmap`.
 
         :param keychain: Keychain contains key and spice
         :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -35,7 +35,7 @@ class SecretmapCommand(metaclass=Singleton):
         else:
             raise CourseLocationError
 
-        self.filepath = os.path.join(directory, SecretmapCommand.FILENAME)
+        self.filepath = os.path.join(directory, Secretmap.FILENAME)
         self.keychain = keychain
         self.tmp = os.path.join('/tmp', str(uuid.uuid4()))
 

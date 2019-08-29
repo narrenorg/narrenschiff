@@ -1,7 +1,7 @@
 import click
 
 from narrenschiff.chest import Keychain
-from narrenschiff.secretmap import SecretmapCommand
+from narrenschiff.secretmap import Secretmap
 
 
 @click.group()
@@ -39,7 +39,7 @@ def stash(keychain, source, destination, treasure, location):
     :return: Void
     :rtype: ``None``
     """
-    secretmap = SecretmapCommand(keychain=keychain, directory=location)
+    secretmap = Secretmap(keychain=keychain, directory=location)
     secretmap.upsert(src=source, dest=destination, treasure=treasure)
 
 
@@ -64,5 +64,5 @@ def loot(keychain, destination, treasure, location):
     :rtype: ``None``
     """
 
-    secretmap = SecretmapCommand(keychain=keychain, directory=location)
+    secretmap = Secretmap(keychain=keychain, directory=location)
     secretmap.decrypt(dest=destination, treasure=treasure)

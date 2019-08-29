@@ -3,7 +3,7 @@ import subprocess
 from contextlib import suppress
 
 from narrenschiff.modules.common import NarrenschiffModule
-from narrenschiff.secretmap import SecretmapCommand
+from narrenschiff.secretmap import Secretmap
 
 
 class Helm(NarrenschiffModule):
@@ -17,7 +17,7 @@ class Helm(NarrenschiffModule):
         options = self.command.get('opts')
         arguments = self.command.get('args', {})
 
-        self.parse_and_copy_secretmaps_args()
+        self.parse_secretmaps_args()
 
         try:
             args_set = self.command.get('args').get('set')
@@ -41,7 +41,7 @@ class Helm(NarrenschiffModule):
         cmd = ' '.join([Helm.helm_cmd, command, chart, opts, args, sets])
         subprocess.run(cmd, shell=True, check=True)
 
-    def parse_and_copy_secretmaps_args(self):
+    def parse_secretmaps_args(self):
         """
         Mutate secretmap arguments. Expand secretmap paths to match files in
         the ``/tmp`` directory.
@@ -54,6 +54,6 @@ class Helm(NarrenschiffModule):
             with suppress(AttributeError):
                 if value.startswith(secretmap):
                     basepath = value.replace(secretmap, '')
-                    tmp = SecretmapCommand().tmp
+                    tmp = Secretmap().tmp
                     rendered_path = os.path.join(tmp, basepath)
                     self.command['args'][key] = rendered_path

@@ -9,7 +9,7 @@ from narrenschiff.secretmap import Secretmap
 class Helm(NarrenschiffModule):
     """``helm`` module."""
 
-    helm_cmd = 'helm'
+    helm = 'helm'
 
     def execute(self):
         command = self.command.get('command')
@@ -28,6 +28,10 @@ class Helm(NarrenschiffModule):
         if options:
             opts = ' '.join(map(lambda opt: '--{}'.format(opt), options))
 
+        with suppress(AttributeError, TypeError):
+            values = ','.join(self.command.get('args').get('values'))
+            self.command['args']['values'] = values
+
         args = ' '.join(
             ['--{} {}'.format(key, value)
                 for key, value in arguments.items()
@@ -38,7 +42,7 @@ class Helm(NarrenschiffModule):
         if args_set:
             sets = ' '.join(['--set {}'.format(s) for s in args_set])
 
-        cmd = ' '.join([Helm.helm_cmd, command, chart, opts, args, sets])
+        cmd = ' '.join([Helm.helm, command, chart, opts, args, sets])
         subprocess.run(cmd, shell=True, check=True)
 
     def parse_secretmaps_args(self):
@@ -49,11 +53,19 @@ class Helm(NarrenschiffModule):
         :return: Void
         :rtype: ``None``
         """
-        secretmap = '{{secretmap}}/'
         for key, value in self.command.get('args', {}).items():
-            with suppress(AttributeError):
-                if value.startswith(secretmap):
-                    basepath = value.replace(secretmap, '')
-                    tmp = Secretmap().tmp
-                    rendered_path = os.path.join(tmp, basepath)
-                    self.command['args'][key] = rendered_path
+            try:
+                self.command['args'][key] = self._template_path(value)
+            except AttributeError:
+                if key == 'values':
+                    values = [self._template_path(v) for v in value]
+                    self.command['args'][key] = values
+
+    def _template_path(self, value):
+        """Replace secretmap filter artifact with `/tmp` file path."""
+        secretmap = '{{secretmap}}/'
+        if value.startswith(secretmap):
+            basepath = value.replace(secretmap, '')
+            tmp = Secretmap().tmp
+            return os.path.join(tmp, basepath)
+        return value

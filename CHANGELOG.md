@@ -1,3 +1,9 @@
+# 0.2.1 - 29.8.2019.
+
+## Fixed
+
+* Add support for multiple values in helm install command
+
 # 0.2.0 - 29.8.2019.
 
 ## Added

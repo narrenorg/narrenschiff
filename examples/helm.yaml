@@ -33,3 +33,6 @@
       set:
         - "secret.htpasswd='admin:1ce4cee4e1a24b9b9babb8e01f9752ae'"
         - "common.storage='5'"
+      values:
+        - "{{ app_ingress | secretmap }}"
+        - https://git.example.com/repo/override.yaml

@@ -8,7 +8,7 @@ from narrenschiff.secretmap import Secretmap
 @click.pass_context
 def secretmap(ctx):
     """
-    Load keys and spices.
+    Encrypt, decrypt, and edit files.
 
     :return: Void
     :rtype: ``None``
@@ -76,7 +76,7 @@ def loot(keychain, destination, treasure, location):
 @click.pass_obj
 def alter(keychain, treasure, location):
     """
-    Encrypt and edit the file. After edits, the file is encrypted again.
+    Decrypt and edit the file. After edits, the file is encrypted again.
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`

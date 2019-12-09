@@ -9,6 +9,7 @@ from narrenschiff.modules.common import NarrenschiffModuleException
 
 
 class WaitForPod(NarrenschiffModule):
+    """Use this module when you need to wait for a pod to become ready."""
 
     def execute(self):
         timeout = 300  # 5min

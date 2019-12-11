@@ -6,6 +6,12 @@ from narrenschiff.modules.common import NarrenschiffModule
 from narrenschiff.secretmap import Secretmap
 
 
+class HelmException(Exception):
+    """Raise when something is wrong with Helm module."""
+
+    pass
+
+
 class Helm(NarrenschiffModule):
     """``helm`` module."""
 
@@ -13,9 +19,16 @@ class Helm(NarrenschiffModule):
 
     def execute(self):
         command = self.command.get('command')
+        name = self.command.get('name', '')
         chart = self.command.get('chart', '')
         options = self.command.get('opts')
         arguments = self.command.get('args', {})
+
+        if not name:
+            raise HelmException('Chart name must be specified')
+
+        if not chart:
+            raise HelmException('Chart must be specified')
 
         self.parse_secretmaps_args()
 
@@ -42,7 +55,7 @@ class Helm(NarrenschiffModule):
         if args_set:
             sets = ' '.join(['--set {}'.format(s) for s in args_set])
 
-        cmd = ' '.join([Helm.helm, command, chart, opts, args, sets])
+        cmd = ' '.join([Helm.helm, command, name, chart, opts, args, sets])
         subprocess.run(cmd, shell=True, check=True)
 
     def parse_secretmaps_args(self):

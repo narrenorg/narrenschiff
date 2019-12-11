@@ -1,3 +1,9 @@
+# 0.2.2 - 11.12.2019.
+
+## Fixed
+
+* `--name` flage in Helm module replaced with `name` argument
+
 # 0.2.1 - 29.8.2019.
 
 ## Fixed

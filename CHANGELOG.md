@@ -1,3 +1,9 @@
+# 0.2.3 - 11.12.2019.
+
+## Fixed
+
+* `name` and `chart` are not any more obligatory when using Helm module
+
 # 0.2.2 - 11.12.2019.
 
 ## Fixed

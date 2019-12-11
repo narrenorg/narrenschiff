@@ -24,12 +24,6 @@ class Helm(NarrenschiffModule):
         options = self.command.get('opts')
         arguments = self.command.get('args', {})
 
-        if not name:
-            raise HelmException('Chart name must be specified')
-
-        if not chart:
-            raise HelmException('Chart must be specified')
-
         self.parse_secretmaps_args()
 
         try:

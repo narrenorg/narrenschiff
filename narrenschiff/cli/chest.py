@@ -84,7 +84,7 @@ def lock(keychain, value):
 
 
 @chest.command()
-@click.option('--value', help='String to be encrypted')
+@click.option('--value', help='String to be decrypted')
 @click.pass_obj
 def unlock(keychain, value):
     """

@@ -2,7 +2,7 @@
 
 ## Fixed
 
-* `--name` flage in Helm module replaced with `name` argument
+* `--name` flag in Helm module replaced with `name` argument
 
 # 0.2.1 - 29.8.2019.
 

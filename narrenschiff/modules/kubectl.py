@@ -24,7 +24,7 @@ class Kubectl(NarrenschiffModule):
         args = self.command.get('args', {})
         flags = []
         for key, value in args.items():
-            flags.append("--{} '{}'".format(key, value))
+            flags.append("--{}='{}'".format(key, value))
 
         cmd = ' '.join([Kubectl.kubectl, command, *flags])
 

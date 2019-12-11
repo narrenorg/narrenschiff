@@ -1,3 +1,9 @@
+# 0.2.4 - 11.12.2019.
+
+## Fixed
+
+* Add `=` to `kubectl` flags in Kubectl module
+
 # 0.2.3 - 11.12.2019.
 
 ## Fixed

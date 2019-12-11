@@ -21,10 +21,9 @@ def chest(ctx):
 
 @chest.command()
 @click.option('--treasure', help='Variable name')
-@click.option('--value', help='Value')
 @click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
-def loot(keychain, treasure, value, location):
+def loot(keychain, treasure, location):
     """
     Display value from the chest file.
 
@@ -32,8 +31,6 @@ def loot(keychain, treasure, value, location):
     :type keychain: :class:`narrenschiff.chest.Keychain`
     :param treasure: Name of the variable
     :type treasure: ``str``
-    :param value: Value of the variable
-    :type value: ``str``
     :return: Void
     :rtype: ``None``
     """

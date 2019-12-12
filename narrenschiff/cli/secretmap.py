@@ -18,7 +18,7 @@ def secretmap(ctx):
 
 @secretmap.command()
 @click.option('--source', help='Source filepath for encryption')
-@click.option('--destination', help='Destination of the encrypted file')
+@click.option('--destination', help='Destination of the encrypted file. Path relative to course project directory')
 @click.option('--treasure', help='Variable name')
 @click.option('--location', help='Relative path to course project directory')
 @click.pass_obj

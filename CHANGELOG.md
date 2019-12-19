@@ -1,3 +1,9 @@
+# 0.3.4 - 19.12.2019.
+
+## Added
+
+* `gcloud` module now supports flags without arguments
+
 # 0.2.4 - 11.12.2019.
 
 ## Fixed

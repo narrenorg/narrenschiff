@@ -11,10 +11,13 @@ class Gcloud(NarrenschiffModule):
     def execute(self):
         command = self.command.get('command')
         args = self.command.get('args', {})
+        switches = self.command.get('flags', [])
 
         flags = []
         for flag, value in args.items():
             flags.append("--{} '{}'".format(flag, args[flag]))
+
+        flags.extend(['--{}'.format(switch) for switch in switches])
 
         cmd = ' '.join([Gcloud.gcloud_cmd, command, *flags])
 

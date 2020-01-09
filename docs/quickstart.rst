@@ -127,4 +127,4 @@ Glossary
     Salt used for encrypting strings
 
   secretmap
-    Encrypted file
+    Encrypted file (currently only supported for ``helm`` module)

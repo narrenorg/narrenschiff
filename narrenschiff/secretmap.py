@@ -92,6 +92,22 @@ class Secretmap(metaclass=Singleton):
         with open(dest, 'w') as f:
             f.write(enc_file_core)
 
+    def peek(self, treasure):
+        """
+        Print encrypted file to STDOUT.
+
+        :param treasure: Name of the secretmap variable
+        :type treasure: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
+        config = self._read_config()
+        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+
+        with open(src, 'r') as f:
+            cipher = AES256Cipher(self.keychain)
+            print(cipher.decrypt(f.read()))
+
     def render_all_files(self):
         """
         Decrypt and copy all files at the given destination.

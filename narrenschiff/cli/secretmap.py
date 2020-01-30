@@ -18,7 +18,11 @@ def secretmap(ctx):
 
 @secretmap.command()
 @click.option('--source', help='Source filepath for encryption')
-@click.option('--destination', help='Destination of the encrypted file. Path relative to course project directory')
+@click.option(
+    '--destination',
+    help=('Destination of the encrypted file.'
+          ' Path relative to course project directory')
+)
 @click.option('--treasure', help='Variable name')
 @click.option('--location', help='Relative path to course project directory')
 @click.pass_obj
@@ -65,6 +69,27 @@ def loot(keychain, destination, treasure, location):
     """
     secretmap = Secretmap(keychain=keychain, directory=location)
     secretmap.decrypt(dest=destination, treasure=treasure)
+
+
+@secretmap.command()
+@click.option('--treasure', help='Variable name from the secretmap file')
+@click.option('--location', help='Relative path to course project directory')
+@click.pass_obj
+def peek(keychain, treasure, location):
+    """
+    Print content of the encrypted file to STDOUT.
+
+    :param keychain: Object containing key and spice
+    :type keychain: :class:`narrenschiff.chest.Keychain`
+    :param treasure: Name of the variable
+    :type treasure: ``str``
+    :param location: Location of the secretmap file
+    :type location: ``str``
+    :return: Void
+    :rtype: ``None``
+    """
+    secretmap = Secretmap(keychain=keychain, directory=location)
+    secretmap.peek(treasure)
 
 
 @secretmap.command()

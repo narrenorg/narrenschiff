@@ -166,7 +166,16 @@ class Secretmap(metaclass=Singleton):
         cmd = '{} {}'.format(editor, destination)
         subprocess.run(cmd, shell=True)
 
-        self.upsert(destination, config[treasure], treasure)
+        with open(destination, 'r') as f:
+            tmp_file_content = f.read()
+
+        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+        with open(src, 'r') as f:
+            cipher = AES256Cipher(self.keychain)
+            original_file_content = cipher.decrypt(f.read())
+
+        if original_file_content != tmp_file_content:
+            self.upsert(destination, config[treasure], treasure)
 
         tmp_file = DeleteFile(destination)
         tmp_file.delete()

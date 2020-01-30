@@ -1,3 +1,9 @@
+# 0.5.1 - 30.1.2020.
+
+## Fixed
+
+* Non-edited files by `secretmap alter` command, are not re-encrypted
+
 # 0.5.0 - 30.1.2020.
 
 ## Added

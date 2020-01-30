@@ -1,3 +1,9 @@
+# 0.5.0 - 30.1.2020.
+
+## Added
+
+* User can now delete secretmap file with `narrenschiff secretmap destroy`
+
 # 0.4.0 - 30.1.2020.
 
 ## Added

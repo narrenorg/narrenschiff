@@ -108,6 +108,22 @@ class Secretmap(metaclass=Singleton):
             cipher = AES256Cipher(self.keychain)
             print(cipher.decrypt(f.read()))
 
+    def destroy(self, treasure):
+        """
+        Delete secretmap file and remove key from the config file.
+
+        :param treasure: Name of the secretmap variable
+        :type treasure: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
+        config = self._read_config()
+        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+
+        del config[treasure]
+        self._write_config(config)
+        os.remove(src)
+
     def render_all_files(self):
         """
         Decrypt and copy all files at the given destination.

@@ -114,3 +114,26 @@ def alter(keychain, treasure, location):
     """
     secretmap = Secretmap(keychain=keychain, directory=location)
     secretmap.edit(treasure)
+
+
+@secretmap.command()
+@click.option('--treasure', help='Variable name from the secretmap file')
+@click.option('--location', help='Relative path to course project directory')
+@click.pass_obj
+def destroy(keychain, treasure, location):
+    """
+    Delete secretmap file and corresponding key in the secretmap.
+
+    :param keychain: Object containing key and spice
+    :type keychain: :class:`narrenschiff.chest.Keychain`
+    :param treasure: Name of the variable
+    :type treasure: ``str``
+    :param location: Location of the secretmap file
+    :type location: ``str``
+    :return: Void
+    :rtype: ``None``
+
+    **You cannot undo this action!**
+    """
+    secretmap = Secretmap(keychain=keychain, directory=location)
+    secretmap.destroy(treasure)

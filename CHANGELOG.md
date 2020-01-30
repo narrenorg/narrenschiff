@@ -1,3 +1,9 @@
+# 0.4.0 - 30.1.2020.
+
+## Added
+
+* User can now print `secretmap` contentn to `STDOUT` with `peek`
+
 # 0.3.4 - 19.12.2019.
 
 ## Added

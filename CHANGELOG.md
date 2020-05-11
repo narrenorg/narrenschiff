@@ -1,3 +1,10 @@
+# 0.6.0 - 11.5.2020.
+
+## Adeed
+
+* Added `--verbosity` flag on main `narrenschiff` command (it has to be used before any subcommand)
+* Added logger class for the tool
+
 # 0.5.1 - 30.1.2020.
 
 ## Fixed

@@ -26,11 +26,11 @@ logging.config.dictConfig(LOGGING)
 class NarrenschiffLogger(metaclass=Singleton):
 
     LOG_LEVEL = {
-        1: logging.DEBUG,
-        2: logging.INFO,
+        5: logging.DEBUG,
+        4: logging.INFO,
         3: logging.WARNING,
-        4: logging.ERROR,
-        5: logging.CRITICAL
+        2: logging.ERROR,
+        1: logging.CRITICAL
     }
 
     def __init__(self):
@@ -47,7 +47,10 @@ class NarrenschiffLogger(metaclass=Singleton):
         """
         if verbosity not in range(1, 6):
             return
-        self.logger.addHandler(logging.StreamHandler())
+        formatter = logging.Formatter('%(levelname)s %(asctime)s %(message)s')
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
         self.logger.setLevel(NarrenschiffLogger.LOG_LEVEL.get(verbosity))
 
     def debug(self, msg):

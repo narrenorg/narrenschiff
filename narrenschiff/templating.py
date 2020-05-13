@@ -12,6 +12,10 @@ from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
 from narrenschiff.common import is_yaml
 from narrenschiff.common import Singleton
+from narrenschiff.log import NarrenschiffLogger
+
+
+logger = NarrenschiffLogger()
 
 
 class TemplateException(Exception):
@@ -45,6 +49,7 @@ class Vars:
         :return: List of paths to var files.
         :rtype: ``list`` of ``str``
         """
+        logger.info('Searching for var files')
         paths = []
 
         has_dir = False
@@ -55,12 +60,14 @@ class Vars:
         for ext in ['yaml', 'yml']:
             file_name = "{}.{}".format(self.name, ext)
             file_path = os.path.join(self.template_directory, file_name)
+            logger.debug(f'Searching for {file_name} on {file_path} path')
             if os.path.isfile(file_path):
                 has_file = True
                 break
 
         # Find name directory
         directory_path = os.path.join(self.template_directory, self.name)
+        logger.debug(f'Searching for vars on {directory_path} path')
         if os.path.isdir(directory_path):
             paths.extend(self._walk_directory(directory_path))
             has_dir = True
@@ -68,9 +75,19 @@ class Vars:
         if has_file:
             paths.append(file_path)
 
+        logger.info(f'Has var file: {has_file}')
+        logger.info(f'Has var directory: {has_dir}')
+
         if not has_file and not has_dir:
+            logger.error(
+                f'No var file found on {self.template_directory} path'
+            )
+            logger.error(f'No var files found on {directory_path} path')
             raise VarsFileNotFoundError
 
+        logger.info('Var files found!')
+        for path in paths:
+            logger.debug(f'Var files found on {path} paths')
         return paths
 
     def _walk_directory(self, directory):
@@ -180,12 +197,16 @@ class Template(metaclass=Singleton):
         Directory containing the ``course`` (e.g. ``tasks.yaml``) file will
         be the directory from where the templates are taken to be rendered.
         """
+        logger.info('Preparing templating environment')
         if not (path.endswith('.yml') or path.endswith('.yaml')):
             exception = 'Files must end with ".yaml" or ".yml" extension'
             raise TemplateException(exception)
 
         self.tasks_file = os.path.abspath(path)
         self.template_directory = os.path.abspath(os.path.dirname(path))
+
+        logger.debug(f'Task file: {self.tasks_file}')
+        logger.debug(f'Template directory {self.template_directory}')
 
         loader = FileSystemLoader(self.template_directory)
         self.env = Environment(loader=loader)
@@ -226,7 +247,7 @@ class Template(metaclass=Singleton):
 
         **Important:** Files must not contain duplicate values!
         """
-
+        logger.info('Load vars into templates from all var types')
         vars = [
             *PlainVars(self.template_directory).load_vars(),
             *ChestVars(self.template_directory).load_vars(),
@@ -246,6 +267,7 @@ class Template(metaclass=Singleton):
         for dct in vars:
             variables.update(dct)
 
+        logger.debug(f'Vars loaded: {variables}')
         return variables
 
     def find_duplicates(self, values):

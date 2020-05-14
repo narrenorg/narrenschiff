@@ -1,6 +1,12 @@
+# 0.7.0 - 14.5.2020.
+
+## Added
+
+* Better logging in the `Kustomization` module
+
 # 0.6.0 - 11.5.2020.
 
-## Adeed
+## Added
 
 * Added `--verbosity` flag on main `narrenschiff` command (it has to be used before any subcommand)
 * Added logger class for the tool

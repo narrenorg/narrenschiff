@@ -17,7 +17,7 @@ setup(
     maintainer='Petar Nikolovski',
     maintainer_email='nikolovski@brainshuttle.com',
     install_requires=[
-        'click', 'PyYAML', 'Jinja2', 'cryptography'
+        'click', 'PyYAML', 'Jinja2', 'cryptography', 'colorlog'
     ],
     entry_points="""
         [console_scripts]

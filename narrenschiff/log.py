@@ -1,5 +1,6 @@
 import logging
 import logging.config
+from colorlog import ColoredFormatter
 
 from narrenschiff.common import Singleton
 
@@ -47,23 +48,22 @@ class NarrenschiffLogger(metaclass=Singleton):
         """
         if verbosity not in range(1, 6):
             return
-        formatter = logging.Formatter('%(levelname)s %(asctime)s %(message)s')
+        formatter = ColoredFormatter(
+            '%(log_color)s %(levelname)s %(asctime)s %(message)s',
+            log_colors={
+                'DEBUG': 'blue',
+                'INFO': 'white',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                'CRITICAL': 'red,bold',
+            },
+        )
         handler = logging.StreamHandler()
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
         self.logger.setLevel(NarrenschiffLogger.LOG_LEVEL.get(verbosity))
 
-    def debug(self, msg):
-        self.logger.debug(msg)
-
-    def info(self, msg):
-        self.logger.info(msg)
-
-    def warning(self, msg):
-        self.logger.warning(msg)
-
-    def error(self, msg):
-        self.logger.error(msg)
-
-    def critical(self, msg):
-        self.logger.critical(msg)
+    def __getattr__(self, name):
+        log_levels = ['debug', 'info', 'warning', 'error', 'critical']
+        if name in log_levels:
+            return getattr(self.logger, name)

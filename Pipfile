@@ -15,6 +15,7 @@ click = "*"
 pyyaml = "*"
 jinja2 = "*"
 cryptography = "*"
+colorlog = "*"
 
 [requires]
 python_version = "3.6"

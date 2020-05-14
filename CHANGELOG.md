@@ -3,6 +3,11 @@
 ## Added
 
 * Better logging in the `Kustomization` module
+* Colors for logging
+
+## Changed
+
+* Use magic method (`__getattr__`) to obtain corresponding log level method in the logger class
 
 # 0.6.0 - 11.5.2020.
 

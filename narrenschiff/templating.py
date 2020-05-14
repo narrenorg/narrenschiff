@@ -75,8 +75,8 @@ class Vars:
         if has_file:
             paths.append(file_path)
 
-        logger.info(f'Has var file: {has_file}')
-        logger.info(f'Has var directory: {has_dir}')
+        logger.debug(f'Has var file: {has_file}')
+        logger.debug(f'Has var directory: {has_dir}')
 
         if not has_file and not has_dir:
             logger.error(

@@ -9,6 +9,7 @@ narrenschiff = {path = ".",editable = true}
 sphinx = "*"
 sphinx-rtd-theme = "*"
 ipdb = "*"
+coverage = "*"
 
 [packages]
 click = "*"

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+pipenv run flake8 .
+pipenv run coverage run -m unittest discover
+pipenv run coverage report -m
+pipenv run coverage html

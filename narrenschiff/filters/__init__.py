@@ -31,7 +31,7 @@ def rtrim(value):
 
 def secretmap(value):
     """
-    Label path with ``/secretmap``.
+    Label path with ``{{secretmap}}``.
 
     :param value: Path
     :type value: ``str``

@@ -307,8 +307,8 @@ class Template(metaclass=Singleton):
             os.makedirs(os.path.join(self.tmp, root_path), exist_ok=True)
             for file in files:
                 if is_yaml(file):
-                    rendered = self.render(os.path.join('files', root_path, file))
-                    with open(os.path.join(self.tmp, root_path, file), 'w') as f:
+                    rendered = self.render(os.path.join('files', root_path, file))  # noqa
+                    with open(os.path.join(self.tmp, root_path, file), 'w') as f:  # noqa
                         f.write(rendered)
 
     def clear_templates(self):

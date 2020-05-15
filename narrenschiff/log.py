@@ -9,14 +9,14 @@ LOGGING = {
     'version': 1,
     'handlers': {
         'null': {
-            'class':'logging.NullHandler',
+            'class': 'logging.NullHandler',
         },
     },
     'loggers': {
         'narrenschiff': {
-            'handlers':['null'],
+            'handlers': ['null'],
             'propagate': True,
-            'level':'INFO',
+            'level': 'INFO',
         },
     }
 }

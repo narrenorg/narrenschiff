@@ -1,0 +1,12 @@
+[coverage:run]
+branch = true
+source = .
+omit =
+  */tests*
+  setup.py
+
+[coverage:report]
+precision = 2
+exclude_lines =
+  pragma: no cover
+  raise NotImplementedError

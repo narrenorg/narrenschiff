@@ -60,14 +60,14 @@ class Vars:
         for ext in ['yaml', 'yml']:
             file_name = "{}.{}".format(self.name, ext)
             file_path = os.path.join(self.template_directory, file_name)
-            logger.debug(f'Searching for {file_name} on {file_path} path')
+            logger.debug(f'Searching for {file_name} on {file_path}')
             if os.path.isfile(file_path):
                 has_file = True
                 break
 
         # Find name directory
         directory_path = os.path.join(self.template_directory, self.name)
-        logger.debug(f'Searching for vars on {directory_path} path')
+        logger.debug(f'Searching for vars on {directory_path}')
         if os.path.isdir(directory_path):
             paths.extend(self._walk_directory(directory_path))
             has_dir = True
@@ -80,14 +80,14 @@ class Vars:
 
         if not has_file and not has_dir:
             logger.error(
-                f'No var file found on {self.template_directory} path'
+                f'No var file found on {self.template_directory}'
             )
-            logger.error(f'No var files found on {directory_path} path')
+            logger.error(f'No var files found on {directory_path}')
             raise VarsFileNotFoundError
 
         logger.info('Var files found!')
         for path in paths:
-            logger.debug(f'Var files found on {path} paths')
+            logger.debug(f'Var files found on {path}')
         return paths
 
     def _walk_directory(self, directory):

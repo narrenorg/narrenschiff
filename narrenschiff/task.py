@@ -120,3 +120,4 @@ class TasksEngine:
             '* [ {} ] * [ {} ] {}\n'.format(current_time, task.name, fill)
         )
         task.command.execute()
+        click.echo()

@@ -12,7 +12,13 @@ from narrenschiff.secretmap import Secretmap
 
 @click.command()
 @click.option('--set-course', 'course', help='Path to your YAML course file.')
-def deploy(course):
+@click.option(
+    '--follow-beacons',
+    'beacons',
+    required=False,
+    type=str,
+    help='Execute tasks marked only with given beacons (comma separated list)')
+def deploy(course, beacons):
     """
     Turn tasks into actions.
 
@@ -34,7 +40,12 @@ def deploy(course):
     template.render_all_files()
     secretmap.render_all_files()
 
-    engine = TasksEngine(tasks)
+    try:
+        beacons = set(beacons.split(','))
+    except AttributeError:
+        beacons = set()
+
+    engine = TasksEngine(tasks, beacons)
     engine.run()
 
     template.clear_templates()

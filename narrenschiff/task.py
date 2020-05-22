@@ -25,6 +25,7 @@ class Task:
 
     def __init__(self, task):
         self.name = task.pop('name', None)
+        self.beacons = set(task.pop('beacons', []))
 
         if len(task) > 1:
             options = ', '.join(task.keys())
@@ -68,18 +69,19 @@ class Task:
 class TasksEngine:
     """Run course."""
 
-    def __init__(self, tasks):
+    def __init__(self, tasks, beacons):
         """
         Construct a :class:`narrenschiff.task.TasksEngine` class.
 
         :param tasks: List of tasks
         :type tasks: ``list`` of :class:`narrenschiff.task.Task`
-        :param template: Template environment of the course project
-        :type template: :class:`narrenschiff.templating.Template`
+        :param beacons: List of tags used to determine which task is run
+        :type beacons: ``set``
         :return: Void
         :rtype: ``None``
         """
         self.tasks = tasks
+        self.beacons = beacons
         self.width = int(subprocess.check_output(['tput', 'cols']).decode())
 
     def run(self):
@@ -89,16 +91,32 @@ class TasksEngine:
         :return: Void
         :rtype: ``None``
         """
-        print()
+        click.echo()
         try:
             for task in self.tasks:
-                width = int(self.width) - 41 - len(task.name)
-                current_time = datetime.datetime.now()
-                fill = '*' * width
-                print('* [', current_time, '] * [', task.name, ']', fill, '\n')
-                task.command.execute()
-                print()
+                if self.beacons:
+                    if self.beacons & task.beacons or 'always' in task.beacons:
+                        self._execute(task)
+                else:
+                    self._execute(task)
         except subprocess.CalledProcessError as e:  # noqa
             click.secho(e, fg='red')
             warning = 'Task encountered an error! Exiting...'
             click.secho(warning, fg='red', err=True)
+
+    def _execute(self, task):
+        """
+        Execute a task.
+
+        :param task: Task that is about to get executed
+        :type task: :class:`narrenschiff.task.Task`
+        :return: Void
+        :rtype: ``None``
+        """
+        width = int(self.width) - 41 - len(task.name)
+        current_time = datetime.datetime.now()
+        fill = '*' * width
+        click.echo(
+            '* [ {} ] * [ {} ] {}\n'.format(current_time, task.name, fill)
+        )
+        task.command.execute()

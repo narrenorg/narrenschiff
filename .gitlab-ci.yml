@@ -7,9 +7,25 @@ before_script:
 
 
 stages:
+  - build
   - lint
   - test
   - publish
+
+
+docs:
+  stage: build
+  script:
+    - pipenv run sphinx-build -d docs/_build/doctrees/ docs/ docs/_build/html/
+    - pipenv run sphinx-build -b coverage docs/ docs/_build/coverage/
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - docs/_build/html/
+      - docs/_build/coverage/python.txt
+  only:
+    - master
+  allow_failure: true
 
 
 flake8:

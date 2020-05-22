@@ -1,0 +1,25 @@
+- name: List all namespaces
+  kubectl:
+    command: get namespaces
+  beacons:
+    - uniq
+
+- name: List all pods
+  kubectl:
+    command: get pods
+  beacons:
+    - always
+    - pods
+
+- name: Check pod resources
+  kubectl:
+    command: top pods
+  beacons:
+    - stats
+    - pods
+
+- name: Check node resources
+  kubectl:
+    command: top nodes
+  beacons:
+    - stats

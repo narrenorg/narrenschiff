@@ -104,6 +104,42 @@ Treasure is encrypted using password (``key``) and salt (``spice``). These are s
 
 You can also encrypt files and bring them into your source code. Files are encrypted, and stored at desired location, and relative path to the file is saved in `secretmap` file.
 
+If you have a fairly complex course, and you want to execute only a specific set of tasks, you can use `beacons`::
+
+.. code-block:: yaml
+
+  - name: List all namespaces
+    kubectl:
+      command: get namespaces
+
+  - name: List all pods
+    kubectl:
+      command: get pods
+    beacons:
+      - always
+      - pods
+
+  - name: Check pod resources
+    kubectl:
+      command: top pods
+    beacons:
+      - stats
+      - pods
+
+  - name: Check node resources
+    kubectl:
+      command: top nodes
+    beacons:
+      - stats
+
+Now you can easily select which collection of tasks you want to execute::
+
+.. code-block:: sh
+
+  narrenschiff deploy --set-course stats.yaml --follow-beacons stats,pods
+
+Note that ``always`` is a special keyword for beacons! Taks marked with ``always`` are always executed, regardless of the becaons you specified on the command line.
+
 .. _Jinja2: https://jinja.palletsprojects.com/en/2.10.x/
 
 Glossary

@@ -1,3 +1,9 @@
+# 0.8.0 - 22.5.2020.
+
+## Added
+
+* Becaons - tag a task, if you want to execute only specific set of tasks from the course (use `always` becaon if you want a task executed always regardless of the specified beacons on the command line)
+
 # 0.7.0 - 14.5.2020.
 
 ## Added

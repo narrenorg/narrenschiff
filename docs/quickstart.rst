@@ -76,7 +76,7 @@ Chest files have flat dictionary structure. No nesting of the keys is allowed (a
 
 The app is deployed using ``narrenschiff`` tool::
 
-  narrenschiff deploy --set-course project/tasks.yaml
+  narrenschiff sail --set-course project/tasks.yaml
 
 After you execute this, the following happens:
 
@@ -104,7 +104,7 @@ Treasure is encrypted using password (``key``) and salt (``spice``). These are s
 
 You can also encrypt files and bring them into your source code. Files are encrypted, and stored at desired location, and relative path to the file is saved in `secretmap` file.
 
-If you have a fairly complex course, and you want to execute only a specific set of tasks, you can use `beacons`::
+If you have a fairly complex course, and you want to execute only a specific set of tasks, you can use `beacons`:
 
 .. code-block:: yaml
 
@@ -132,11 +132,11 @@ If you have a fairly complex course, and you want to execute only a specific set
     beacons:
       - stats
 
-Now you can easily select which collection of tasks you want to execute::
+Now you can easily select which collection of tasks you want to execute:
 
 .. code-block:: sh
 
-  narrenschiff deploy --set-course stats.yaml --follow-beacons stats,pods
+  narrenschiff sail --set-course stats.yaml --follow-beacons stats,pods
 
 Note that ``always`` is a special keyword for beacons! Taks marked with ``always`` are always executed, regardless of the becaons you specified on the command line.
 

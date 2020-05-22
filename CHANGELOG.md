@@ -1,3 +1,9 @@
+# 1.0.0 - 22.5.2020.
+
+## Changed
+
+* `deploy` is renamed to `sail`
+
 # 0.8.0 - 22.5.2020.
 
 ## Added

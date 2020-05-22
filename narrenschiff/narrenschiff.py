@@ -1,6 +1,6 @@
 import click
 
-from narrenschiff.cli.deploy import deploy
+from narrenschiff.cli.sail import sail
 from narrenschiff.cli.chest import chest
 from narrenschiff.cli.secretmap import secretmap
 from narrenschiff.log import NarrenschiffLogger
@@ -24,6 +24,6 @@ def narrenschiff(verbosity=0):
     logger.set_verbosity(verbosity)
 
 
-narrenschiff.add_command(secretmap)
-narrenschiff.add_command(deploy)
+narrenschiff.add_command(sail)
 narrenschiff.add_command(chest)
+narrenschiff.add_command(secretmap)

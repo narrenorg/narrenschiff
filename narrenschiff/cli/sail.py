@@ -18,7 +18,7 @@ from narrenschiff.secretmap import Secretmap
     required=False,
     type=str,
     help='Execute tasks marked only with given beacons (comma separated list)')
-def deploy(course, beacons):
+def sail(course, beacons):
     """
     Turn tasks into actions.
 

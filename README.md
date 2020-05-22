@@ -45,8 +45,8 @@ touch dev/chest.yaml
 narrenschiff chest stash --treasure 'db_password' --value 'password' --location 'dev/'
 ```
 
-Use `Jinja2` templating to be more flexible with your manifests. When yore ready, deploy:
+Use `Jinja2` templating to be more flexible with your manifests. When you're ready, deploy:
 
 ```sh
-narrenschiff deploy --set-course dev/tasks.yaml
+narrenschiff sail --set-course dev/tasks.yaml
 ```

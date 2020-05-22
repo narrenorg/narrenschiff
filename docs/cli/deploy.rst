@@ -1,4 +1,4 @@
 Deploy
 ======
 
-.. autofunction:: narrenschiff.cli.deploy.deploy(course)
+.. autofunction:: narrenschiff.cli.deploy.sail(course)

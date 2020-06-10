@@ -3,16 +3,16 @@ import click
 from narrenschiff.cli.sail import sail
 from narrenschiff.cli.chest import chest
 from narrenschiff.cli.secretmap import secretmap
+from narrenschiff.cli.autocomplete import autocomplete
 from narrenschiff.log import NarrenschiffLogger
 
 
 @click.group()
-@click.option(
-    '--verbosity',
-    'verbosity',
-    required=False,
-    type=int,
-    help='Set verbosity (levels available are from 1 to 5)')
+@click.option('--verbosity',
+              'verbosity',
+              required=False,
+              type=int,
+              help='Set verbosity (levels available are from 1 to 5)')
 def narrenschiff(verbosity=0):
     """
     Base command.
@@ -27,3 +27,4 @@ def narrenschiff(verbosity=0):
 narrenschiff.add_command(sail)
 narrenschiff.add_command(chest)
 narrenschiff.add_command(secretmap)
+narrenschiff.add_command(autocomplete)

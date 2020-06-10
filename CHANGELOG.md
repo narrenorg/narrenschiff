@@ -1,3 +1,9 @@
+# 1.1.0 - 10.6.2020.
+
+## Added
+
+* `bash` autocompletion
+
 # 1.0.0 - 22.5.2020.
 
 ## Changed

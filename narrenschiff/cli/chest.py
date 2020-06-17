@@ -34,6 +34,8 @@ def loot(keychain, treasure, location):
     :type keychain: :class:`narrenschiff.chest.Keychain`
     :param treasure: Name of the variable
     :type treasure: ``str``
+    :param location: Path to the course directory
+    :type location: ``str``
     :return: Void
     :rtype: ``None``
     """
@@ -57,6 +59,8 @@ def stash(keychain, treasure, value, location):
     :type treasure: ``str``
     :param value: Value of the variable
     :type value: ``str``
+    :param location: Path to the course directory
+    :type location: ``str``
     :return: Void
     :rtype: ``None``
     """
@@ -107,12 +111,8 @@ def dump(location):
     """
     Print all values from the chest on STDOUT.
 
-    :param keychain: Object containing key and spice
-    :type keychain: :class:`narrenschiff.chest.Keychain`
-    :param location: Location of the secretmap file
+    :param location: Path to the course directory
     :type location: ``str``
-    :param match: Pattern you are looking for
-    :type match: ``str``
     :return: Void
     :rtype: ``None``
     """

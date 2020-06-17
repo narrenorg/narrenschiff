@@ -1,3 +1,9 @@
+# 1.2.0 - 17.6.2020.
+
+## Added
+
+* You can now search patterns through secretmaps with `search`
+
 # 1.1.0 - 10.6.2020.
 
 ## Added

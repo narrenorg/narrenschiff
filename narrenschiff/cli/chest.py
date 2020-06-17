@@ -1,3 +1,4 @@
+import os
 import click
 
 from narrenschiff.chest import Chest
@@ -5,6 +6,8 @@ from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
 
 from narrenschiff.common import get_chest_file_path
+from narrenschiff.templating import ChestVars
+from narrenschiff.secretmap import CourseLocationError
 
 
 @click.group()
@@ -96,3 +99,27 @@ def unlock(keychain, value):
     """
     cipher = AES256Cipher(keychain)
     click.echo(cipher.decrypt(value))
+
+
+@chest.command()
+@click.option('--location', help='Relative path to course project directory')
+def dump(location):
+    """
+    Print all values from the chest on STDOUT.
+
+    :param keychain: Object containing key and spice
+    :type keychain: :class:`narrenschiff.chest.Keychain`
+    :param location: Location of the secretmap file
+    :type location: ``str``
+    :param match: Pattern you are looking for
+    :type match: ``str``
+    :return: Void
+    :rtype: ``None``
+    """
+    if not os.path.isdir(location):
+        raise CourseLocationError
+
+    vars = ChestVars(location).load_vars()
+
+    for key, value in vars[0].items():
+        print(f'{key}: {value}')

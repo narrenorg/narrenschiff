@@ -1,3 +1,4 @@
+import os
 import click
 
 from narrenschiff.chest import Chest
@@ -5,6 +6,8 @@ from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
 
 from narrenschiff.common import get_chest_file_path
+from narrenschiff.templating import ChestVars
+from narrenschiff.secretmap import CourseLocationError
 
 
 @click.group()
@@ -31,6 +34,8 @@ def loot(keychain, treasure, location):
     :type keychain: :class:`narrenschiff.chest.Keychain`
     :param treasure: Name of the variable
     :type treasure: ``str``
+    :param location: Path to the course directory
+    :type location: ``str``
     :return: Void
     :rtype: ``None``
     """
@@ -54,6 +59,8 @@ def stash(keychain, treasure, value, location):
     :type treasure: ``str``
     :param value: Value of the variable
     :type value: ``str``
+    :param location: Path to the course directory
+    :type location: ``str``
     :return: Void
     :rtype: ``None``
     """
@@ -96,3 +103,23 @@ def unlock(keychain, value):
     """
     cipher = AES256Cipher(keychain)
     click.echo(cipher.decrypt(value))
+
+
+@chest.command()
+@click.option('--location', help='Relative path to course project directory')
+def dump(location):
+    """
+    Print all values from the chest on STDOUT.
+
+    :param location: Path to the course directory
+    :type location: ``str``
+    :return: Void
+    :rtype: ``None``
+    """
+    if not os.path.isdir(location):
+        raise CourseLocationError
+
+    vars = ChestVars(location).load_vars()
+
+    for key, value in vars[0].items():
+        print(f'{key}: {value}')

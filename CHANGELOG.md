@@ -1,3 +1,9 @@
+# 1.3.0 - 17.6.2020.
+
+## Added
+
+* Add chest dump option to print all chest values on STDOUT
+
 # 1.2.0 - 17.6.2020.
 
 ## Added

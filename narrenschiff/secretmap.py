@@ -132,7 +132,7 @@ class Secretmap(metaclass=Singleton):
             cipher = AES256Cipher(self.keychain)
             secretmap = cipher.decrypt(f.read()).split("\n")
 
-        logger.info(f'Searching for "{match}"')
+        logger.debug(f'Searching for "{match}"')
         for index, line in enumerate(secretmap, start=1):
             candidate = re.search(match, line)
             if candidate:

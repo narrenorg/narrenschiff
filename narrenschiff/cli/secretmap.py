@@ -1,7 +1,10 @@
+import os
 import click
 
 from narrenschiff.chest import Keychain
 from narrenschiff.secretmap import Secretmap
+from narrenschiff.templating import SecretmapVars
+from narrenschiff.secretmap import CourseLocationError
 
 
 @click.group()
@@ -137,3 +140,30 @@ def destroy(keychain, treasure, location):
     """
     secretmap = Secretmap(keychain=keychain, directory=location)
     secretmap.destroy(treasure)
+
+
+@secretmap.command()
+@click.option('--location', help='Relative path to course project directory')
+@click.option('--match', help='Pattern you are searching for')
+@click.pass_obj
+def search(keychain, location, match):
+    """
+    Search for a pattern in secretmaps.
+
+    :param keychain: Object containing key and spice
+    :type keychain: :class:`narrenschiff.chest.Keychain`
+    :param location: Location of the secretmap file
+    :type location: ``str``
+    :param match: Pattern you are looking for
+    :type match: ``str``
+    :return: Void
+    :rtype: ``None``
+    """
+    if not os.path.isdir(location):
+        raise CourseLocationError
+
+    vars = SecretmapVars(location).load_vars()
+
+    for treasure in vars[0].keys():
+        secretmap = Secretmap(keychain=keychain, directory=location)
+        secretmap.find(match, treasure)

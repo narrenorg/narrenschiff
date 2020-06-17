@@ -1,4 +1,5 @@
 import os
+import re
 import yaml
 import uuid
 import shutil
@@ -8,6 +9,10 @@ from contextlib import suppress
 from narrenschiff.chest import AES256Cipher
 from narrenschiff.common import Singleton
 from narrenschiff.common import DeleteFile
+from narrenschiff.log import NarrenschiffLogger
+
+
+logger = NarrenschiffLogger()
 
 
 class CourseLocationError(Exception):
@@ -107,6 +112,34 @@ class Secretmap(metaclass=Singleton):
         with open(src, 'r') as f:
             cipher = AES256Cipher(self.keychain)
             print(cipher.decrypt(f.read()))
+
+    def find(self, match, treasure):
+        """
+        Match a pattern in a treasure and print to STDOUT.
+
+        :param match: Pattern to match
+        :type match: ``str``
+        :param treasure: Name of the secretmap variable
+        :type treasure: ``str``
+        :return: Void
+        :rtype: ``None``
+        """
+        config = self._read_config()
+        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+
+        with open(src, 'r') as f:
+            logger.debug(f'Decrypting secretmap on {src}')
+            cipher = AES256Cipher(self.keychain)
+            secretmap = cipher.decrypt(f.read()).split("\n")
+
+        logger.info(f'Searching for "{match}"')
+        for index, line in enumerate(secretmap, start=1):
+            candidate = re.search(match, line)
+            if candidate:
+                result = candidate.group()
+                prefix = (f'\033[35m{treasure}\033[0m:\033[32m{index}\033[0m')
+                formatted = line.replace(result, f'\033[31m{result}\033[0m')
+                print(f'{prefix}:{formatted}')
 
     def destroy(self, treasure):
         """

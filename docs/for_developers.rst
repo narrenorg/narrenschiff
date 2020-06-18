@@ -14,3 +14,5 @@ Manual for Contributors
    filters
    modules
    cli
+   log
+   autocomplete

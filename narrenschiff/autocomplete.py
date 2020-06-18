@@ -2,6 +2,7 @@ import os
 
 
 class ShellAutocomplete:
+    """Set autocomplete fot the script."""
 
     AUTOCOMPLETION_START_TAG = '### narrenschiff-autocompletion-start ###\n'
     AUTOCOMPLETION_END_TAG = '### narrenschiff-autocompletion-end ###\n'

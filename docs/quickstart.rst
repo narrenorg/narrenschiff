@@ -8,7 +8,9 @@ Requirements
 ------------
 
 * Python 3.6 or higher
-* ``kubectl`` v1.15 or higher
+* ``kubectl`` v1.17 or higher
+* ``helm`` v3.0 or higher
+* ``gcloud`` 297.0.1 or higher
 
 Installation
 ------------

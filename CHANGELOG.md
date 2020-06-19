@@ -1,3 +1,9 @@
+# 1.4.0 - 19.6.2020.
+
+## Added
+
+* You can now check version with `--version` flag
+
 # 1.3.0 - 17.6.2020.
 
 ## Added

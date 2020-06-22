@@ -33,7 +33,7 @@ def _dependency_management(formatted):
                                     stderr=subprocess.PIPE)
         if check_tool.returncode == 0:
             version = re.search(
-                '\d+\.\d+\.\d+',
+                r'\d+\.\d+\.\d+',
                 check_tool.stdout.decode().strip()
             ).group()
         else:

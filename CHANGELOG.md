@@ -1,3 +1,10 @@
+# 1.4.0 - 19.6.2020.
+
+## Added
+
+* You can now check version with `--version` flag
+* You can print environment info in case you need this for debugging or issue reporting, this option includes output optionally formatted with Markdown
+
 # 1.3.0 - 17.6.2020.
 
 ## Added

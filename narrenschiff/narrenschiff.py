@@ -1,5 +1,7 @@
 import click
 
+import narrenschiff
+from narrenschiff.cli.env import env
 from narrenschiff.cli.sail import sail
 from narrenschiff.cli.chest import chest
 from narrenschiff.cli.secretmap import secretmap
@@ -13,6 +15,7 @@ from narrenschiff.log import NarrenschiffLogger
               required=False,
               type=int,
               help='Set verbosity (levels available are from 1 to 5)')
+@click.version_option(narrenschiff.__version__, message='%(version)s')
 def narrenschiff(verbosity=0):
     """
     Base command.
@@ -24,6 +27,7 @@ def narrenschiff(verbosity=0):
     logger.set_verbosity(verbosity)
 
 
+narrenschiff.add_command(env)
 narrenschiff.add_command(sail)
 narrenschiff.add_command(chest)
 narrenschiff.add_command(secretmap)

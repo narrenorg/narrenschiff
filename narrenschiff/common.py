@@ -117,3 +117,7 @@ def flatten(lst):
 
 def is_yaml(filename):
     return bool(re.search(r'ya?ml$', filename, re.I))
+
+
+def is_jinja(filename):
+    return bool(re.search(r'j(inja)?2$', filename, re.I))

@@ -1,3 +1,9 @@
+# 1.5.0 - 29.6.2020.
+
+## Added
+
+* Basic linter for Jinja2 files - this will linter recursivelly all files within a directory
+
 # 1.4.0 - 19.6.2020.
 
 ## Added

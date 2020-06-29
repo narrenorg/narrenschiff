@@ -20,7 +20,7 @@ def autocomplete():
               default='bash',
               show_default=True,
               type=str,
-              help='Type of the shell')
+              help='Type of the shell.')
 def add(shell):
     """
     Add autocomplete script to your environment.

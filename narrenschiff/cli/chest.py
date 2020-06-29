@@ -23,8 +23,8 @@ def chest(ctx):
 
 
 @chest.command()
-@click.option('--treasure', help='Variable name')
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--treasure', help='Variable name.')
+@click.option('--location', help='Relative path to course project directory.')
 @click.pass_obj
 def loot(keychain, treasure, location):
     """
@@ -45,9 +45,9 @@ def loot(keychain, treasure, location):
 
 
 @chest.command()
-@click.option('--treasure', help='Variable name')
-@click.option('--value', help='Value')
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--treasure', help='Variable name.')
+@click.option('--value', help='Value.')
+@click.option('--location', help='Relative path to course project directory.')
 @click.pass_obj
 def stash(keychain, treasure, value, location):
     """
@@ -70,7 +70,7 @@ def stash(keychain, treasure, value, location):
 
 
 @chest.command()
-@click.option('--value', help='String to be encrypted')
+@click.option('--value', help='String to be encrypted.')
 @click.pass_obj
 def lock(keychain, value):
     """
@@ -88,7 +88,7 @@ def lock(keychain, value):
 
 
 @chest.command()
-@click.option('--value', help='String to be decrypted')
+@click.option('--value', help='String to be decrypted.')
 @click.pass_obj
 def unlock(keychain, value):
     """
@@ -106,7 +106,7 @@ def unlock(keychain, value):
 
 
 @chest.command()
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--location', help='Relative path to course project directory.')
 def dump(location):
     """
     Print all values from the chest on STDOUT.

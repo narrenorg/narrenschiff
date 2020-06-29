@@ -59,7 +59,7 @@ def _dependency_management(formatted):
 @click.option('--formatted',
               required=False,
               is_flag=True,
-              help='Output in Markdown format')
+              help='Output in Markdown format.')
 def env(formatted):
     """Show environment info."""
     click.echo(f'* narrenschiff: {narrenschiff.__version__}')

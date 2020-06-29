@@ -20,14 +20,14 @@ def secretmap(ctx):
 
 
 @secretmap.command()
-@click.option('--source', help='Source filepath for encryption')
+@click.option('--source', help='Source filepath for encryption.')
 @click.option(
     '--destination',
     help=('Destination of the encrypted file.'
-          ' Path relative to course project directory')
+          ' Path relative to course project directory.')
 )
-@click.option('--treasure', help='Variable name')
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--treasure', help='Variable name.')
+@click.option('--location', help='Relative path to course project directory.')
 @click.pass_obj
 def stash(keychain, source, destination, treasure, location):
     """
@@ -51,9 +51,9 @@ def stash(keychain, source, destination, treasure, location):
 
 
 @secretmap.command()
-@click.option('--destination', help='Destination of the encrypted file')
-@click.option('--treasure', help='Variable name')
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--destination', help='Destination of the encrypted file.')
+@click.option('--treasure', help='Variable name.')
+@click.option('--location', help='Relative path to course project directory.')
 @click.pass_obj
 def loot(keychain, destination, treasure, location):
     """
@@ -75,8 +75,8 @@ def loot(keychain, destination, treasure, location):
 
 
 @secretmap.command()
-@click.option('--treasure', help='Variable name from the secretmap file')
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--treasure', help='Variable name from the secretmap file.')
+@click.option('--location', help='Relative path to course project directory.')
 @click.pass_obj
 def peek(keychain, treasure, location):
     """
@@ -98,9 +98,9 @@ def peek(keychain, treasure, location):
 @secretmap.command()
 @click.option(
     '--treasure',
-    help='Variable name from the secretmap file of the file you want to edit'
+    help='Variable name from the secretmap file of the file you want to edit.'
 )
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--location', help='Relative path to course project directory.')
 @click.pass_obj
 def alter(keychain, treasure, location):
     """
@@ -120,8 +120,8 @@ def alter(keychain, treasure, location):
 
 
 @secretmap.command()
-@click.option('--treasure', help='Variable name from the secretmap file')
-@click.option('--location', help='Relative path to course project directory')
+@click.option('--treasure', help='Variable name from the secretmap file.')
+@click.option('--location', help='Relative path to course project directory.')
 @click.pass_obj
 def destroy(keychain, treasure, location):
     """
@@ -143,8 +143,8 @@ def destroy(keychain, treasure, location):
 
 
 @secretmap.command()
-@click.option('--location', help='Relative path to course project directory')
-@click.option('--match', help='Pattern you are searching for')
+@click.option('--location', help='Relative path to course project directory.')
+@click.option('--match', help='Pattern you are searching for.')
 @click.pass_obj
 def search(keychain, location, match):
     """

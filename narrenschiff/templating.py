@@ -227,6 +227,7 @@ class Template(metaclass=Singleton):
         :return: Rendered template
         :rtype: ``str``
         """
+        logger.debug(f'Rendering template on {path}')
         template = self.env.get_template(path)
         return template.render(**self.vars)
 

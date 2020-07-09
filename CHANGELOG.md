@@ -1,3 +1,9 @@
+# 1.5.1 - 9.7.2020.
+
+## Fixed
+
+* Fix includes of course files - imports are now relative to the root of the course project directory
+
 # 1.5.0 - 29.6.2020.
 
 ## Added

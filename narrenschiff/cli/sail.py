@@ -35,7 +35,7 @@ def sail(course, beacons):
 
     secretmap = Secretmap(Keychain(), os.path.dirname(course))
 
-    tasks = _import_course(course, template)
+    tasks = _import_course(os.path.basename(course), template)
 
     template.render_all_files()
     secretmap.render_all_files()
@@ -89,6 +89,6 @@ def _import_current_tasks(course, template):
     :return: Tasks as a list of dictionaries
     :rtype: ``list`` of ``dict``
     """
-    tasks_raw = template.render(os.path.basename(course))
+    tasks_raw = template.render(course)
     tasks_yaml = yaml.load(tasks_raw, Loader=yaml.FullLoader)
     return tasks_yaml

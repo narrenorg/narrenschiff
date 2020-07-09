@@ -1,0 +1,9 @@
+- name: Import tasks
+  import_course: "includes/stats.yaml"
+
+- name: Import more stats
+  import_course: "beacons.yaml"
+
+- name: List all pods
+  kubectl:
+    command: get pods

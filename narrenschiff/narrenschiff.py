@@ -3,6 +3,7 @@ import click
 import narrenschiff
 from narrenschiff.cli.env import env
 from narrenschiff.cli.lint import lint
+from narrenschiff.cli.dock import dock
 from narrenschiff.cli.sail import sail
 from narrenschiff.cli.chest import chest
 from narrenschiff.cli.secretmap import secretmap
@@ -31,6 +32,7 @@ def narrenschiff(verbosity=0):
 
 narrenschiff.add_command(env)
 narrenschiff.add_command(lint)
+narrenschiff.add_command(dock)
 narrenschiff.add_command(sail)
 narrenschiff.add_command(chest)
 narrenschiff.add_command(secretmap)

@@ -1,3 +1,9 @@
+# Unreleased
+
+## Fixed
+
+* Documentation update
+
 # 1.5.1 - 9.7.2020.
 
 ## Fixed

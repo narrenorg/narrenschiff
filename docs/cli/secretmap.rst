@@ -12,3 +12,5 @@ Secret Map
 .. autofunction:: narrenschiff.cli.secretmap.alter(keychain, treasure, location)
 
 .. autofunction:: narrenschiff.cli.secretmap.destroy(keychain, treasure, location)
+
+.. autofunction:: narrenschiff.cli.secretmap.search(keychain, location, match)

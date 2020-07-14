@@ -54,6 +54,7 @@ def _validate_template(path):
 def lint(ctx, location):
     """
     Lint project files. Check if they are valid Jinja2 templates.
+    \f
 
     :param location: Location of the secretmap file
     :type location: ``str``

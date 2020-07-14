@@ -8,5 +8,6 @@ CLI
    cli/deploy
    cli/chest
    cli/secretmap
+   cli/lint
    cli/env
    cli/autocomplete

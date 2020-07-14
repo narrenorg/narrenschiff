@@ -1,7 +1,7 @@
 Modules
 =======
 
-Modules are way of implementing CLI commands e.g. ``kubectl``.
+Modules are way of implementing CLI commands e.g. ``kubectl``. ``narrenschiff`` can be extended with new modules. All modules should reside in ``narrenschiff.modules`` package.
 
 .. toctree::
    :maxdepth: 2

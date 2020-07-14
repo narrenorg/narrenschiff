@@ -12,6 +12,7 @@ from narrenschiff.secretmap import CourseLocationError
 def secretmap(ctx):
     """
     Encrypt, decrypt, and edit files.
+    \f
 
     :return: Void
     :rtype: ``None``
@@ -32,6 +33,7 @@ def secretmap(ctx):
 def stash(keychain, source, destination, treasure, location):
     """
     Encrypt and stash file.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -58,6 +60,7 @@ def stash(keychain, source, destination, treasure, location):
 def loot(keychain, destination, treasure, location):
     """
     Decrypt file from stash.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -81,6 +84,7 @@ def loot(keychain, destination, treasure, location):
 def peek(keychain, treasure, location):
     """
     Print content of the encrypted file to STDOUT.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -105,6 +109,7 @@ def peek(keychain, treasure, location):
 def alter(keychain, treasure, location):
     """
     Decrypt and edit the file. After edits, the file is encrypted again.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -126,6 +131,7 @@ def alter(keychain, treasure, location):
 def destroy(keychain, treasure, location):
     """
     Delete secretmap file and corresponding key in the secretmap.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -149,6 +155,7 @@ def destroy(keychain, treasure, location):
 def search(keychain, location, match):
     """
     Search for a pattern in secretmaps.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`

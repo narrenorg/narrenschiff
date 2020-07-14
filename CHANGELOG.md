@@ -1,4 +1,8 @@
-# Unreleased
+# 1.6.0 - 14.7.2020.
+
+## Added
+
+* You can start a project now with `narrenschiff dock`
 
 ## Fixed
 

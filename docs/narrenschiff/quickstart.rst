@@ -1,8 +1,7 @@
-Manual for Users
-================
+Introduction
+============
 
-``narrenschiff`` is a Ansible-like configuration management tool for Kubernetes. It is advanced *wrapper* around ``kubectl``.
-
+``narrenschiff`` is a configuration management tool for Kubernetes. It can be used to easily source control your manifests, and to actually encrypt your ``Secret`` resources. In addition to encrypting secrets, it can also encrypt whole configuration files. In essence, it is a wrapper around various tools (e.g. ``helm``, and ``kubectl``). All tools are executed locally on the host OS.
 
 Requirements
 ------------
@@ -15,7 +14,14 @@ Requirements
 Installation
 ------------
 
-At the moment it can be only built from the source code.
+You can easily install it with ``pip``:
+
+.. code-block:: sh
+
+  pip install narrenschiff
+
+
+We advise you to install it in virtualenv.
 
 Primer on ``narrenschiff``
 --------------------------

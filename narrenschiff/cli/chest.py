@@ -15,6 +15,7 @@ from narrenschiff.secretmap import CourseLocationError
 def chest(ctx):
     """
     Load keys and spices.
+    \f
 
     :return: Void
     :rtype: ``None``
@@ -29,6 +30,7 @@ def chest(ctx):
 def loot(keychain, treasure, location):
     """
     Display value from the chest file.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -52,6 +54,7 @@ def loot(keychain, treasure, location):
 def stash(keychain, treasure, value, location):
     """
     Dynamically update chest file. Override old value if exists.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -75,6 +78,7 @@ def stash(keychain, treasure, value, location):
 def lock(keychain, value):
     """
     Encrypt string and print it to STDOUT.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -93,6 +97,7 @@ def lock(keychain, value):
 def unlock(keychain, value):
     """
     Decrypt string and print it to STDOUT.
+    \f
 
     :param keychain: Object containing key and spice
     :type keychain: :class:`narrenschiff.chest.Keychain`
@@ -110,6 +115,7 @@ def unlock(keychain, value):
 def dump(location):
     """
     Print all values from the chest on STDOUT.
+    \f
 
     :param location: Path to the course directory
     :type location: ``str``

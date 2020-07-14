@@ -21,6 +21,7 @@ from narrenschiff.secretmap import Secretmap
 def sail(course, beacons):
     """
     Turn tasks into actions.
+    \f
 
     :param course: The path to ``course`` file. A file containing tasks
         specified in the YAML format. Tasks are ``executable`` pieces of

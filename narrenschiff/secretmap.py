@@ -16,6 +16,8 @@ logger = NarrenschiffLogger()
 
 
 class CourseLocationError(Exception):
+    """Raise exception if course is not found."""
+
     pass
 
 

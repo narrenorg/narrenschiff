@@ -20,6 +20,7 @@ from narrenschiff.log import NarrenschiffLogger
 def narrenschiff(verbosity=0):
     """
     Base command.
+    \f
 
     :return: Void
     :rtype: ``None``

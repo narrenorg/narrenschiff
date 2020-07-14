@@ -7,6 +7,7 @@ from narrenschiff.autocomplete import ShellAutocomplete
 def autocomplete():
     """
     Manage autocomplete script for your environment.
+    \f
 
     :return: Void
     :rtype: ``None``
@@ -24,6 +25,7 @@ def autocomplete():
 def add(shell):
     """
     Add autocomplete script to your environment.
+    \f
 
     :param shell: Type of the shell you are using
     :type shell: ``str``

@@ -1,14 +1,10 @@
 import os
 import unittest
 
+from tests.mocks import MockKeychain
+
 from narrenschiff.chest import Chest
 from narrenschiff.chest import AES256Cipher
-
-
-class MockKeychain:
-
-    key = 'key'
-    spice = 'sugar'
 
 
 class AES256CipherTestCase(unittest.TestCase):

@@ -3,6 +3,7 @@ import uuid
 import unittest
 
 from narrenschiff.common import is_yaml
+from narrenschiff.common import is_jinja
 from narrenschiff.common import flatten
 from narrenschiff.common import DeleteFile
 from narrenschiff.common import get_chest_file_path
@@ -12,11 +13,19 @@ from narrenschiff.common import AmbiguousConfiguration
 class CommonFunctionsTestCase(unittest.TestCase):
 
     def test_is_yaml(self):
-        self.assertEqual(True, is_yaml('file.yaml'))
-        self.assertEqual(True, is_yaml('file.yml'))
+        self.assertTrue(is_yaml('file.yaml'))
+        self.assertTrue(is_yaml('file.yml'))
 
     def test_is_yaml_fail(self):
-        self.assertEqual(False, is_yaml('file.toml'))
+        self.assertFalse(is_yaml('file.toml'))
+
+    def test_is_jinja(self):
+        self.assertTrue(is_jinja('file.j2'))
+        self.assertTrue(is_jinja('file.jinja2'))
+
+    def test_is_jinja_fail(self):
+        self.assertFalse(is_jinja('file.jin'))
+        self.assertFalse(is_jinja('file.jinja'))
 
     def test_flatten_list(self):
         input_list = ['a', ['b', 'c']]

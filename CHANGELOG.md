@@ -1,3 +1,9 @@
+# Unreleased
+
+## Fixed
+
+* Add missing trailing newline at the end of the decrypted secretmap
+
 # 1.6.0 - 14.7.2020.
 
 ## Added

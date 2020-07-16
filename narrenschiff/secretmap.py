@@ -97,7 +97,7 @@ class Secretmap(metaclass=Singleton):
             enc_file_core = cipher.decrypt(f.read())
 
         with open(dest, 'w') as f:
-            f.write(enc_file_core)
+            f.write(f'{enc_file_core}\n')
 
     def peek(self, treasure):
         """

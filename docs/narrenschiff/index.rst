@@ -7,3 +7,5 @@ User Guide
 
    quickstart
    howto
+   getting_started
+   vars_files

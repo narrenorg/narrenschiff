@@ -2,11 +2,17 @@
 - name: Cluster create
   gcloud:
     command: "container clusters create {{ cluster_name }}"
+    args:
+      num-nodes: 3
 
 - name: Get credentials
   gcloud:
     command: "container clusters get-credentials {{ cluster_name }}"
 
-- name: Services enable
+- name: Enable GKE API
   gcloud:
     command: "services enable container.googleapis.com"
+
+- name: Delete cluster
+  gcloud:
+    command: "container clusters delete {{ cluster_name }}"

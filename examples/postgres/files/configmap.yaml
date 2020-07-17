@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+data:
+  POSTGRES_USER: user
+  POSTGRES_DB: db

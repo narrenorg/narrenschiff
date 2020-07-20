@@ -6,7 +6,7 @@ User Guide
    :caption: Contents:
 
    quickstart
-   howto
    getting_started
+   courses
    vars_files
    beacons

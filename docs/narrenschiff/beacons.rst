@@ -71,5 +71,81 @@ And you can also select multiple becaons from the command line:
 
   $ narrenschiff sail --follow-beacons dev,stage --set-course course.yaml
 
+Here's a practical example. If you are using Helm to manage you applications, you can pack the upgrade instructions in a one course, but separate environments using becaons.
+
+.. code-block:: yaml
+
+  # helm/postgres.yaml
+  - name: Add bitnami repo to Helm
+    helm:
+      command: repo add jetstack https://charts.bitnami.com/bitnami
+    beacons:
+      - always
+
+  - name: Update repo
+    helm:
+      command: repo update
+    beacons:
+      - always
+
+  - name: Upgrade Postgres on development
+    helm:
+      command: upgrade
+      name: postgres
+      chart: bitnami/postgresql
+      version: 11.8.0
+      opts:
+        - atomic
+        - cleanup-on-fail
+        - reuse-values
+      args:
+        namespace: development
+        values:
+          - "{{ values | secretmap }}"
+    beacons:
+      - dev
+
+  - name: Upgrade Postgres on staging
+    helm:
+      command: upgrade
+      name: postgres
+      chart: bitnami/postgresql
+      version: 9.1.1
+      opts:
+        - atomic
+        - cleanup-on-fail
+        - reuse-values
+      args:
+        namespace: staging
+        values:
+          - "{{ values | secretmap }}"
+    beacons:
+      - stage
+
+  - name: Upgrade Postgres on production
+    helm:
+      command: upgrade
+      name: postgres
+      chart: bitnami/postgresql
+      version: 9.1.1
+      opts:
+        - atomic
+        - cleanup-on-fail
+        - reuse-values
+      args:
+        namespace: production
+        values:
+          - "{{ values | secretmap }}"
+    beacons:
+      - prod
+
+Now, if you only want to upgrade your service on the development environment, you can do this without executing other tasks in the course:
+
+.. code-block:: sh
+
+  $ narrenschiff sail --follow-becaons dev --set-course helm/postgres.yaml
+
+Beacons can only be used on tasks. They cannot be used on course imports (i.e. ``import_course`` does not support becaons).
+
 .. _here: getting_started.html#before-you-start
 .. _`official documentation`: https://kubernetes.io/docs/tasks/tools/install-minikube/

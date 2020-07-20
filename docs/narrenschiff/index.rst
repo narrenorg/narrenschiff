@@ -9,3 +9,4 @@ User Guide
    howto
    getting_started
    vars_files
+   beacons

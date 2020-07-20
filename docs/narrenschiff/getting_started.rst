@@ -263,7 +263,9 @@ However, we don't have ordinary Kubernetes manifests anymore. We're now using te
           - deployment.yaml
       namespace: "default"
 
-All you have to do now is to deploy this to our cluster. Or, in other words, set a course and sail this crazy ship:
+In Narrenschiff, this is called a *taks*, and *course* is a collection of tasks.
+
+Now, all you have to do is to deploy this to our cluster. Or, in other words, set a course and sail this crazy ship:
 
 .. code-block:: sh
 

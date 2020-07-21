@@ -17,7 +17,7 @@ This is a general anatomy of a task:
           - nginx/app/deployment.yaml
         namespace: default
     beacons:  # tags for alternative execution path (optional)
-      - dev  # chose whatever value except ``always`` which is a reserved becaon
+      - dev  # chose whatever value ("always" is a reserved becaon)
 
 ``name`` of the task describes what task should do, and with module you're actaully writing what the task is doing. Names are required, so your infrastructure configuration becomes a self-documenting repo. Name is an arbitraty description. Module, however, can only be whatever is implemented in Narrenschiff. At this moment, there are several modules available to use:
 

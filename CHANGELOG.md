@@ -4,6 +4,10 @@
 
 * Add missing trailing newline at the end of the decrypted secretmap
 
+## Changed
+
+* Updated user and developer documentation
+
 # 1.6.0 - 14.7.2020.
 
 ## Added

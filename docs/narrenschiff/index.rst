@@ -6,6 +6,7 @@ User Guide
    :caption: Contents:
 
    quickstart
+   overview
    getting_started
    courses
    vars_files

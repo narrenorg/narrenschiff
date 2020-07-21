@@ -23,153 +23,63 @@ You can easily install it with ``pip``:
 
 We advise you to install it in virtualenv.
 
-Primer on ``narrenschiff``
---------------------------
+Quickstart
+----------
 
-Basic unit of ``narrenschiff`` is ``course`` or ``courses`` i.e. file or files storing task that are to performed in sequential order. ``course`` is YAML file e.g.:
-
-.. code-block:: yaml
-
-  - name: Deploy config map
-    kubectl:
-      command: apply
-      args:
-        filename: "{{ files_path }}/configmap.yaml"
-
-  - name: Apply namespaces and RBAC settings
-    kubectl:
-      command: apply
-      args:
-        filename:
-          - namespaces.yaml  # filenames are referenced relative to files/ dir
-          - rbac.yaml
-
-Each YAML file in the project is treated as a template file i.e. each ``course`` can have template variables. Template language that is powering ``courses`` is Jinja2_.
-
-File paths are referenced relative to the ``files/`` directory in the *course project* root. ``files/`` is reserved for Jinja2 templates of Kubernetes manifest files.
-
-The basic directory layout of the should resemble something like this::
-
-  project/
-  ├── files  <-- Templates for you manifest files
-  │   ├── namespaces.yaml
-  │   ├── rbac.yaml
-  │   └── app
-  │       ├── kustomization.yaml
-  │       ├── configmap.yaml
-  │       ├── secret.yaml
-  │       └── deployment.yml
-  ├── tasks.yaml  <-- course file describing the deployment process
-  ├── vars  <-- directory with arbitrary nesting may be used instead of vars.yaml
-  │   ├── common.yaml
-  │   ├── domains.yaml
-  │   └── apps
-  │       └── prod.yml
-  ├── chest <-- directory with arbitrary nesting may be used instead of chest.yaml
-  │   ├── database.yaml
-  │   └── secrets.yaml
-  ├── vars.yaml  <-- non encrypted variables
-  └── chest.yaml  <-- encrypted variables
-
-``files/`` directory is a directory reserved for your Kubernetes manifest files. With ``narrenschiff`` you can use Jinja2 templating language to inject variables into the manifests.
-
-You can use ``vars.yaml`` and ``chest.yaml`` to define variables for you project. ``vars.yaml`` file or ``vars/`` directory contain unencrypted variables. ``chest.yaml`` file or ``chest/`` directory is a place to stash your *treasure* (i.e. keys, secrets, passwords, etc.). Both ``vars/`` and ``chest/`` directories can have arbitrary nesting and files within them can have arbitrary names. However, all variable names contained across these files **must** be unique! All boolean values must be quoted.
-
-Chest files have flat dictionary structure. No nesting of the keys is allowed (at the moment at least):
-
-.. code-block:: yaml
-
-  db_password: 6Wziywgso3YsosQNfMeufodDZxEaOyujHM+ch9Pxe5u1u2ZO5e7G9bPOhEIVYo8n
-  hash_key: uSn/rKMdbMArR0SnWcbtP1Z64/Y8LI8LNOZGbVZUmm5ioFLV/NwP6OcyTNGgMSGi
-
-The app is deployed using ``narrenschiff`` tool::
-
-  narrenschiff sail --set-course project/tasks.yaml
-
-After you execute this, the following happens:
-
-1. All variables from ``vars`` files and ``chests`` are collected (only those files that are contained within the project are used - project is the directory in which the executed ``course`` is located)
-
-  1. Load ``vars.yaml``
-  2. Load all files from the ``vars/`` directory if it exists
-  3. Load and decrypt all variables from ``chest.yaml``
-  4. Load all files from the ``chest/`` directory if it exists
-  5. Load all variables from ``secretmap.yaml``
-  6. Merge all files
-
-2. Variables are checked for duplicates, if there are any, the ship cannot take this course
-3. Course file is supplied with collected variables and executed
-4. Tasks are executed in sequential order, each YAML file is supplied with collected variables
-
-You can either use ``chest.yaml`` or ``chest.yml`` file per *course project*, but not both. A *course project* is a directory where course file is located.
-
-Treasure is encrypted using password (``key``) and salt (``spice``). These are stored in simple text files. The root of the project should contain the ``.narrenschiff.yaml`` configuration file that stores paths to these files. Keep in mind that while ``.narrenschiff.yaml`` should be source controlled, password and salt file should never be committed to your repo! Here is the example of the configuration file:
-
-.. code-block:: yaml
-
-  # .narrenschiff.yaml
-  key: ./password.txt  # path to file containing password for encrypting files
-  spice: ./salt.txt  # path to file containing salt (salt should be random and long)
-
-You can also encrypt files and bring them into your source code. Files are encrypted, and stored at desired location, and relative path to the file is saved in `secretmap` file.
-
-If you have a fairly complex course, and you want to execute only a specific set of tasks, you can use `beacons`:
-
-.. code-block:: yaml
-
-  - name: List all namespaces
-    kubectl:
-      command: get namespaces
-
-  - name: List all pods
-    kubectl:
-      command: get pods
-    beacons:
-      - always
-      - pods
-
-  - name: Check pod resources
-    kubectl:
-      command: top pods
-    beacons:
-      - stats
-      - pods
-
-  - name: Check node resources
-    kubectl:
-      command: top nodes
-    beacons:
-      - stats
-
-Now you can easily select which collection of tasks you want to execute:
+Install Narrenschiff in virtualenv:
 
 .. code-block:: sh
 
-  narrenschiff sail --set-course stats.yaml --follow-beacons stats,pods
+  $ mkdir infrastructure && cd infrastructure
+  $ git init
+  $ python3 -m venv env  && echo 'env' > .gitignore
+  $ pip install narrenschiff
 
-Note that ``always`` is a special keyword for beacons! Taks marked with ``always`` are always executed, regardless of the becaons you specified on the command line.
+Initialize a course project, and encrypt a treasure:
 
-.. _Jinja2: https://jinja.palletsprojects.com/en/2.10.x/
+.. code-block:: sh
 
-Glossary
---------
+  $ narrenschiff dock --autogenerate --location postgres/
+  $ narrenschiff chest stash --treasure postgres_password --values "Password123!" --location postgres/
 
-.. glossary::
+Create a template for ``Secret`` Kubernetes resource, using encrypted treasure:
 
-  course
-    Templated YAML file containing list of tasks to be performed.
+.. code-block:: sh
 
-  treasure
-    Sensitive information, keys, secrets, and passwords are stored
+  $ mkdir postgres/files/
+  $ cat > postgres/files/secret.yaml << EOF
+  ---
+  apiVersion: v1
+  kind: Secret
+  type: Opaque
+  metadata:
+    name: postgres
+  data:
+    POSTGRES_PASSWORD: "{{ postgres_password | b64enc }}"
+  EOF
 
-  chest
-    File or files in which your treasure is stored.
+Create a course:
 
-  key
-    Master password for encrypting strings
+.. code-block:: sh
 
-  spice
-    Salt used for encrypting strings
+  $ cat > postgres/course.yaml << EOF
+  ---
+  - name: Add secret to default namespace
+    kubectl:
+    command: apply
+    args:
+      filename:
+        - secret.yaml
+    namespace: "default"
+  EOF
 
-  secretmap
-    Encrypted file (currently only supported for ``helm`` module)
+Deploy:
+
+.. code-block:: sh
+
+  $ narrenschiff sail --set-course postgres/course.yaml
+
+That's it! Secret is now deployed to your cluster. Head over to `general overview`_ to get familiar with Narrenschiff terminology, or to `Getting Started`_ to learn how to make your first project.
+
+.. _`General Overview`: overview.html
+.. _`Getting Started`: getting_started.html

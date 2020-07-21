@@ -1,7 +1,7 @@
 Introduction
 ============
 
-``narrenschiff`` is a configuration management tool for Kubernetes. It can be used to easily source control your manifests, and to actually encrypt your ``Secret`` resources. In addition to encrypting secrets, it can also encrypt whole configuration files. In essence, it is a wrapper around various tools (e.g. ``helm``, and ``kubectl``). All tools are executed locally on the host OS.
+``narrenschiff`` is a configuration management tool for Kubernetes inspired by Ansible. It can be used to easily source control your manifests, and to actually encrypt your ``Secret`` resources. In addition to encrypting secrets, it can also encrypt whole configuration files. In essence, it is a wrapper around various tools (e.g. ``helm``, and ``kubectl``). All tools are executed locally on the host OS.
 
 Requirements
 ------------
@@ -90,11 +90,12 @@ After you execute this, the following happens:
 
 1. All variables from ``vars`` files and ``chests`` are collected (only those files that are contained within the project are used - project is the directory in which the executed ``course`` is located)
 
-  1. Load ``vars.yaml`` if it exists
+  1. Load ``vars.yaml``
   2. Load all files from the ``vars/`` directory if it exists
   3. Load and decrypt all variables from ``chest.yaml``
   4. Load all files from the ``chest/`` directory if it exists
-  5. Merge all files
+  5. Load all variables from ``secretmap.yaml``
+  6. Merge all files
 
 2. Variables are checked for duplicates, if there are any, the ship cannot take this course
 3. Course file is supplied with collected variables and executed

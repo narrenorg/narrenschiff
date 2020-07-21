@@ -40,7 +40,7 @@ Initialize a course project, and encrypt a treasure:
 .. code-block:: sh
 
   $ narrenschiff dock --autogenerate --location postgres/
-  $ narrenschiff chest stash --treasure postgres_password --values "Password123!" --location postgres/
+  $ narrenschiff chest stash --treasure postgres_password --value "Password123!" --location postgres/
 
 Create a template for ``Secret`` Kubernetes resource, using encrypted treasure:
 
@@ -79,7 +79,7 @@ Deploy:
 
   $ narrenschiff sail --set-course postgres/course.yaml
 
-That's it! Secret is now deployed to your cluster. Head over to `general overview`_ to get familiar with Narrenschiff terminology, or to `Getting Started`_ to learn how to make your first project.
+That's it! Secret is now deployed to your cluster. Head over to `General Overview`_ to get familiar with Narrenschiff terminology, or to `Getting Started`_ to learn how to make your first project.
 
 .. _`General Overview`: overview.html
 .. _`Getting Started`: getting_started.html

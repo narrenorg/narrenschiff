@@ -3,6 +3,7 @@
 ## Fixed
 
 * Add missing trailing newline at the end of the decrypted secretmap
+* Renamed `flags` in Gcloud module to `opts` to make Modules API more consistent (**breaking change**)
 
 ## Changed
 

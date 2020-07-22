@@ -1,3 +1,0 @@
-- name: List all namespaces
-  kubectl:
-    command: get namespaces

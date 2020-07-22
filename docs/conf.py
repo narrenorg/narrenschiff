@@ -12,17 +12,20 @@
 
 import os
 import sys
+from datetime import datetime
+import narrenschiff
+
 sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'narrenschiff'
-copyright = '2019, Petar Nikolovski'
+copyright = '{}, Petar Nikolovski'.format(datetime.now().year)
 author = 'Petar Nikolovski'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = narrenschiff.__version__
 
 # -- Read the Docs overrides -------------------------------------------------
 master_doc = 'index'

@@ -9,7 +9,7 @@ Basic unit of ``narrenschiff`` is ``course`` or ``courses`` i.e. file or files s
     kubectl:
       command: apply
       args:
-        filename: configmap.yaml"
+        filename: "configmap.yaml"
 
   - name: Apply namespaces and RBAC settings
     kubectl:

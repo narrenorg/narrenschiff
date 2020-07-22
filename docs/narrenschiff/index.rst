@@ -11,3 +11,4 @@ User Guide
    courses
    vars_files
    beacons
+   modules/index

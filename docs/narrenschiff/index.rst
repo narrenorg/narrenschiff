@@ -12,3 +12,4 @@ User Guide
    vars_files
    beacons
    modules/index
+   examples/index

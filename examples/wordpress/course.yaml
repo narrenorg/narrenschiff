@@ -1,0 +1,14 @@
+---
+- name: Deploy Mysql
+  kubectl:
+    command: apply
+    args:
+      filename:
+        - mysql
+
+- name: Deploy Wordpress
+  kubectl:
+    command: apply
+    args:
+      filename:
+        - wordpress

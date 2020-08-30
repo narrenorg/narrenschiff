@@ -33,6 +33,7 @@ Install Narrenschiff in virtualenv:
   $ mkdir infrastructure && cd infrastructure
   $ git init
   $ python3 -m venv env  && echo 'env' > .gitignore
+  $ . env/bin/activate
   $ pip install narrenschiff
 
 Initialize a course project, and encrypt a treasure:

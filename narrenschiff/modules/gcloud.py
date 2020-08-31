@@ -11,7 +11,7 @@ class Gcloud(NarrenschiffModule):
     def execute(self):
         command = self.command.get('command')
         args = self.command.get('args', {})
-        switches = self.command.get('flags', [])
+        switches = self.command.get('opts', [])
 
         flags = []
         for flag, value in args.items():

@@ -1,8 +1,0 @@
-nginx:
-  image: nginx
-  tag: 1.7.9
-  namespace: narrenschiff
-  replicas: 1
-  labels: |
-    app: nginx
-    release: test

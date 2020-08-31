@@ -1,0 +1,47 @@
+---
+- name: Add bitnami repo
+  helm:
+    command: repo add bitnami https://charts.bitnami.com/bitnami
+
+- name: Update helm repo
+  helm:
+    command: repo update
+
+- name: Install MariaDB database
+  helm:
+    command: upgrade
+    name: mariadb
+    chart: bitnami/mariadb
+    opts:
+      - install
+      - atomic
+      - cleanup-on-fail
+    args:
+      namespace: "{{ namespace }}"
+      version: 7.9.2
+      values:
+        - "{{ mariadb | secretmap }}"
+      set:
+        - "db.user={{ database.user }}"
+        - "db.password={{ database_password }}"
+        - "db.name={{ database.name }}"
+
+- name: Install Moodle
+  helm:
+    command: upgrade
+    name: moodle
+    chart: bitnami/moodle
+    opts:
+      - install
+      - atomic
+      - cleanup-on-fail
+    args:
+      namespace: "{{ namespace }}"
+      version: 8.1.1
+      values:
+        - "{{ moodle | secretmap }}"
+      set:
+        - "externalDatabase.user={{ database.user }}"
+        - "externalDatabase.password={{ database_password }}"
+        - "externalDatabase.database={{ database.name }}"
+        - "externalDatabase.host=mariadb.{{ namespace }}.svc.cluster.local"

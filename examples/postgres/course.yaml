@@ -1,0 +1,9 @@
+- name: Deploy postgres
+  kubectl:
+    command: apply
+    args:
+      filename:
+        - secret.yaml
+        - configmap.yaml
+        - deployment.yaml
+      namespace: "default"

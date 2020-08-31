@@ -1,0 +1,21 @@
+- name: List all namespaces
+  kubectl:
+    command: get namespaces
+  beacons:
+    - always
+
+- name: List all pods in default namespace
+  kubectl:
+    command: get pods
+    args:
+      namespace: default
+  beacons:
+    - default
+
+- name: List all pods in kube-system namespace
+  kubectl:
+    command: get pods
+    args:
+      namespace: kube-system
+  beacons:
+    - kube-system

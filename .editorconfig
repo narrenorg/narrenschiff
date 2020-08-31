@@ -17,3 +17,7 @@ indent_size = 4
 [*.{flake8,coveragerc}]
 indent_style = space
 indent_size = 2
+
+[*.rst]
+indent_style = space
+indent_size = 2

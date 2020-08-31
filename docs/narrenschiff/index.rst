@@ -1,9 +1,15 @@
-Manual for Users
-=======================
+User Guide
+==========
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    quickstart
-   howto
+   overview
+   getting_started
+   courses
+   vars_files
+   beacons
+   modules/index
+   examples/index

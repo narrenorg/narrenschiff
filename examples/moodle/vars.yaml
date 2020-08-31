@@ -1,0 +1,5 @@
+namespace: default
+
+database:
+  user: moodle
+  name: moodle

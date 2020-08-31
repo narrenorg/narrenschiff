@@ -1,8 +1,13 @@
-# Unreleased
+# 2.0.0 - 31.8.2020.
 
 ## Fixed
 
 * Add missing trailing newline at the end of the decrypted secretmap
+* Renamed `flags` in Gcloud module to `opts` to make Modules API more consistent (**breaking change**)
+
+## Changed
+
+* Updated user and developer documentation
 
 # 1.6.0 - 14.7.2020.
 

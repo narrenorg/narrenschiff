@@ -61,8 +61,6 @@ Remember, ``files/`` is reserved in a course project for templates. All template
 
 Make the following files in ``wordpress/files/mysql`` (filenames are in the comments):
 
-
-
 .. code-block:: yaml
 
   # wordpress/files/mysql/service.yaml

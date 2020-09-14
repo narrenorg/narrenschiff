@@ -247,6 +247,9 @@ Finally apply your changes to the cluster:
 
   $ narrenschiff sail --set-course wordpress/course.yaml
 
+Verify
+------
+
 You can verify that wordpress is deployed by accessing it through your browser to finish the installation:
 
 .. code-block:: sh
@@ -254,9 +257,6 @@ You can verify that wordpress is deployed by accessing it through your browser t
   $ minikube service wordpress --url
 
 Copy and paste the URL to your browser, and you can complete the wordpress intallation. Use ``minikube stop && minikube delete`` to stop and delete the cluster.
-
-Verify
-------
 
 .. _documentation: https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 .. _`CC BY 4.0`: https://creativecommons.org/licenses/by/4.0/deed.ast

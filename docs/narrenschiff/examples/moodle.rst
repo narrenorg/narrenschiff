@@ -206,6 +206,9 @@ Finally apply your changes to the cluster:
 
   $ narrenschiff sail --set-course moodle/course.yaml
 
+Verify
+------
+
 You can verify that Moodle is deployed by accessing it through your browser:
 
 .. code-block:: sh

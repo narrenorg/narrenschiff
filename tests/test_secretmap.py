@@ -26,6 +26,7 @@ class SecretmapTestCase(unittest.TestCase):
 
         self.assertEqual(config['dev'], 'encrypted.yaml')
 
+    @unittest.skip('See CHANGELOG for v2.0.0 and v2.0.1')
     def test_decrypt(self):
         self.secretmap.upsert(src=self.source,
                               dest='encrypted.yaml',

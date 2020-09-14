@@ -1,3 +1,9 @@
+# 2.0.1 - 14.9.2020.
+
+## Fixed
+
+* Revert changes on missing trailing newline. Secretmaps get alwasy re-encrypted. For the time being, the trailing line is not a problem - it is not obvious which part of the code is removing the original trailing newline - either encryption, or decryption
+
 # 2.0.0 - 31.8.2020.
 
 ## Fixed

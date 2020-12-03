@@ -1,3 +1,9 @@
+# 2.0.2 - 3.12.2020.
+
+## Fixed
+
+* Make sure version appears in METADATA of the packaged tool
+
 # 2.0.1 - 14.9.2020.
 
 ## Fixed

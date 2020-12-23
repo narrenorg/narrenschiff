@@ -50,7 +50,7 @@ class NarrenschiffLogger(metaclass=Singleton):
         if verbosity not in range(1, 6):
             return
         formatter = ColoredFormatter(
-            '%(log_color)s %(levelname)s %(asctime)s %(message)s',
+            '%(log_color)s%(levelname)s %(asctime)s %(message)s',
             log_colors={
                 'DEBUG': 'blue',
                 'INFO': 'white',

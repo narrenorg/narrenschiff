@@ -5,6 +5,7 @@
 * Improve UX in case when loading of keys and spices fails
 * Improve UX in case when loading of secretmap fails
 * Improve UX in case when loading of treasure from secretmap fails
+* Remove unnecessary identation in log output
 
 # 2.0.2 - 3.12.2020.
 

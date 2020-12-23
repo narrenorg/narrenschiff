@@ -1,7 +1,9 @@
 import os
+import sys
 import yaml
 import base64
 
+import click
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
@@ -32,9 +34,21 @@ class Keychain:
         :param path: Path to the file
         :type path: ``str``
         """
-        with open(os.path.expanduser(path), 'r') as f:
-            secret = f.readlines()[0]
-        return secret.rstrip()
+        secret = ''
+        try:
+            with open(os.path.expanduser(path), 'r') as f:
+                secret = f.readlines()[0].rstrip()
+        except IndexError:
+            click.secho(f'File {path} cannot be empty', fg='red')
+            sys.exit(1)
+        except FileNotFoundError:
+            click.secho(f'File {path} not found', fg='red')
+            click.secho(
+                f'Please check or configure paths in {self.get_configuration_path()}',  # noqa
+                fg='red'
+            )
+            sys.exit(1)
+        return secret
 
     def load_configuration_file(self):
         """

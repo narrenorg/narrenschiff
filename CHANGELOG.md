@@ -1,3 +1,9 @@
+# 2.0.3 - 23.12.2020.
+
+## Fixed
+
+* Improve UX in case when loading of keys and spices fail
+
 # 2.0.2 - 3.12.2020.
 
 ## Fixed

@@ -1,10 +1,13 @@
 import os
 import re
-import yaml
+import sys
 import uuid
 import shutil
 import subprocess
 from contextlib import suppress
+
+import yaml
+import click
 
 from narrenschiff.chest import AES256Cipher
 from narrenschiff.common import Singleton
@@ -89,8 +92,7 @@ class Secretmap(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
-        config = self._read_config()
-        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+        src = self._get_treasure_path(treasure)
 
         with open(src, 'r') as f:
             cipher = AES256Cipher(self.keychain)
@@ -108,8 +110,7 @@ class Secretmap(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
-        config = self._read_config()
-        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+        src = self._get_treasure_path(treasure)
 
         with open(src, 'r') as f:
             cipher = AES256Cipher(self.keychain)
@@ -126,8 +127,7 @@ class Secretmap(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
-        config = self._read_config()
-        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+        src = self._get_treasure_path(treasure)
 
         with open(src, 'r') as f:
             logger.debug(f'Decrypting secretmap on {src}')
@@ -153,7 +153,7 @@ class Secretmap(metaclass=Singleton):
         :rtype: ``None``
         """
         config = self._read_config()
-        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+        src = self._get_treasure_path(treasure)
 
         del config[treasure]
         self._write_config(config)
@@ -204,7 +204,7 @@ class Secretmap(metaclass=Singleton):
         with open(destination, 'r') as f:
             tmp_file_content = f.read()
 
-        src = os.path.abspath(os.path.join(self.directory, config[treasure]))
+        src = self._get_treasure_path(treasure)
         with open(src, 'r') as f:
             cipher = AES256Cipher(self.keychain)
             original_file_content = cipher.decrypt(f.read())
@@ -215,9 +215,34 @@ class Secretmap(metaclass=Singleton):
         tmp_file = DeleteFile(destination)
         tmp_file.delete()
 
+    def _get_treasure_path(self, treasure):
+        """
+        Get path to treasure from config file.
+
+        :param config: Name of the treasure
+        :type config: ``str``
+        :return: Path to encrypted secretmap file
+        :rtype: ``str``
+        """
+        config = self._read_config()
+        try:
+            return os.path.abspath(
+                os.path.join(self.directory, config[treasure])
+            )
+        except KeyError:
+            click.secho(
+                f'Treasure "{treasure}" not found in {self.filepath}',
+                fg='red'
+            )
+            sys.exit(1)
+
     def _read_config(self):
-        with open(self.filepath, 'r') as f:
-            config = yaml.load(f, Loader=yaml.FullLoader)
+        try:
+            with open(self.filepath, 'r') as f:
+                config = yaml.load(f, Loader=yaml.FullLoader)
+        except FileNotFoundError:
+            click.secho(f'File {self.filepath} not found', fg='red')
+            sys.exit(1)
         return config if config else {}
 
     def _write_config(self, config):

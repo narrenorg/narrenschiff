@@ -14,13 +14,17 @@ Requirements
 Parameters
 ----------
 
-+---------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Parameter** | **Comment**                                                                                                                                     |
-+---------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
-| command       | Any kubectl command with nested subcommands                                                                                                     |
-+---------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
-| args          | flag/value pairs, a flag needs to be listed by its full name (e.g. you can't use ``f`` for ``-f/--filename``, you have to use ``filename``)     |
-+---------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+.. list-table::
+  :header-rows: 1
+
+  * - Parameter
+    - Comment
+  * - command
+    - Any kubectl command with nested subcommands
+  * - args
+    - flag/value pairs, a flag needs to be listed by its full name (e.g. you can't use ``f`` for ``-f/--filename``, you have to use ``filename``)
+  * - opts
+    - flags without arguments i.e. switches
 
 Examples
 --------
@@ -33,13 +37,21 @@ Examples
     kubectl:
       command: get namespaces
 
-  # "args" paramater taks only flag/value pairs
+  # "args" paramater accepts only flag/value pairs
   # kubectl get pods --namespaces default
   - name: List all pods in default namespace
     kubectl:
       command: get pods
       args:
         namespace: default
+
+  # Use "opts" when you need flags without input values
+  # kubectl get pods --all-namespaces
+  - name: List pods in all namespaces
+    kubectl:
+      command: get pods
+      opts:
+        - all-namespaces
 
   # If you need to create a namespace you can just put a whole command in "command" paramater
   # kubectl create namespace cert-manager

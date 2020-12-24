@@ -1,4 +1,8 @@
-# 2.0.3 - 23.12.2020.
+# 2.1.0 - 24.12.2020.
+
+## Added
+
+* Enable opts for Kubectl module
 
 ## Fixed
 

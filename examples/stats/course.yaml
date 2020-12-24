@@ -19,3 +19,11 @@
       namespace: kube-system
   beacons:
     - kube-system
+
+- name: List pods from all namespaces
+  kubectl:
+    command: get pods
+    opts:
+      - all-namespaces
+  beacons:
+    - always

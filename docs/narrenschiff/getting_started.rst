@@ -261,7 +261,7 @@ However, we don't have ordinary Kubernetes manifests anymore. We're now using te
           - secret.yaml
           - configmap.yaml
           - deployment.yaml
-      namespace: "default"
+        namespace: "default"
 
 In Narrenschiff, this is called a *taks*, and *course* is a collection of tasks.
 

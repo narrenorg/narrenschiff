@@ -13,11 +13,9 @@ from narrenschiff.templating import Template
 class Kubectl(NarrenschiffModule):
     """``kubectl`` module."""
 
-    kubectl = 'kubectl'
-
-    # TODO: Implement templating (echo -e 'lorem\n  ipsum' | cat - | kubectl -)
     def execute(self):
         command = self.command.get('command')
+        switches = self.command.get('opts', [])
 
         self.sanitize_filenames()
         self.update_filename_argument()
@@ -26,7 +24,9 @@ class Kubectl(NarrenschiffModule):
         for key, value in args.items():
             flags.append("--{}='{}'".format(key, value))
 
-        cmd = ' '.join([Kubectl.kubectl, command, *flags])
+        flags.extend(['--{}'.format(switch) for switch in switches])
+
+        cmd = ' '.join(['kubectl', command, *flags])
 
         process = subprocess.run(
             cmd,

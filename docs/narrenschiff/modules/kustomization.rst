@@ -14,11 +14,13 @@ Requirements
 Parameters
 ----------
 
-+---------------+---------------------------------------------------+
-| **Parameter** | **Comment**                                       |
-+---------------+---------------------------------------------------+
-| N/A           | Module does not support additional parameters     |
-+---------------+---------------------------------------------------+
+.. list-table::
+  :header-rows: 1
+
+  * - Parameter
+    - Comment
+  * - N/A
+    - Module does not support additional parameters
 
 Examples
 --------

@@ -14,15 +14,17 @@ Requirements
 Parameters
 ----------
 
-+---------------+------------------------------------------------------------------+
-| **Parameter** | **Comment**                                                      |
-+---------------+------------------------------------------------------------------+
-| command       | Any gcloud command with nested subcommands                       |
-+---------------+------------------------------------------------------------------+
-| args          | flag/value pairs, a flag needs to be listed by its full name     |
-+---------------+------------------------------------------------------------------+
-| opts          | flags without arguments i.e. switches                            |
-+---------------+------------------------------------------------------------------+
+.. list-table::
+  :header-rows: 1
+
+  * - Parameter
+    - Comment
+  * - command
+    - Any gcloud command with nested subcommands
+  * - args
+    - flag/value pairs, a flag needs to be listed by its full name
+  * - opts
+    - flags without arguments i.e. switches
 
 Examples
 --------

@@ -4,6 +4,10 @@
 
 * Enable opts for Kubectl module
 
+## Changed
+
+* Update table formating in documentation (we use list tables instead of regular tables - they are easier to write and maintain)
+
 ## Fixed
 
 * Improve UX in case when loading of keys and spices fails

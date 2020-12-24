@@ -14,15 +14,17 @@ Requirements
 Parameters
 ----------
 
-+------------------------+-------------------------------------------------------------------------------------+
-| **Parameter**          | **Comment**                                                                         |
-+------------------------+-------------------------------------------------------------------------------------+
-| namespace              | Namespace in which the pod is located                                               |
-+------------------------+-------------------------------------------------------------------------------------+
-| threshold_replicas     | How many replicast should be ready in order for task to be considered completed     |
-+------------------------+-------------------------------------------------------------------------------------+
-| grep_pod_name          | Pod you are waiting                                                                 |
-+------------------------+-------------------------------------------------------------------------------------+
+.. list-table::
+  :header-rows: 1
+
+  * - Parameter
+    - Comment
+  * - namespace
+    - Namespace in which the pod is located
+  * - threshold_replicas
+    - How many replicast should be ready in order for task to be considered completed
+  * - grep_pod_name
+    - Pod you are waiting
 
 Examples
 --------

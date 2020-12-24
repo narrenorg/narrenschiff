@@ -15,19 +15,21 @@ Requirements
 Parameters
 ----------
 
-+---------------+------------------------------------------------------------------+
-| **Parameter** | **Comment**                                                      |
-+---------------+------------------------------------------------------------------+
-| command       | Any gcloud command with nested subcommands                       |
-+---------------+------------------------------------------------------------------+
-| args          | flag/value pairs, a flag needs to be listed by its full name     |
-+---------------+------------------------------------------------------------------+
-| opts          | flags without arguments i.e. switches                            |
-+---------------+------------------------------------------------------------------+
-| chart         | name of the chart                                                |
-+---------------+------------------------------------------------------------------+
-| name          | name of the chart release                                        |
-+---------------+------------------------------------------------------------------+
+.. list-table::
+  :header-rows: 1
+
+  * - Parameter
+    - Comment
+  * - command
+    - Any gcloud command with nested subcommands
+  * - args
+    - flag/value pairs, a flag needs to be listed by its full name
+  * - opts
+    - flags without arguments i.e. switches
+  * - chart
+    - name of the chart
+  * - name
+    - name of the chart release                                        |
 
 Examples
 --------

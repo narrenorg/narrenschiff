@@ -30,9 +30,13 @@ class WaitForPod(NarrenschiffModule):
 
             output = process.stdout.decode('utf-8')
 
+            # output, rc = self.subprocess(cmd)
+            # if rc: -> sys.exit (something went wrong) print(output)
+
             r = re.search(r'^{}.*\s+(\d)/\d.*'.format(pod_name), output, re.M)
             if int(r.group(1)) == self.command['threshold_replicas']:
                 click.secho('Pod ready', fg='green')
+                # self.echo('Pod ready', rc)
                 break
 
             if time.time() - start_time >= timeout:

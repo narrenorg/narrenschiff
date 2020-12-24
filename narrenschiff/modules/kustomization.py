@@ -25,17 +25,5 @@ class Kustomization(NarrenschiffModule):
 
         logger.debug(f'Executing kustomization module on {path}')
 
-        process = subprocess.run(
-            cmd,
-            shell=True,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-        output = process.stdout if process.stdout else process.stderr
-        color = 'green' if process.stdout else 'red'
-
-        logger.info(f'Command "{cmd}" executed')
-        logger.debug(output)
-
-        click.secho(output.decode('utf-8'), fg=color)
+        output, rc = self.subprocess(cmd)
+        self.echo(output, rc)

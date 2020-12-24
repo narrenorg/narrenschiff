@@ -1,5 +1,4 @@
 import os
-import subprocess
 from contextlib import suppress
 from urllib.parse import urlparse
 
@@ -28,16 +27,8 @@ class Kubectl(NarrenschiffModule):
 
         cmd = ' '.join(['kubectl', command, *flags])
 
-        process = subprocess.run(
-            cmd,
-            shell=True,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-        output = process.stdout if process.stdout else process.stderr
-        color = 'green' if process.stdout else 'red'
-        click.secho(output.decode('utf-8'), fg=color)
+        output, rc = self.subprocess(cmd)
+        self.echo(output, rc)
 
     def update_filename_argument(self):
         """

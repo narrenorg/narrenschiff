@@ -6,6 +6,8 @@ Description
 
 Execute ``gcloud`` commands. Manage GKE.
 
+Execution of the module will fail for the commands that require user input. Use ``--quiet`` instead. See gcloud docs_ for more info.
+
 Requirements
 ------------
 
@@ -31,7 +33,7 @@ Examples
 
 .. code-block:: yaml
 
-  # gcloud container clusters create test-cluster --enable-ip-alias --num-nodes 1 --machine-type n1-standard-2 --zone europe-west1-a
+  # gcloud container clusters create test-cluster --enable-ip-alias --quiet --num-nodes 1 --machine-type n1-standard-2 --zone europe-west1-a
   - name: Create the cluster
     gcloud:
       command: "container clusters create test-cluster"
@@ -41,6 +43,7 @@ Examples
         zone: europe-west1-a
       opts:
         - enable-ip-alias  # opts are always listed as a YAML list
+        - quiet
 
   # If you do not need any flags or switches you can place everything under the "command"
   - name: Get credentials for the cluster
@@ -57,3 +60,6 @@ Status
 .. warning::
 
   This module is experimental.
+
+
+.. _docs: https://cloud.google.com/sdk/gcloud/reference/

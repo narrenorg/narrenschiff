@@ -1,3 +1,10 @@
+# 3.0.0 - 24.12.2020.
+
+## Changed
+
+* Gcloud module will fail with commands that require user input, use `--quiet` in opts make these operations pass (**breaking change**)
+* Modules are refactored, all subprocess execution is implemented in the parent module
+
 # 2.1.0 - 24.12.2020.
 
 ## Added

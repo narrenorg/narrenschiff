@@ -50,7 +50,9 @@ class Helm(NarrenschiffModule):
             sets = ' '.join(['--set {}'.format(s) for s in args_set])
 
         cmd = ' '.join([Helm.helm, command, name, chart, opts, args, sets])
-        subprocess.run(cmd, shell=True, check=True)
+
+        output, rc = self.subprocess(cmd)
+        self.echo(output, rc)
 
     def parse_secretmaps_args(self):
         """

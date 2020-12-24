@@ -21,8 +21,5 @@ class Gcloud(NarrenschiffModule):
 
         cmd = ' '.join([Gcloud.gcloud_cmd, command, *flags])
 
-        # When you enable some API the output will be empty
-        # It's OK to pipe to stdout instead of catching with check in the
-        # tasks engine - though it would create problems with commands that
-        # require user input
-        subprocess.run(cmd, shell=True, check=True)
+        output, rc = self.subprocess(cmd)
+        self.echo(output, rc)

@@ -1,5 +1,14 @@
+import sys
+import subprocess
 from abc import ABC
 from abc import abstractmethod
+
+import click
+
+from narrenschiff.log import NarrenschiffLogger
+
+
+logger = NarrenschiffLogger()
 
 
 class NarrenschiffModuleException(Exception):
@@ -39,3 +48,52 @@ class NarrenschiffModule(ABC):
     def execute(self):
         """Parse command and its arguments, and execute the module."""
         pass
+
+    def subprocess(self, cmd):
+        """
+        Execute command with shell, and return output and return code.
+
+        :param cmd: Command to execute
+        :type cmd: ``str``
+        :return: output and return code
+        :rtype: ``tuple``
+
+        Example::
+
+            output, rc = self.subprocess('kubectl get pods')
+        """
+        process = subprocess.run(
+            cmd,
+            shell=True,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
+        logger.info(f'Command "{cmd}" executed')
+        logger.debug(output)
+
+        output = process.stdout if process.stdout else process.stderr
+        return output.decode('utf-8'), process.returncode
+
+    def echo(self, output, rc):
+        """
+        Print output to console, and exit if return code is different from 0.
+
+        :param output: stdout or stderr of a process
+        :type output: ``str``
+        :param rc: Return code of the process
+        :type rc: ``int``
+        :return: Void
+        :rtype: ``None``
+        """
+        color = 'green' if rc == 0 else 'red'
+
+        if output == '' and rc == 0:
+            # No output from the task, but operation was successful
+            output = 'Operation successfully executed!'
+
+        click.secho(output, fg=color)
+
+        if rc:
+            sys.exit(rc)

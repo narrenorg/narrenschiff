@@ -13,10 +13,8 @@ class WaitForPod(NarrenschiffModule):
 
     def execute(self):
         timeout = 300  # 5min
-        namespace = self.command['namespace']
         pod_name = self.command['grep_pod_name']
-
-        cmd = 'kubectl get pods --namespace {}'.format(namespace)
+        cmd = self.get_cmd()
         start_time = time.time()
 
         while True:
@@ -30,9 +28,13 @@ class WaitForPod(NarrenschiffModule):
 
             output = process.stdout.decode('utf-8')
 
+            # output, rc = self.subprocess(cmd)
+            # if rc: -> sys.exit (something went wrong) print(output)
+
             r = re.search(r'^{}.*\s+(\d)/\d.*'.format(pod_name), output, re.M)
             if int(r.group(1)) == self.command['threshold_replicas']:
                 click.secho('Pod ready', fg='green')
+                # self.echo('Pod ready', rc)
                 break
 
             if time.time() - start_time >= timeout:
@@ -40,3 +42,7 @@ class WaitForPod(NarrenschiffModule):
 
             # click.secho('Waiting...', fg='green')
             time.sleep(1)
+
+    def get_cmd(self):
+        namespace = self.command['namespace']
+        return 'kubectl get pods --namespace {}'.format(namespace)

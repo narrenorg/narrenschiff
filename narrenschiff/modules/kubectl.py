@@ -1,9 +1,6 @@
 import os
-import subprocess
 from contextlib import suppress
 from urllib.parse import urlparse
-
-import click
 
 from narrenschiff.common import flatten
 from narrenschiff.modules.common import NarrenschiffModule
@@ -13,7 +10,7 @@ from narrenschiff.templating import Template
 class Kubectl(NarrenschiffModule):
     """``kubectl`` module."""
 
-    def execute(self):
+    def get_cmd(self):
         command = self.command.get('command')
         switches = self.command.get('opts', [])
 
@@ -26,18 +23,7 @@ class Kubectl(NarrenschiffModule):
 
         flags.extend(['--{}'.format(switch) for switch in switches])
 
-        cmd = ' '.join(['kubectl', command, *flags])
-
-        process = subprocess.run(
-            cmd,
-            shell=True,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-        output = process.stdout if process.stdout else process.stderr
-        color = 'green' if process.stdout else 'red'
-        click.secho(output.decode('utf-8'), fg=color)
+        return ' '.join(['kubectl', command, *flags])
 
     def update_filename_argument(self):
         """

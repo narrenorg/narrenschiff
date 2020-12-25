@@ -1,5 +1,4 @@
 import os
-import subprocess
 from contextlib import suppress
 
 from narrenschiff.modules.common import NarrenschiffModule
@@ -17,7 +16,7 @@ class Helm(NarrenschiffModule):
 
     helm = 'helm'
 
-    def execute(self):
+    def get_cmd(self):
         command = self.command.get('command')
         name = self.command.get('name', '')
         chart = self.command.get('chart', '')
@@ -49,8 +48,7 @@ class Helm(NarrenschiffModule):
         if args_set:
             sets = ' '.join(['--set {}'.format(s) for s in args_set])
 
-        cmd = ' '.join([Helm.helm, command, name, chart, opts, args, sets])
-        subprocess.run(cmd, shell=True, check=True)
+        return ' '.join([Helm.helm, command, name, chart, opts, args, sets])
 
     def parse_secretmaps_args(self):
         """

@@ -92,17 +92,12 @@ class TasksEngine:
         :rtype: ``None``
         """
         click.echo()
-        try:
-            for task in self.tasks:
-                if self.beacons:
-                    if self.beacons & task.beacons or 'always' in task.beacons:
-                        self._execute(task)
-                else:
+        for task in self.tasks:
+            if self.beacons:
+                if self.beacons & task.beacons or 'always' in task.beacons:
                     self._execute(task)
-        except subprocess.CalledProcessError as e:  # noqa
-            click.secho(e, fg='red')
-            warning = 'Task encountered an error! Exiting...'
-            click.secho(warning, fg='red', err=True)
+            else:
+                self._execute(task)
 
     def _execute(self, task):
         """

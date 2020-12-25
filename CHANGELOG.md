@@ -1,3 +1,9 @@
+# 3.0.1 - 24.12.2020.
+
+## Fixed
+
+* Remove handling of `CalledProcessError` from `TaskEngine` (errors printing should be handled by task Module echo method)
+
 # 3.0.0 - 24.12.2020.
 
 ## Changed

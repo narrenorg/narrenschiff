@@ -3,6 +3,7 @@
 ## Fixed
 
 * Remove handling of `CalledProcessError` from `TaskEngine` (errors printing should be handled by task Module echo method)
+* Improve UX of `TaskEngine` (remove unnecessary newline after task execution)
 
 # 3.0.0 - 24.12.2020.
 

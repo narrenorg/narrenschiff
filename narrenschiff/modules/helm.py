@@ -14,8 +14,6 @@ class HelmException(Exception):
 class Helm(NarrenschiffModule):
     """``helm`` module."""
 
-    helm = 'helm'
-
     @property
     def cmd(self):
         command = self.command.get('command')
@@ -49,7 +47,7 @@ class Helm(NarrenschiffModule):
         if args_set:
             sets = ' '.join(['--set {}'.format(s) for s in args_set])
 
-        return ' '.join([Helm.helm, command, name, chart, opts, args, sets])
+        return ' '.join(['helm', command, name, chart, opts, args, sets])
 
     def parse_secretmaps_args(self):
         """

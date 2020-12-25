@@ -13,10 +13,8 @@ class WaitForPod(NarrenschiffModule):
 
     def execute(self):
         timeout = 300  # 5min
-        namespace = self.command['namespace']
         pod_name = self.command['grep_pod_name']
-
-        cmd = 'kubectl get pods --namespace {}'.format(namespace)
+        cmd = self.get_cmd()
         start_time = time.time()
 
         while True:
@@ -44,3 +42,7 @@ class WaitForPod(NarrenschiffModule):
 
             # click.secho('Waiting...', fg='green')
             time.sleep(1)
+
+    def get_cmd(self):
+        namespace = self.command['namespace']
+        return 'kubectl get pods --namespace {}'.format(namespace)

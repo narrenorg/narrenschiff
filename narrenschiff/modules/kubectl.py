@@ -2,8 +2,6 @@ import os
 from contextlib import suppress
 from urllib.parse import urlparse
 
-import click
-
 from narrenschiff.common import flatten
 from narrenschiff.modules.common import NarrenschiffModule
 from narrenschiff.templating import Template
@@ -12,7 +10,7 @@ from narrenschiff.templating import Template
 class Kubectl(NarrenschiffModule):
     """``kubectl`` module."""
 
-    def execute(self):
+    def get_cmd(self):
         command = self.command.get('command')
         switches = self.command.get('opts', [])
 
@@ -25,10 +23,7 @@ class Kubectl(NarrenschiffModule):
 
         flags.extend(['--{}'.format(switch) for switch in switches])
 
-        cmd = ' '.join(['kubectl', command, *flags])
-
-        output, rc = self.subprocess(cmd)
-        self.echo(output, rc)
+        return ' '.join(['kubectl', command, *flags])
 
     def update_filename_argument(self):
         """

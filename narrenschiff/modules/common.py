@@ -29,8 +29,6 @@ class NarrenschiffModule(ABC):
 
         :param command: Arguments for the module used to construct a command
         :type command: ``str``, ``int``, ``list``, or ``dict``
-        :param template: Template environment of the course project
-        :type template: :class:`narrenschiff.templating.Template`
         :return: Void
         :rtype: ``None``
         """
@@ -44,9 +42,20 @@ class NarrenschiffModule(ABC):
         name = self.__class__.__name__
         return '<{}.{} object at {}>'.format(module, name, hex(id(self)))
 
-    @abstractmethod
     def execute(self):
         """Parse command and its arguments, and execute the module."""
+        cmd = self.get_cmd()
+        output, rc = self.subprocess(cmd)
+        self.echo(output, rc)
+
+    @abstractmethod
+    def get_cmd(self):
+        """
+        Get command that module needs to execute later.
+
+        :return: Full command with all parameters
+        :rtype: ``str``
+        """
         pass
 
     def subprocess(self, cmd):
@@ -70,10 +79,11 @@ class NarrenschiffModule(ABC):
             stderr=subprocess.PIPE
         )
 
+        output = process.stdout if process.stdout else process.stderr
+
         logger.info(f'Command "{cmd}" executed')
         logger.debug(output)
 
-        output = process.stdout if process.stdout else process.stderr
         return output.decode('utf-8'), process.returncode
 
     def echo(self, output, rc):

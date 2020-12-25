@@ -10,7 +10,8 @@ from narrenschiff.templating import Template
 class Kubectl(NarrenschiffModule):
     """``kubectl`` module."""
 
-    def get_cmd(self):
+    @property
+    def cmd(self):
         command = self.command.get('command')
         switches = self.command.get('opts', [])
 

@@ -6,7 +6,8 @@ class Gcloud(NarrenschiffModule):
 
     gcloud_cmd = 'gcloud'
 
-    def get_cmd(self):
+    @property
+    def cmd(self):
         command = self.command.get('command')
         args = self.command.get('args', {})
         switches = self.command.get('opts', [])

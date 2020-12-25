@@ -16,7 +16,8 @@ class Helm(NarrenschiffModule):
 
     helm = 'helm'
 
-    def get_cmd(self):
+    @property
+    def cmd(self):
         command = self.command.get('command')
         name = self.command.get('name', '')
         chart = self.command.get('chart', '')

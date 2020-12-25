@@ -1,5 +1,9 @@
 # 3.0.1 - 24.12.2020.
 
+## Changed
+
+* `get_cmd` abstract method is now `cmd` abstract property (decorator `@property` must be added when inheriting from `NarrenschiffModule`)
+
 ## Fixed
 
 * Remove handling of `CalledProcessError` from `TaskEngine` (errors printing should be handled by task Module echo method)

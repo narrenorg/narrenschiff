@@ -12,7 +12,8 @@ logger = NarrenschiffLogger()
 class Kustomization(NarrenschiffModule):
     """``kustomization`` module. Wrapper around ``kubectl apply -k dir/``."""
 
-    def get_cmd(self):
+    @property
+    def cmd(self):
         logger.info('Executing kustomization task')
         if not isinstance(self.command, str):
             exception = 'This module does not support additional arguments'

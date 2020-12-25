@@ -44,12 +44,12 @@ class NarrenschiffModule(ABC):
 
     def execute(self):
         """Parse command and its arguments, and execute the module."""
-        cmd = self.get_cmd()
-        output, rc = self.subprocess(cmd)
+        output, rc = self.subprocess(self.cmd)
         self.echo(output, rc)
 
+    @property
     @abstractmethod
-    def get_cmd(self):
+    def cmd(self):
         """
         Get command that module needs to execute later.
 

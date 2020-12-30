@@ -17,3 +17,6 @@ class Gcloud(NarrenschiffModule):
         flags.extend(['--{}'.format(switch) for switch in switches])
 
         return ' '.join(['gcloud', command, *flags])
+
+    def dry_run_supported(self, cmd):
+        return False

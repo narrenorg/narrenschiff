@@ -47,3 +47,6 @@ class WaitForPod(NarrenschiffModule):
     def cmd(self):
         namespace = self.command['namespace']
         return 'kubectl get pods --namespace {}'.format(namespace)
+
+    def dry_run_supported(self, cmd):
+        return False

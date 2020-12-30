@@ -23,3 +23,10 @@ class Kustomization(NarrenschiffModule):
         logger.debug(f'Executing kustomization module on {path}')
 
         return 'kubectl apply -k "{}"'.format(path)
+
+    @property
+    def dry_run(self):
+        return '--dry-run=server'  # none, server, client, -o yaml
+
+    def dry_run_supported(self, cmd):
+        return True

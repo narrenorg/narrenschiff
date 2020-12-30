@@ -1,4 +1,8 @@
-# 3.0.1 - 24.12.2020.
+# 3.1.0 - 24.12.2020.
+
+## Added
+
+* Dry run is now supported by modules (the implementation works by passing `--dry-run` flag to commands that should be executed)
 
 ## Changed
 

@@ -73,3 +73,15 @@ class Helm(NarrenschiffModule):
             tmp = Secretmap().tmp
             return os.path.join(tmp, basepath)
         return value
+
+    def dry_run_supported(self, cmd):
+        whitelist = [
+            'install',
+            'template',
+            'uninstall',
+            'upgrade',
+        ]
+
+        if cmd.split()[1] in whitelist:
+            return True
+        return False

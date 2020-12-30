@@ -42,9 +42,23 @@ class NarrenschiffModule(ABC):
         name = self.__class__.__name__
         return '<{}.{} object at {}>'.format(module, name, hex(id(self)))
 
-    def execute(self):
-        """Parse command and its arguments, and execute the module."""
-        output, rc = self.subprocess(self.cmd)
+    def execute(self, dry_run_enabled=False):
+        """
+        Parse command and its arguments, and execute the module.
+
+        :param dry_run_enabled: Boolean indicating whether user turned on dry
+            run for the task
+        :type dry_run_enabled: ``bool``
+        :return: Void
+        :rtype: ``None``
+        """
+        if dry_run_enabled:
+            if self.dry_run_supported(self.cmd):
+                output, rc = self.subprocess(f'{self.cmd} {self.dry_run}')
+            else:
+                output, rc = 'Dry run not supported by module or subcommand\n', 1  # noqa
+        else:
+            output, rc = self.subprocess(self.cmd)
         self.echo(output, rc)
 
     @property
@@ -56,7 +70,34 @@ class NarrenschiffModule(ABC):
         :return: Full command with all parameters
         :rtype: ``str``
         """
-        pass
+        raise NotImplementedError
+
+    @property
+    def dry_run(self):
+        """
+        Return a dry run flag.
+
+        :return: ``--dry-run`` string
+        :rtype: ``str``
+
+        In general most commands use ``--dry-run`` so there is no need to
+        override this. However, there are exceptions for some commands where
+        this flag is differently named. This property offers extensibility to
+        the modules that may use different flag.
+        """
+        return '--dry-run'
+
+    @abstractmethod
+    def dry_run_supported(self, cmd):
+        """
+        Check if command supports --dry-run.
+
+        :param cmd: Command that module should execute
+        :type cmd: ``str``
+        :return: Boolean indicating whether command supports dry run
+        :rtype: ``bool``
+        """
+        raise NotImplementedError
 
     def subprocess(self, cmd):
         """

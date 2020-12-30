@@ -21,7 +21,18 @@ class NarrenschiffModule(ABC):
     """
     Abstract class/Interface for the module classes. A module must inherit
     from this class.
+
+    :cvar DRY_RUN_FLAG: ``int``
+
+    The subprocess module does not have a way of indicating whether a command
+    was run with dry run or not, since that is the responsibility of
+    :meth:`narrenschiff.modules.common.NarrenschiffModule.execute` method. If
+    module or subcommand of module is not supporting dry run, than
+    ``DRY_RUN_FLAG`` is a reserved return code (rc) that indicates that program
+    should not exit, and output should be printed in special color (blue).
     """
+
+    DRY_RUN_FLAG = -99999
 
     def __init__(self, command):
         """
@@ -56,7 +67,10 @@ class NarrenschiffModule(ABC):
             if self.dry_run_supported(self.cmd):
                 output, rc = self.subprocess(f'{self.cmd} {self.dry_run}')
             else:
-                output, rc = 'Dry run not supported by module or subcommand\n', 1  # noqa
+                output, rc = (
+                    'Dry run not supported by the module or a subcommand\n',
+                    NarrenschiffModule.DRY_RUN_FLAG
+                )
         else:
             output, rc = self.subprocess(self.cmd)
         self.echo(output, rc)
@@ -138,7 +152,7 @@ class NarrenschiffModule(ABC):
         :return: Void
         :rtype: ``None``
         """
-        color = 'green' if rc == 0 else 'red'
+        color = self._color(rc)
 
         if output == '' and rc == 0:
             # No output from the task, but operation was successful
@@ -146,5 +160,21 @@ class NarrenschiffModule(ABC):
 
         click.secho(output, fg=color)
 
-        if rc:
+        if rc and rc != NarrenschiffModule.DRY_RUN_FLAG:
             sys.exit(rc)
+
+    def _color(self, rc):
+        """
+        Get color for the command output.
+
+        :param rc: Return code of the command
+        :type rc: ``int``
+        :return: String indicating color
+        :rtype: ``str``
+        """
+        if rc == 0:
+            return 'green'
+        elif rc == NarrenschiffModule.DRY_RUN_FLAG:
+            return 'blue'
+        else:
+            return 'red'

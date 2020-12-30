@@ -21,7 +21,18 @@ class NarrenschiffModule(ABC):
     """
     Abstract class/Interface for the module classes. A module must inherit
     from this class.
+
+    :cvar DRY_RUN_FLAG: ``int``
+
+    The subprocess module does not have a way of indicating whether a command
+    was run with dry run or not, since that is the responsibility of
+    :meth:`narrenschiff.modules.common.NarrenschiffModule.execute` method. If
+    module or subcommand of module is not supporting dry run, than
+    ``DRY_RUN_FLAG`` is a reserved return code (rc) that indicates that program
+    should not exit, and output should be printed in special color (blue).
     """
+
+    DRY_RUN_FLAG = -99999
 
     def __init__(self, command):
         """
@@ -42,21 +53,65 @@ class NarrenschiffModule(ABC):
         name = self.__class__.__name__
         return '<{}.{} object at {}>'.format(module, name, hex(id(self)))
 
-    def execute(self):
-        """Parse command and its arguments, and execute the module."""
-        cmd = self.get_cmd()
-        output, rc = self.subprocess(cmd)
+    def execute(self, dry_run_enabled=False):
+        """
+        Parse command and its arguments, and execute the module.
+
+        :param dry_run_enabled: Boolean indicating whether user turned on dry
+            run for the task
+        :type dry_run_enabled: ``bool``
+        :return: Void
+        :rtype: ``None``
+        """
+        if dry_run_enabled:
+            if self.dry_run_supported(self.cmd):
+                output, rc = self.subprocess(f'{self.cmd} {self.dry_run}')
+            else:
+                output, rc = (
+                    'Dry run not supported by the module or a subcommand\n',
+                    NarrenschiffModule.DRY_RUN_FLAG
+                )
+        else:
+            output, rc = self.subprocess(self.cmd)
         self.echo(output, rc)
 
+    @property
     @abstractmethod
-    def get_cmd(self):
+    def cmd(self):
         """
         Get command that module needs to execute later.
 
         :return: Full command with all parameters
         :rtype: ``str``
         """
-        pass
+        raise NotImplementedError
+
+    @property
+    def dry_run(self):
+        """
+        Return a dry run flag.
+
+        :return: ``--dry-run`` string
+        :rtype: ``str``
+
+        In general most commands use ``--dry-run`` so there is no need to
+        override this. However, there are exceptions for some commands where
+        this flag is differently named. This property offers extensibility to
+        the modules that may use different flag.
+        """
+        return '--dry-run'
+
+    @abstractmethod
+    def dry_run_supported(self, cmd):
+        """
+        Check if command supports --dry-run.
+
+        :param cmd: Command that module should execute
+        :type cmd: ``str``
+        :return: Boolean indicating whether command supports dry run
+        :rtype: ``bool``
+        """
+        raise NotImplementedError
 
     def subprocess(self, cmd):
         """
@@ -97,7 +152,7 @@ class NarrenschiffModule(ABC):
         :return: Void
         :rtype: ``None``
         """
-        color = 'green' if rc == 0 else 'red'
+        color = self._color(rc)
 
         if output == '' and rc == 0:
             # No output from the task, but operation was successful
@@ -105,5 +160,21 @@ class NarrenschiffModule(ABC):
 
         click.secho(output, fg=color)
 
-        if rc:
+        if rc and rc != NarrenschiffModule.DRY_RUN_FLAG:
             sys.exit(rc)
+
+    def _color(self, rc):
+        """
+        Get color for the command output.
+
+        :param rc: Return code of the command
+        :type rc: ``int``
+        :return: String indicating color
+        :rtype: ``str``
+        """
+        if rc == 0:
+            return 'green'
+        elif rc == NarrenschiffModule.DRY_RUN_FLAG:
+            return 'blue'
+        else:
+            return 'red'

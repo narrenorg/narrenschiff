@@ -1,3 +1,22 @@
+# 3.1.0 - 30.12.2020.
+
+## Added
+
+* Dry run is now supported by modules (the implementation works by passing `--dry-run` flag to commands that should be executed)
+
+## Changed
+
+* `get_cmd` abstract method is now `cmd` abstract property (decorator `@property` must be added when inheriting from `NarrenschiffModule`)
+
+## Removed
+
+* Remove unnecessary command attribute from narrenschiff modules
+
+## Fixed
+
+* Remove handling of `CalledProcessError` from `TaskEngine` (errors printing should be handled by task Module echo method)
+* Improve UX of `TaskEngine` (remove unnecessary newline after task execution)
+
 # 3.0.0 - 24.12.2020.
 
 ## Changed

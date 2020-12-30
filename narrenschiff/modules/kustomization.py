@@ -12,7 +12,8 @@ logger = NarrenschiffLogger()
 class Kustomization(NarrenschiffModule):
     """``kustomization`` module. Wrapper around ``kubectl apply -k dir/``."""
 
-    def get_cmd(self):
+    @property
+    def cmd(self):
         logger.info('Executing kustomization task')
         if not isinstance(self.command, str):
             exception = 'This module does not support additional arguments'
@@ -22,3 +23,10 @@ class Kustomization(NarrenschiffModule):
         logger.debug(f'Executing kustomization module on {path}')
 
         return 'kubectl apply -k "{}"'.format(path)
+
+    @property
+    def dry_run(self):
+        return '--dry-run=server'  # none, server, client, -o yaml
+
+    def dry_run_supported(self, cmd):
+        return True

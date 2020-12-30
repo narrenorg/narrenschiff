@@ -69,7 +69,7 @@ class Task:
 class TasksEngine:
     """Run course."""
 
-    def __init__(self, tasks, beacons):
+    def __init__(self, tasks, beacons, dry_run_enabled):
         """
         Construct a :class:`narrenschiff.task.TasksEngine` class.
 
@@ -77,11 +77,15 @@ class TasksEngine:
         :type tasks: ``list`` of :class:`narrenschiff.task.Task`
         :param beacons: List of tags used to determine which task is run
         :type beacons: ``set``
+        :param dry_run_enabled: Boolean indicating whether user turned on dry
+            run for the task
+        :type dry_run_enabled: ``bool``
         :return: Void
         :rtype: ``None``
         """
         self.tasks = tasks
         self.beacons = beacons
+        self.dry_run_enabled = dry_run_enabled
         self.width = int(subprocess.check_output(['tput', 'cols']).decode())
 
     def run(self):
@@ -92,17 +96,12 @@ class TasksEngine:
         :rtype: ``None``
         """
         click.echo()
-        try:
-            for task in self.tasks:
-                if self.beacons:
-                    if self.beacons & task.beacons or 'always' in task.beacons:
-                        self._execute(task)
-                else:
+        for task in self.tasks:
+            if self.beacons:
+                if self.beacons & task.beacons or 'always' in task.beacons:
                     self._execute(task)
-        except subprocess.CalledProcessError as e:  # noqa
-            click.secho(e, fg='red')
-            warning = 'Task encountered an error! Exiting...'
-            click.secho(warning, fg='red', err=True)
+            else:
+                self._execute(task)
 
     def _execute(self, task):
         """
@@ -119,5 +118,4 @@ class TasksEngine:
         click.echo(
             '* [ {} ] * [ {} ] {}\n'.format(current_time, task.name, fill)
         )
-        task.command.execute()
-        click.echo()
+        task.command.execute(dry_run_enabled=self.dry_run_enabled)

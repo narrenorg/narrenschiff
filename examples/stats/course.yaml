@@ -27,3 +27,11 @@
       - all-namespaces
   beacons:
     - always
+
+- name: Repo list
+  helm:
+    command: repo list
+
+- name: Gcloud version
+  gcloud:
+    command: version

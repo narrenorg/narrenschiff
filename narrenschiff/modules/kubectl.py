@@ -10,7 +10,8 @@ from narrenschiff.templating import Template
 class Kubectl(NarrenschiffModule):
     """``kubectl`` module."""
 
-    def get_cmd(self):
+    @property
+    def cmd(self):
         command = self.command.get('command')
         switches = self.command.get('opts', [])
 
@@ -56,3 +57,23 @@ class Kubectl(NarrenschiffModule):
                 paths.append(os.path.join(Template().tmp, filename))
 
             self.command['args']['filename'] = paths
+
+    @property
+    def dry_run(self):
+        return '--dry-run=server'  # none, server, client, -o yaml
+
+    def dry_run_supported(self, cmd):
+        whitelist = [
+            'run',
+            'apply',
+            'delete',
+            'create',
+            'scale',
+            'autoscale',
+            'patch',
+            'replace',
+        ]
+
+        if cmd.split()[1] in whitelist:
+            return True
+        return False

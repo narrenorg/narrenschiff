@@ -18,7 +18,8 @@ from narrenschiff.secretmap import Secretmap
     required=False,
     type=str,
     help='Execute tasks marked only by given beacons (comma separated list).')
-def sail(course, beacons):
+@click.option('--dry-run', required=False, is_flag=True)
+def sail(course, beacons, dry_run):
     """
     Turn tasks into actions.
     \f
@@ -46,7 +47,7 @@ def sail(course, beacons):
     except AttributeError:
         beacons = set()
 
-    engine = TasksEngine(tasks, beacons)
+    engine = TasksEngine(tasks, beacons, dry_run)
     engine.run()
 
     template.clear_templates()

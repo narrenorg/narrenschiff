@@ -4,9 +4,8 @@ from narrenschiff.modules.common import NarrenschiffModule
 class Gcloud(NarrenschiffModule):
     """``gcloud`` module."""
 
-    gcloud_cmd = 'gcloud'
-
-    def get_cmd(self):
+    @property
+    def cmd(self):
         command = self.command.get('command')
         args = self.command.get('args', {})
         switches = self.command.get('opts', [])
@@ -17,4 +16,7 @@ class Gcloud(NarrenschiffModule):
 
         flags.extend(['--{}'.format(switch) for switch in switches])
 
-        return ' '.join([Gcloud.gcloud_cmd, command, *flags])
+        return ' '.join(['gcloud', command, *flags])
+
+    def dry_run_supported(self, cmd):
+        return False

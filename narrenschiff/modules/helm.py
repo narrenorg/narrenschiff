@@ -14,9 +14,8 @@ class HelmException(Exception):
 class Helm(NarrenschiffModule):
     """``helm`` module."""
 
-    helm = 'helm'
-
-    def get_cmd(self):
+    @property
+    def cmd(self):
         command = self.command.get('command')
         name = self.command.get('name', '')
         chart = self.command.get('chart', '')
@@ -48,7 +47,7 @@ class Helm(NarrenschiffModule):
         if args_set:
             sets = ' '.join(['--set {}'.format(s) for s in args_set])
 
-        return ' '.join([Helm.helm, command, name, chart, opts, args, sets])
+        return ' '.join(['helm', command, name, chart, opts, args, sets])
 
     def parse_secretmaps_args(self):
         """
@@ -74,3 +73,15 @@ class Helm(NarrenschiffModule):
             tmp = Secretmap().tmp
             return os.path.join(tmp, basepath)
         return value
+
+    def dry_run_supported(self, cmd):
+        whitelist = [
+            'install',
+            'template',
+            'uninstall',
+            'upgrade',
+        ]
+
+        if cmd.split()[1] in whitelist:
+            return True
+        return False

@@ -23,11 +23,12 @@ class Keychain:
     """Bundle password and salt."""
 
     def __init__(self):
-        conf = self.load_configuration_file()
-        self.key = self.load_value(conf.get('key'))
-        self.spice = self.load_value(conf.get('spice'))
+        conf = self._load_configuration_file()
 
-    def load_value(self, path):
+        self.key = self._load_value(conf.get('key'))
+        self.spice = self._load_value(conf.get('spice'))
+
+    def _load_value(self, path):
         """
         Load value from file on the given path.
 
@@ -44,22 +45,22 @@ class Keychain:
         except FileNotFoundError:
             click.secho(f'File {path} not found', fg='red')
             click.secho(
-                f'Please check or configure paths in {self.get_configuration_path()}',  # noqa
+                f'Please check or configure paths in {self._get_configuration_path()}',  # noqa
                 fg='red'
             )
             sys.exit(1)
         return secret
 
-    def load_configuration_file(self):
+    def _load_configuration_file(self):
         """
         Load ``.narrenschiff.yaml`` configuration file.
         """
-        path = self.get_configuration_path()
+        path = self._get_configuration_path()
         with open(path, 'r') as f:
             conf = yaml.load(f, Loader=yaml.FullLoader)
         return conf
 
-    def get_configuration_path(self):
+    def _get_configuration_path(self):
         """
         Get path to the existing configuration file.
 
@@ -72,8 +73,8 @@ class Keychain:
         narrenschiff_yaml = '.'.join([narrenschiff, 'yaml'])
         narrenschiff_yml = '.'.join([narrenschiff, 'yml'])
 
-        conf_yaml = self.check_configuration_file_exists(narrenschiff_yaml)
-        conf_yml = self.check_configuration_file_exists(narrenschiff_yml)
+        conf_yaml = self._check_configuration_file_exists(narrenschiff_yaml)
+        conf_yml = self._check_configuration_file_exists(narrenschiff_yml)
 
         if bool(conf_yaml) != bool(conf_yml):
             return conf_yaml or conf_yml
@@ -81,7 +82,7 @@ class Keychain:
         exception = 'Ambiguous configuration. Either missing or duplicated'
         raise ChestException(exception)
 
-    def check_configuration_file_exists(self, path):
+    def _check_configuration_file_exists(self, path):
         """
         Check if configuraiton file exists. If it exists, return its path.
 

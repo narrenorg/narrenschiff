@@ -6,7 +6,7 @@ import yaml
 from narrenschiff.task import Task
 from narrenschiff.task import TasksEngine
 from narrenschiff.templating import Template
-from narrenschiff.chest import Keychain
+from narrenschiff.config import Keychain
 from narrenschiff.secretmap import Secretmap
 
 

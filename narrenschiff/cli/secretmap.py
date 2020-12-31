@@ -1,9 +1,9 @@
 import os
 import click
 
-from narrenschiff.chest import Keychain
-from narrenschiff.secretmap import Secretmap
+from narrenschiff.config import Keychain
 from narrenschiff.templating import SecretmapVars
+from narrenschiff.secretmap import Secretmap
 from narrenschiff.secretmap import CourseLocationError
 
 

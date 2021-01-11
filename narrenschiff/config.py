@@ -1,7 +1,14 @@
 import os
 import sys
+import subprocess
+
 import yaml
 import click
+
+from narrenschiff.log import NarrenschiffLogger
+
+
+logger = NarrenschiffLogger()
 
 
 class ConfigurationException(Exception):
@@ -25,6 +32,7 @@ class NarrenschiffConfiguration:
 
         self.key = self._load_value(conf.get('key'))
         self.spice = self._load_value(conf.get('spice'))
+        self.context = conf.get('context', {})
 
     def _load_value(self, path):
         """
@@ -62,7 +70,7 @@ class NarrenschiffConfiguration:
         """
         Get path to the existing configuration file.
 
-        :return: Path to configuraiton file
+        :return: Path to configuration file
         :rtype: ``str``
         """
         project_root = os.getcwd()
@@ -82,7 +90,7 @@ class NarrenschiffConfiguration:
 
     def _check_configuration_file_exists(self, path):
         """
-        Check if configuraiton file exists. If it exists, return its path.
+        Check if configuration file exists. If it exists, return its path.
 
         :param path: Path to configuration file
         :type path: ``str``
@@ -98,7 +106,77 @@ class Keychain:
     """Bundle password and salt."""
 
     def __init__(self):
-        configuraiton = NarrenschiffConfiguration()
+        configuration = NarrenschiffConfiguration()
 
-        self.key = configuraiton.key
-        self.spice = configuraiton.spice
+        self.key = configuration.key
+        self.spice = configuration.spice
+
+
+class KubectlContext:
+    """Handle context switching."""
+
+    NAME = 'undefined'
+    USE = 'false'
+
+    def __init__(self):
+        configuration = NarrenschiffConfiguration()
+
+        self.name = configuration.context.get('name', KubectlContext.NAME)
+        self.use = self._sanitize_boolean(
+            configuration.context.get('use', KubectlContext.USE)
+        )
+
+        if self.use:
+            self.old = self._get_current_context()
+            self.switch_context = (self.old, self.name)
+
+    def _sanitize_boolean(self, value):
+        if isinstance(value, str):
+            if value == 'true':
+                return True
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, int):
+            return bool(value)
+        return False
+
+    def _get_current_context(self):
+        logger.info('Obtaining current kubectl context')
+
+        process = subprocess.run(
+            'kubectl config current-context',
+            shell=True,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
+        if process.returncode:
+            logger.error('Could not get current context')
+            logger.debug(f"{process.stderr.decode('utf-8')}")
+            sys.exit(1)
+
+        context = process.stdout.decode('utf-8').strip()
+        logger.info(f'Current kubectl context is {context}')
+        return context
+
+    def switch(self):
+        """Switch kubectl context."""
+        old, new = self.switch_context
+        logger.info(f'Switching kubectl context to {new}')
+
+        process = subprocess.run(
+            f'kubectl config use-context {new}',
+            shell=True,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
+        if process.returncode:
+            logger.error('Could not switch context')
+            logger.debug(f"{process.stderr.decode('utf-8')}")
+            sys.exit(1)
+
+        logger.info(f'Current kubectl context is set to {new}')
+        self.switch_context = (new, old)

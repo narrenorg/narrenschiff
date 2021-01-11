@@ -1,3 +1,13 @@
+# 3.2.0 - 11.1.2021.
+
+## Added
+
+* Cluster context switching for kubectl (experimental feature)
+
+## Changed
+
+* Add new configuration class that other configuration classes shell reuse by principle of composition
+
 # 3.1.0 - 30.12.2020.
 
 ## Added

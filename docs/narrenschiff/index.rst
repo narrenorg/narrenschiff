@@ -11,5 +11,6 @@ User Guide
    courses
    vars_files
    beacons
+   configuration_file
    modules/index
    examples/index

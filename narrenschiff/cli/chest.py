@@ -2,8 +2,8 @@ import os
 import click
 
 from narrenschiff.chest import Chest
-from narrenschiff.chest import Keychain
 from narrenschiff.chest import AES256Cipher
+from narrenschiff.config import Keychain
 
 from narrenschiff.common import get_chest_file_path
 from narrenschiff.templating import ChestVars

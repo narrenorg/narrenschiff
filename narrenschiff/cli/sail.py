@@ -6,7 +6,8 @@ import yaml
 from narrenschiff.task import Task
 from narrenschiff.task import TasksEngine
 from narrenschiff.templating import Template
-from narrenschiff.chest import Keychain
+from narrenschiff.config import Keychain
+from narrenschiff.config import KubectlContext
 from narrenschiff.secretmap import Secretmap
 
 
@@ -32,6 +33,8 @@ def sail(course, beacons, dry_run):
     :return: Void
     :rtype: ``None``
     """
+    context = KubectlContext()
+
     template = Template()
     template.set_course(course)
 
@@ -48,10 +51,28 @@ def sail(course, beacons, dry_run):
         beacons = set()
 
     engine = TasksEngine(tasks, beacons, dry_run)
-    engine.run()
+
+    try:
+        _check_or_switch(context)
+        engine.run()
+    finally:
+        _check_or_switch(context)
 
     template.clear_templates()
     secretmap.clear_all_files()
+
+
+def _check_or_switch(context):
+    """
+    Change context for the kubectl command.
+
+    :param context: Context configuration class
+    :type context: :class:`narrenschiff.config.KubectlContext`
+    :return: Void
+    :rtype: ``None``
+    """
+    if context.use:
+        context.switch()
 
 
 def _import_course(course, template):

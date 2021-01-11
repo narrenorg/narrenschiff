@@ -11,6 +11,7 @@ API
    chest
    secretmap
    common
+   config
    filters
    modules
    cli

@@ -8,7 +8,7 @@ from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
 from narrenschiff.filters import filters
-from narrenschiff.chest import Keychain
+from narrenschiff.config import Keychain
 from narrenschiff.chest import AES256Cipher
 from narrenschiff.common import is_yaml
 from narrenschiff.common import Singleton

@@ -1,3 +1,9 @@
+# 3.2.1 - 12.1.2021.
+
+## Fixed
+
+* Delete rendered templates and files from `/tmp/{uuid}` even when program does not exit normally
+
 # 3.2.0 - 11.1.2021.
 
 ## Added

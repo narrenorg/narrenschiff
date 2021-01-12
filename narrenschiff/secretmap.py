@@ -181,7 +181,9 @@ class Secretmap(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
+        logger.info(f'Deleting rendered secretmaps at {self.tmp}')
         shutil.rmtree(self.tmp)
+        logger.info('Done!')
 
     def edit(self, treasure):
         """

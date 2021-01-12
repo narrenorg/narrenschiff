@@ -137,7 +137,6 @@ class NarrenschiffModule(ABC):
         output = process.stdout if process.stdout else process.stderr
 
         logger.info(f'Command "{cmd}" executed')
-        logger.debug(output)
 
         return output.decode('utf-8'), process.returncode
 

@@ -57,9 +57,8 @@ def sail(course, beacons, dry_run):
         engine.run()
     finally:
         _check_or_switch(context)
-
-    template.clear_templates()
-    secretmap.clear_all_files()
+        template.clear_templates()
+        secretmap.clear_all_files()
 
 
 def _check_or_switch(context):

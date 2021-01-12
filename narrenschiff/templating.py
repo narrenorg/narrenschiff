@@ -319,4 +319,6 @@ class Template(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
+        logger.info(f'Deleting rendered templates at {self.tmp}')
         shutil.rmtree(self.tmp)
+        logger.info('Done!')

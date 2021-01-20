@@ -14,12 +14,11 @@ class WaitForPod(NarrenschiffModule):
     def execute(self):
         timeout = 300  # 5min
         pod_name = self.command['grep_pod_name']
-        cmd = self.get_cmd()
         start_time = time.time()
 
         while True:
             process = subprocess.run(
-                cmd,
+                self.cmd,
                 shell=True,
                 check=True,
                 stdout=subprocess.PIPE,

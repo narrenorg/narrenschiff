@@ -11,6 +11,7 @@
 ## Fixed
 
 * Delete dead code in Kubectl module (`update_filename_argument` does not need to check if `filename` in `arg` is a list, since `sanitize_filenames` always turns it into a list)
+* Bug in `wait_for_pod` module - `cmd` was a reference to deleted method from the parrent, this is fixed now
 
 # 3.2.1 - 12.1.2021.
 

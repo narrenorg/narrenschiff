@@ -1,3 +1,9 @@
+# Unreleased
+
+## Changed
+
+* Refactored kubectl and kustomization module - shared code for dry run is a mixin now
+
 # 3.2.1 - 12.1.2021.
 
 ## Fixed

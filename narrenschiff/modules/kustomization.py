@@ -1,5 +1,6 @@
 import os
 
+from narrenschiff.modules.mixins import KubectlDryRunMixin
 from narrenschiff.modules.common import NarrenschiffModule
 from narrenschiff.modules.common import NarrenschiffModuleException
 from narrenschiff.templating import Template
@@ -9,7 +10,7 @@ from narrenschiff.log import NarrenschiffLogger
 logger = NarrenschiffLogger()
 
 
-class Kustomization(NarrenschiffModule):
+class Kustomization(KubectlDryRunMixin, NarrenschiffModule):
     """``kustomization`` module. Wrapper around ``kubectl apply -k dir/``."""
 
     @property
@@ -23,10 +24,3 @@ class Kustomization(NarrenschiffModule):
         logger.debug(f'Executing kustomization module on {path}')
 
         return 'kubectl apply -k "{}"'.format(path)
-
-    @property
-    def dry_run(self):
-        return '--dry-run=server'  # none, server, client, -o yaml
-
-    def dry_run_supported(self, cmd):
-        return True

@@ -3,11 +3,12 @@ from contextlib import suppress
 from urllib.parse import urlparse
 
 from narrenschiff.common import flatten
-from narrenschiff.modules.common import NarrenschiffModule
 from narrenschiff.templating import Template
+from narrenschiff.modules.mixins import KubectlDryRunMixin
+from narrenschiff.modules.common import NarrenschiffModule
 
 
-class Kubectl(NarrenschiffModule):
+class Kubectl(KubectlDryRunMixin, NarrenschiffModule):
     """``kubectl`` module."""
 
     @property
@@ -57,23 +58,3 @@ class Kubectl(NarrenschiffModule):
                 paths.append(os.path.join(Template().tmp, filename))
 
             self.command['args']['filename'] = paths
-
-    @property
-    def dry_run(self):
-        return '--dry-run=server'  # none, server, client, -o yaml
-
-    def dry_run_supported(self, cmd):
-        whitelist = [
-            'run',
-            'apply',
-            'delete',
-            'create',
-            'scale',
-            'autoscale',
-            'patch',
-            'replace',
-        ]
-
-        if cmd.split()[1] in whitelist:
-            return True
-        return False

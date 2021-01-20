@@ -36,8 +36,7 @@ class Kubectl(KubectlDryRunMixin, NarrenschiffModule):
         """
         with suppress(KeyError):
             filenames = self.command['args']['filename']
-            if isinstance(filenames, list):
-                self.command['args']['filename'] = ','.join(filenames)
+            self.command['args']['filename'] = ','.join(filenames)
 
     def sanitize_filenames(self):
         """

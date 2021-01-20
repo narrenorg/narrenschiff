@@ -8,6 +8,10 @@
 
 * Refactored kubectl and kustomization module - shared code for dry run is a mixin now
 
+## Fixed
+
+* Delete dead code in Kubectl module (`update_filename_argument` does not need to check if `filename` in `arg` is a list, since `sanitize_filenames` always turns it into a list)
+
 # 3.2.1 - 12.1.2021.
 
 ## Fixed

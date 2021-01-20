@@ -23,4 +23,4 @@ class Kustomization(KubectlDryRunMixin, NarrenschiffModule):
         path = os.path.join(Template().tmp, self.command)
         logger.debug(f'Executing kustomization module on {path}')
 
-        return 'kubectl apply -k "{}"'.format(path)
+        return f'kubectl apply -k "{path}"'

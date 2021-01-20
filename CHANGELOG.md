@@ -1,5 +1,9 @@
 # Unreleased
 
+## Added
+
+* New unit tests in order to increase coverage
+
 ## Changed
 
 * Refactored kubectl and kustomization module - shared code for dry run is a mixin now

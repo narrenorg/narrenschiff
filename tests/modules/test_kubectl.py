@@ -34,7 +34,8 @@ class KubectlTestCase(unittest.TestCase):
         self.kubectl.update_filename_argument()
         self.assertEqual(
             self.kubectl.command.get('args')['filename'],
-            '/tmp/nonexistent/app/manifest.yaml,http://example.com/manifest.yaml'  # noqa
+            ('/tmp/nonexistent/app/manifest.yaml,'
+             'http://example.com/manifest.yaml')
         )
 
     def test_cmd(self):
@@ -48,7 +49,8 @@ class KubectlTestCase(unittest.TestCase):
                 'filename': 'http://example.com/manifest.yaml'
             }
         })
-        expected = "kubectl apply --filename='http://example.com/manifest.yaml'"  # noqa
+        expected = ("kubectl apply "
+                    "--filename='http://example.com/manifest.yaml'")
         self.assertEqual(kubectl.cmd, expected)
 
     def tearDown(self):

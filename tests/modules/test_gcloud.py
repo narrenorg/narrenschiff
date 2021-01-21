@@ -18,5 +18,6 @@ class GcloudTestCase(unittest.TestCase):
             'command': 'container clusters create test-cluster',
             'args': {'num-nodes': '3'}
         })
-        expected = "gcloud container clusters create test-cluster --num-nodes '3'"  # noqa
+        expected = ("gcloud container clusters create "
+                    "test-cluster --num-nodes '3'")
         self.assertEqual(gcloud.cmd, expected)

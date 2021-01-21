@@ -19,7 +19,7 @@ class Helm(NarrenschiffModule):
         command = self.command.get('command')
         name = self.command.get('name', '')
         chart = self.command.get('chart', '')
-        options = self.command.get('opts')
+        options = self.command.get('opts', [])
         arguments = self.command.get('args', {})
 
         self.parse_secretmaps_args()

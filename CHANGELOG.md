@@ -1,7 +1,8 @@
-# Unreleased
+# 3.3.0 - 18.5.2021.
 
 ## Added
 
+* Secretmap now has `diff` subcommand (use it to compare two secretmaps in the same course project)
 * New unit tests in order to increase coverage
 
 ## Changed

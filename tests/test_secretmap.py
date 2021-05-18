@@ -70,6 +70,24 @@ class SecretmapTestCase(unittest.TestCase):
             '\033[35mdev\033[0m:\033[32m15\033[0m:  type: \033[31mClusterIP\033[0m\n'  # noqa
         )
 
+    def test_diff(self):
+        expected = '--- dev\n+++ prod\n@@ -13,7 +13,7 @@\n \n service:\n   type: ClusterIP\n-  port: 5000\n+  port: 4000\n \n resources: {}\n   # We usually recommend not to specify default resources and to leave this as a conscious\n'  # noqa
+
+        dev = os.path.join(self.path, 'dev.yaml')
+        prod = os.path.join(self.path, 'prod.yaml')
+
+        self.secretmap.upsert(src=dev,
+                              dest='encrypted-dev.yaml',
+                              treasure='dev')
+        self.secretmap.upsert(src=prod,
+                              dest='encrypted-prod.yaml',
+                              treasure='prod')
+
+        stdout = sys.stdout = io.StringIO()
+        self.secretmap.diff(secretmaps=('dev', 'prod'))
+        sys.stdout = sys.__stdout__
+        self.assertEqual(stdout.getvalue(), expected)
+
     def test_destroy(self):
         self.secretmap.upsert(src=self.source,
                               dest='encrypted.yaml',
@@ -90,6 +108,8 @@ class SecretmapTestCase(unittest.TestCase):
 
         try:
             os.remove(os.path.join(self.path, 'encrypted.yaml'))
+            os.remove(os.path.join(self.path, 'encrypted-dev.yaml'))
+            os.remove(os.path.join(self.path, 'encrypted-prod.yaml'))
             os.remove(os.path.join(self.path, 'decrypted.yaml'))
         except FileNotFoundError:
             pass

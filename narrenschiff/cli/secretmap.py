@@ -174,3 +174,25 @@ def search(keychain, location, match):
     for treasure in vars[0].keys():
         secretmap = Secretmap(keychain=keychain, directory=location)
         secretmap.find(match, treasure)
+
+
+@secretmap.command()
+@click.option('--location', help='Relative path to course project directory.')
+@click.argument('secretmaps', nargs=2)
+@click.pass_obj
+def diff(keychain, location, secretmaps):
+    """
+    Compare secretmaps line by line.
+
+    It can only compare secretmaps in the same course project.
+    \f
+
+    :param location: Location of the secretmap file
+    :type location: ``str``
+    :param secretmaps: Two secretmaps that should be compared
+    :type secretmaps: ``str``
+    :return: Void
+    :rtype: ``None``
+    """
+    secretmap = Secretmap(keychain=keychain, directory=location)
+    secretmap.diff(secretmaps)

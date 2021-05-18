@@ -3,6 +3,7 @@ import re
 import sys
 import uuid
 import shutil
+import difflib
 import subprocess
 from contextlib import suppress
 
@@ -143,6 +144,30 @@ class Secretmap(metaclass=Singleton):
                 formatted = line.replace(result, f'\033[31m{result}\033[0m')
                 print(f'{prefix}:{formatted}')
 
+    def diff(self, secretmaps):
+        """
+        Compare secretmaps line by line.
+
+        :param secretmaps: Two secretmaps that should be compared
+        :type secretmaps: ``tuple``
+        :return: Void
+        :rtype: ``None``
+        """
+        differences = difflib.unified_diff(
+            self._decrypt(secretmaps[0]).splitlines(keepends=True),
+            self._decrypt(secretmaps[1]).splitlines(keepends=True),
+            fromfile=secretmaps[0],
+            tofile=secretmaps[1]
+        )
+
+        for difference in differences:
+            if difference.startswith('-'):
+                click.secho(difference, nl=False, fg='red')
+            elif difference.startswith('+'):
+                click.secho(difference, nl=False, fg='green')
+            else:
+                click.secho(difference, nl=False)
+
     def destroy(self, treasure):
         """
         Delete secretmap file and remove key from the config file.
@@ -250,3 +275,13 @@ class Secretmap(metaclass=Singleton):
     def _write_config(self, config):
         with open(self.filepath, 'w') as f:
             f.write(yaml.dump(config))
+
+    def _decrypt(self, treasure):
+        src = self._get_treasure_path(treasure)
+
+        with open(src, 'r') as f:
+            logger.debug(f'Decrypting secretmap on {src}')
+            cipher = AES256Cipher(self.keychain)
+            secretmap = cipher.decrypt(f.read())
+
+        return secretmap

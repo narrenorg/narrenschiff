@@ -93,14 +93,8 @@ class Secretmap(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
-        src = self._get_treasure_path(treasure)
-
-        with open(src, 'r') as f:
-            cipher = AES256Cipher(self.keychain)
-            enc_file_core = cipher.decrypt(f.read())
-
         with open(dest, 'w') as f:
-            f.write(enc_file_core)
+            f.write(self._decrypt(treasure))
 
     def peek(self, treasure):
         """
@@ -111,11 +105,7 @@ class Secretmap(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
-        src = self._get_treasure_path(treasure)
-
-        with open(src, 'r') as f:
-            cipher = AES256Cipher(self.keychain)
-            print(cipher.decrypt(f.read()))
+        click.echo(self._decrypt(treasure))
 
     def find(self, match, treasure):
         """
@@ -128,12 +118,7 @@ class Secretmap(metaclass=Singleton):
         :return: Void
         :rtype: ``None``
         """
-        src = self._get_treasure_path(treasure)
-
-        with open(src, 'r') as f:
-            logger.debug(f'Decrypting secretmap on {src}')
-            cipher = AES256Cipher(self.keychain)
-            secretmap = cipher.decrypt(f.read()).split("\n")
+        secretmap = self._decrypt(treasure).split('\n')
 
         logger.debug(f'Searching for "{match}"')
         for index, line in enumerate(secretmap, start=1):
@@ -246,8 +231,8 @@ class Secretmap(metaclass=Singleton):
         """
         Get path to treasure from config file.
 
-        :param config: Name of the treasure
-        :type config: ``str``
+        :param treasure: Name of the treasure
+        :type treasure: ``str``
         :return: Path to encrypted secretmap file
         :rtype: ``str``
         """
@@ -264,6 +249,12 @@ class Secretmap(metaclass=Singleton):
             sys.exit(1)
 
     def _read_config(self):
+        """
+        Load config file from the filesystem.
+
+        :return: Content of the config file
+        :rtype: ``dict``
+        """
         try:
             with open(self.filepath, 'r') as f:
                 config = yaml.load(f, Loader=yaml.FullLoader)
@@ -273,10 +264,26 @@ class Secretmap(metaclass=Singleton):
         return config if config else {}
 
     def _write_config(self, config):
+        """
+        Write config file to filesystem as YAML file.
+
+        :param config: Content of the config file
+        :type config: ``dict``
+        :return: Void
+        :rtype: ``None``
+        """
         with open(self.filepath, 'w') as f:
             f.write(yaml.dump(config))
 
     def _decrypt(self, treasure):
+        """
+        Decrypt treasure, and return it as a cleartext string.
+
+        :param treasure: Name of the treasure
+        :type treasure: ``str``
+        :return: Cleartext string
+        :rtype: ``str``
+        """
         src = self._get_treasure_path(treasure)
 
         with open(src, 'r') as f:

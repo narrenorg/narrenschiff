@@ -8,7 +8,7 @@ Before you Start
 
 We advise you to use Minikube as you follow along this tutorial. Minikube is easy to setup, and manage. See the installation process in the `official documentation`_, or see our `getting started`_ tutorial.
 
-You can find the source code for this tutorial in the official Narrenschiff repo_ under the `examples/` directory. The example in the repo uses ``.narrenschiff.yaml`` configuration from the repo itself. But, for completes purposes, we will show how to properly start a project.
+You can find the source code for this tutorial in the official Narrenschiff repo_ under the ``examples/`` directory. The example in the repo uses ``.narrenschiff.yaml`` configuration from the repo itself. But, for completeness, we will show you how to properly start a project.
 
 Start the Project
 -----------------
@@ -36,14 +36,14 @@ We need a password for MySQL and wel'll start by stashing the password in the ch
 
 .. code-block:: sh
 
-  $ narrenschiff chest stash --treasure 'mysql_password' --value 'Password123!' --location wordpress/
+  $ narrenschiff chest stash --treasure 'mysqlPassword' --value 'Password123!' --location wordpress/
 
 In the next section we'll add Kubernetes resources to our project.
 
 Add Resource Configuration for MySQL and Wordpress
 --------------------------------------------------
 
-We'll add MySQL password to the template for the Secret. Place the template under ``wordpress/files/mysql/secret.yaml``:
+We'll add MySQL password to the template of the ``Secret``. Place the template under ``wordpress/files/mysql/secret.yaml``:
 
 .. code-block:: yaml
 
@@ -55,7 +55,7 @@ We'll add MySQL password to the template for the Secret. Place the template unde
   metadata:
     name: mysql-pass
   data:
-    MYSQL_ROOT_PASSWORD: "{{ mysql_password | b64enc }}"
+    MYSQL_ROOT_PASSWORD: "{{ mysqlPassword | b64enc }}"
 
 Remember, ``files/`` is reserved in a course project for templates. All templates are referenced in courses relative to this directory.
 
@@ -132,7 +132,7 @@ Make the following files in ``wordpress/files/mysql`` (filenames are in the comm
           persistentVolumeClaim:
             claimName: mysql-pv-claim
 
-These were all simple manifests. We didn't have any need to use templating here. But the neat thing about Narrenschiff is that you can add templating to whatever manifest you need whenever you need it. We will now proceed to write manifests for the Wordpress itself:
+These are all simple manifests. We didn't have any need to use templating here. But the neat thing about Narrenschiff is that you can add templating to whatever manifest you need whenever you need it. We will now proceed to write manifests for the Wordpress itself:
 
 .. code-block:: yaml
 
@@ -144,7 +144,7 @@ These were all simple manifests. We didn't have any need to use templating here.
   metadata:
     name: wordpress-env
   data:
-    WORDPRESS_DB_PASSWORD: "{{ mysql_password | b64enc }}"
+    WORDPRESS_DB_PASSWORD: "{{ mysqlPassword | b64enc }}"
 
   # wordpress/files/wordpress/service.yaml
   ---
@@ -250,13 +250,13 @@ Finally apply your changes to the cluster:
 Verify
 ------
 
-You can verify that wordpress is deployed by accessing it through your browser to finish the installation:
+You can verify that wordpress is deployed by accessing it through your web browser to finish the installation:
 
 .. code-block:: sh
 
   $ minikube service wordpress --url
 
-Copy and paste the URL to your browser, and you can complete the wordpress intallation. Use ``minikube stop && minikube delete`` to stop and delete the cluster.
+Copy and paste the URL to your web browser, and you can complete the wordpress intallation. Use ``minikube stop && minikube delete`` to stop and delete the cluster.
 
 .. _documentation: https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 .. _`CC BY 4.0`: https://creativecommons.org/licenses/by/4.0/deed.ast

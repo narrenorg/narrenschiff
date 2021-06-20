@@ -56,7 +56,7 @@ def lint(ctx, location):
     Lint project files. Check if they are valid Jinja2 templates.
     \f
 
-    :param location: Location of the secretmap file
+    :param location: Path to the directory
     :type location: ``str``
     :return: Void
     :rtype: ``None``

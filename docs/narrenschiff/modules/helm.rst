@@ -21,7 +21,7 @@ Parameters
   * - Parameter
     - Comment
   * - command
-    - Any gcloud command with nested subcommands
+    - Any helm command with nested subcommands
   * - args
     - flag/value pairs, a flag needs to be listed by its full name
   * - opts
@@ -29,7 +29,7 @@ Parameters
   * - chart
     - name of the chart
   * - name
-    - name of the chart release                                        |
+    - name of the chart release
 
 Examples
 --------
@@ -89,9 +89,9 @@ Examples
       args:
         version: 9.1.1
         set:
-          - "global.postgresql.postgresqlPassword={{ postgresql_password }}"
+          - "global.postgresql.postgresqlPassword={{ postgresqlPassword }}"
 
-  # Values can be used when you have files or URLs for your chart values
+  # Values can be used when you have URLs as your chart values
   - name: Upgrade Chart Museum
     helm:
       command: upgrade
@@ -105,7 +105,7 @@ Examples
         values:
           - https://github.com/helm/charts/blob/master/stable/chartmuseum/values.yaml
 
-  # When you have files in "values", they are always passed as secretmaps!
+  # Files in "values" are always passed as secretmaps!
   - name: Install Graylog
     helm:
       command: install

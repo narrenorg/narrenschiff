@@ -13,13 +13,13 @@ Make a clone of the repository, and install dependencies (just replace `<your_gi
     git clone https://github.com/<your_github_username>/narrenschiff.git
     pipenv install --dev
 
-This project is using ``unittest`` framework form the Python standard library. After cloning you can run tests to make sure everything is working. A helper script for testing is located in the `bin/` of the project. Use it to execute tests:
+This project is using ``unittest`` framework form the Python standard library. After you clone the repo, you can run tests to make sure everything is working. A helper script for testing is located in the `bin/` of the project. Use it to execute tests:
 
 .. code-block:: sh
 
     bin/test
 
-If you want to contribute to documentation, you can build the documentation locally:
+If you want to contribute to documentation, you can build it locally:
 
 .. code-block:: sh
 
@@ -32,7 +32,7 @@ Now that you have the development environment all setup, it's best to make a new
 
     git checkout -b my-new-feature
 
-When you finish coding, use ``bin/test`` script to test the changes. If all is good, push the branch to your fork, and make a pull request.
+When you finish coding, use ``bin/test`` script to test the changes. If all is good, push the branch to your fork, and make a pull request. Don't forget to add unit tests for the new feature.
 
 Keeping your fork synced with upstream
 --------------------------------------
@@ -43,7 +43,7 @@ If you followed the previously described setup, then you can easily keep your fo
 
     git remote add upstream https://github.com/narrenschiff/narrenschiff.git
 
-Then, you can fetch the changes made to the master, and then push them to your fork:
+Then, you can fetch changes made to the master, and push them to your fork:
 
 .. code-block:: sh
 

@@ -8,7 +8,7 @@ Before you Start
 
 We advise you to use Minikube as you follow along this tutorial. Minikube is easy to setup, and manage. See the installation process in the `official documentation`_, or see our `getting started`_ tutorial.
 
-You can find the source code for this tutorial in the official Narrenschiff repo_ under the `examples/` directory. The example in the repo uses ``.narrenschiff.yaml`` configuration from the repo itself. But, for completes purposes, we will show how to properly start a project.
+You can find the source code for this tutorial in the official Narrenschiff repo_ under the ``examples/`` directory. The example in the repo uses ``.narrenschiff.yaml`` configuration from the repo itself. But, for completeness, we will show you how to properly start a project.
 
 Start the Project
 -----------------
@@ -40,12 +40,12 @@ Therefore we will start with the most basic. Stashing our MariaDB password in th
 
 .. code-block:: sh
 
-  $ narrenschiff chest stash --location moodle/ --treasure database_password --value 'Password123!'
+  $ narrenschiff chest stash --location moodle/ --treasure databasePassword --value 'Password123!'
 
 Prepare Overrides for values.yaml
 ---------------------------------
 
-Narrenschiff's helm module can work with `values.yaml` files. But by default, these files need to be encrypted. Values files oftentime contain sensitive information such as passwords, so it's better to have them encrypted. Make the ``overrides/`` directory in your course file, and make these two files within it:
+Narrenschiff's helm module can work with ``values.yaml``. But by default, these files need to be encrypted. Values file oftentime contains sensitive information such as passwords, so it's better to have it encrypted. Make the ``overrides/`` directory in your course file, and make these two files within it:
 
 .. code-block:: yaml
 
@@ -176,7 +176,7 @@ Before deployment, we have to write the course:
           - "{{ mariadb | secretmap }}"
         set:
           - "db.user={{ database.user }}"
-          - "db.password={{ database_password }}"
+          - "db.password={{ databasePassword }}"
           - "db.name={{ database.name }}"
 
   - name: Install Moodle
@@ -195,12 +195,12 @@ Before deployment, we have to write the course:
           - "{{ moodle | secretmap }}"
         set:
           - "externalDatabase.user={{ database.user }}"
-          - "externalDatabase.password={{ database_password }}"
+          - "externalDatabase.password={{ databasePassword }}"
           - "externalDatabase.database={{ database.name }}"
           - "externalDatabase.host=mariadb.{{ namespace }}.svc.cluster.local"
 
 
-Finally apply your changes to the cluster:
+Finally apply changes to the cluster:
 
 .. code-block:: sh
 
@@ -209,7 +209,7 @@ Finally apply your changes to the cluster:
 Verify
 ------
 
-You can verify that Moodle is deployed by accessing it through your browser:
+You can verify that Moodle is deployed by accessing it through your web browser:
 
 .. code-block:: sh
 

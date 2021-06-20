@@ -119,7 +119,7 @@ class NarrenschiffModule(ABC):
 
         :param cmd: Command to execute
         :type cmd: ``str``
-        :return: output and return code
+        :return: Output and return code
         :rtype: ``tuple``
 
         Example::

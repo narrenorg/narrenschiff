@@ -1,7 +1,7 @@
 Getting Started
 ===============
 
-This guide will lead you from setting up a project to deployment of a service. You can follow this guide using a custom namespace in your existing cluster or, better yet, using Minikube. You need to have ``kubectl`` installed in order for ``narrenschiff`` to work. **Everything you write using** ``narrenschiff`` **will be executed locally** on the host operating system (just as you would execute ``kubectl`` or ``helm`` locally).
+This guide will lead you from set up of a project to deployment of a service. You can follow this guide using a custom namespace in your existing cluster or, better yet, using Minikube. You need to have ``kubectl`` installed in order for ``narrenschiff`` to work. **Everything you write using** ``narrenschiff`` **will be executed locally** on the host operating system (just as you would execute ``kubectl`` or ``helm`` locally).
 
 Before you Start
 ----------------
@@ -16,7 +16,7 @@ Execute following comands in order to install Minikube:
   sudo cp minikube /usr/local/bin/minikube
   sudo chmod +x /usr/local/bin/minikube
 
-When starting Minikube ``kubectl`` should automatically change contexts (i.e. the cluster the ``kubectl`` is associated to). You can check the current context with:
+When starting Minikube ``kubectl`` should automatically change contexts (i.e. the cluster the ``kubectl`` is associated with). You can check the current context with:
 
 .. code-block:: sh
 
@@ -65,17 +65,17 @@ Start managing your infrastructure by first laying out a basic directory structu
   touch project/secretmap.yaml
   touch .narrenschiff.yaml
 
-All of your projects will be managed in subdirectories of ``infrastructure/`` (consider this to be your *main project*). In the root of your infrastructure repo you need to place a ``.narrenschiff.yaml`` configuration file. This configuration file contains password (key) and salt (spice) that are used to encrypt all files and strings accross all of your projects.
+All course projects will be managed in subdirectories of ``infrastructure/`` (consider this to be your *main project*). In the root of your infrastructure repo you need to place a ``.narrenschiff.yaml`` configuration file. This configuration file contains password (key) and salt (spice) that are used to encrypt all files and strings accross all of your course projects.
 
-Each of your projects needs to contain special files that are used to store cleartext and cyphertext variables. These are:
+Each course project needs to contain special files that are used to store cleartext and cyphertext variables. These are:
 
-* ``vars.yaml`` - Used to store variables in plain text
+* ``vars.yaml`` - Used to store variables in cleartext
 * ``chest.yaml`` - Used to store encrypted variables
 * ``secretmap.yaml`` - Used to store paths to encrypted files
 
 All variables contained in these files are injected in your templates when you start deploying with narrenschiff. There is one rule that you need to remember: **no duplicates are allowed**! See `Vars Files`_ for detailed explanation.
 
-Last file that needs to be explained is ``course.yaml``. The name of this file can be arbitraty, and you can have multiple of these. This is actually the file which contains configuration, deployment, and other instructions. In essence a ``course`` is the most basic unit of ``narrenschiff``. ``course`` files are YAML files that contain list of tasks to be performed written using a special syntax. Consequently, the project that contains course files, is called a *course project*. In this example a course project is ``project/``.
+Last file that needs to be explained is ``course.yaml``. The name of this file can be arbitraty, and you can have multiple of these. This is actually the file which contains configuration, deployment, and other instructions. In essence a ``course`` is the most basic unit of ``narrenschiff``. ``course`` files are YAML files that contain list of tasks to be performed written using a special syntax. Consequently, the project which contains course files, is called a *course project*. In this example a course project is ``project/``.
 
 ``narrenschiff dock``
 *********************
@@ -92,18 +92,19 @@ You can easily start a project using ``narrenschiff dock``. It is advisable to r
   pipenv shell
   narrenschiff dock --location project --autogenerate
 
-This will create a *course project* on path ``project/``. ``--autogenerate`` flag will generate *key* and *spice* for the project (in the home direcotry of the user), and add them to ``.narrenschiff.yaml``.
+This will create a *course project* on path ``project/``. ``--autogenerate`` flag will generate *key* and *spice* for the project (in the home directory of the user), and add them to ``.narrenschiff.yaml``.
 
 Configuring a Project
 ---------------------
 
 Configuration of a project is fairly simple. You only need to setup ``.narrenschiff.yaml`` and accompanying files for *key* and *spice*. If you've used ``narrenschiff dock`` this should already be done for you. However, when you're setting up a main project manually, you'll have to do this step manually too.
 
-*Key* and *spice* must not be commited into your source code! Store them somewhere else. It is usually stored in the home direcotry of a user executing ``narrenschiff``:
+*Key* and *spice* must not be commited into your source code! Store them somewhere else. They are usually stored in the home directory of a user executing ``narrenschiff``:
 
 .. code-block:: sh
 
   mkdir ~/.infrastructure
+  cd ~/.infrastructure
   head -c 30 /dev/urandom | base64 > password.txt
   head -c 30 /dev/urandom | base64 > salt.txt
 
@@ -142,7 +143,7 @@ The way you would usually run postgres in a docker is like so:
     -e POSTGRES_DB=db \
     -d postgres:latest
 
-When translating this to Kubernetes manifests, we obviously need to split this into several resources: ``Deployment`` (for the container itself), ``ConfigMap`` (for database name and user name), and ``Secret`` (for password). We will place all these manifests in ``files/`` directory in the *course project*. In ``narrenschiff``, ``files/`` within a *course project* is reserved for Kubernetes manifest files. You can write these configuration using Jinja2 templating language, and ``narrenschiff`` will inject variables from var files into the manifests.
+When translating this to Kubernetes manifests, we obviously need to split this into several resources: ``Deployment`` (for the container itself), ``ConfigMap`` (for database name and user name), and ``Secret`` (for password). We will place all these manifests in ``files/`` directory in the *course project*. In ``narrenschiff``, ``files/`` within a *course project* is reserved for Kubernetes manifests. You can write these configuration using Jinja2 templating language, and ``narrenschiff`` will inject variables from vars files into the manifests.
 
 Let's write Kubernetes manifests. ``ConfigMap`` is straightforward:
 
@@ -161,20 +162,20 @@ Let's write Kubernetes manifests. ``ConfigMap`` is straightforward:
     POSTGRES_DB: db
 
 
-Nothing new here. However, for the secret, we want to utilize encryption. Normally, secrets in Kubernetes are not encrypted (only base64 encoded). The original reason ``narrenschiff`` was made is precisely to overcome this problem - so we can encrypt a secret and source control our infrastructure without compromising it. We'll use ``narrenschiff chest`` to encrypt our password, and store it in the ``chest.yaml``.
+Nothing new here. However, for the secret, we want to utilize encryption. Normally, secrets in Kubernetes are not encrypted in manifests (only base64 encoded). The original reason ``narrenschiff`` was made is precisely to overcome this problem - so we can encrypt a secret and source control our infrastructure without compromising it. We'll use ``narrenschiff chest`` to encrypt our password, and store it in the ``chest.yaml``.
 
 .. code-block:: sh
 
-  narrenschiff chest stash --location postgres/ --treasure postgres_password --value Password123!
+  narrenschiff chest stash --location postgres/ --treasure postgresPassword --value Password123!
 
 If you take a look inside ``chest.yaml`` you'll find your secret:
 
 .. code-block:: sh
 
   cat postgres/chest.yaml
-  postgres_password: 3GghhpUTDrGvGroyhO5J/4TLlpSKUX1hBn3FkgLVd/vq0n6dgCD8+nEB08kYdd2G
+  postgresPassword: 3GghhpUTDrGvGroyhO5J/4TLlpSKUX1hBn3FkgLVd/vq0n6dgCD8+nEB08kYdd2G
 
-The name of our secret variables is ``postgres_password``. And we can use it now anywhere in our manifests. But naturally, we'll use it to define a ``Secret``:
+The name of our secret variables is ``postgresPassword``. And we can use it now anywhere in our manifests. But naturally, we'll use it to define a ``Secret``:
 
 .. code-block:: yaml
 
@@ -188,9 +189,9 @@ The name of our secret variables is ``postgres_password``. And we can use it now
     labels:
       app: postgres
   data:
-    POSTGRES_PASSWORD: "{{ postgres_password | b64enc }}"
+    POSTGRES_PASSWORD: "{{ postgresPassword | b64enc }}"
 
-You'll notice that instead of usual base64 encoded string we have ``"{{ postgres_password | b64enc }}"``. This is Jinja2 syntax. It says "hey, replace what's between the double curly braces, and then apply the ``b64enc`` filter". When you execute deployment with ``narrenschiff sail``, all secrets accross chest files will be collected, decrypted, and passed to Jinja2 templates for rendering. Then, Jinja2 will replace this secret in a template, but not before passing it through ``b64enc`` filter (which encodes string with base64). The end product is what you would normally write as a configuration, the only difference being, you can now safely commit it, and track it with source control, without worrying of secrets being leaked. Only people with *key* and *spice* can decrypt a secret.
+You'll notice that instead of usual base64 encoded string we have ``"{{ postgresPassword | b64enc }}"``. This is Jinja2 syntax. It says "hey, replace what's between the double curly braces, and then apply the ``b64enc`` filter". When you execute deployment with ``narrenschiff sail``, all secrets accross chest files will be collected, decrypted, and passed to Jinja2 templates for rendering. Then, Jinja2 will replace this secret in a template, but not before passing it through ``b64enc`` filter (which encodes string with base64). The end product is what you would normally write as a configuration, the only difference being, you can now safely commit it, and track it with source control, without worrying about secrets being leaked. Only people with *key* and *spice* can decrypt a secret.
 
 This is how it will actually look when rendered:
 
@@ -207,7 +208,7 @@ This is how it will actually look when rendered:
     data:
       POSTGRES_PASSWORD: "UGFzc3dvcmQxMjMhCg=="
 
-But you really don't need to be concerned with how it looks when rendered. Finally, we'll define a ``Deployment``:
+But you don't really need to be concerned with how it looks when rendered. Finally, we'll define a ``Deployment``:
 
 .. code-block:: yaml
 
@@ -240,7 +241,7 @@ But you really don't need to be concerned with how it looks when rendered. Final
             - secretRef:
                 name: postgres
 
-For example, if you want to pin down a version of postgres, and be able to later easily update it, you can replace ``image: postgres:latest`` with ``image: "{{ postgres_docker_image }}"``, and add to your ``vars.yaml`` specifig version as: ``postgres_docker_image: "posgres:12-alpine"``.
+For example, if you want to pin down the version of the postgres, and be able to update it easily later, you can replace ``image: postgres:latest`` with ``image: "{{ postgresDockerImage }}"``, and add to your ``vars.yaml`` specifig version as: ``postgresDockerImage: "posgres:12-alpine"``.
 
 Now, all we have to do is to deploy this to our cluster. We would usually do this like so:
 
@@ -248,7 +249,7 @@ Now, all we have to do is to deploy this to our cluster. We would usually do thi
 
   kubectl appyl -f secret.yaml,configmap.yaml,deployment.yaml --namespace default
 
-However, we don't have ordinary Kubernetes manifests anymore. We're now using templated manifests. Therefore we need to write the equivalent command using Narrenschiff. Open ``course.yaml`` and write the following:
+However, we don't have ordinary Kubernetes manifests anymore. Now we're using templated manifests. Therefore we need to write the equivalent command using Narrenschiff. Open ``course.yaml`` and write the following:
 
 .. code-block:: yaml
 

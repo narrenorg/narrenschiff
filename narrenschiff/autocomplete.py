@@ -2,7 +2,7 @@ import os
 
 
 class ShellAutocomplete:
-    """Set autocomplete fot the script."""
+    """Set autocompletion."""
 
     AUTOCOMPLETION_START_TAG = '### narrenschiff-autocompletion-start ###\n'
     AUTOCOMPLETION_END_TAG = '### narrenschiff-autocompletion-end ###\n'
@@ -11,7 +11,7 @@ class ShellAutocomplete:
         """
         Return autocompletion script.
 
-        :return: Autocompletion script.
+        :return: Autocompletion script
         :rtype: ``list`` of ``str``
         """
         return ''.join([
@@ -29,7 +29,7 @@ class ShellAutocomplete:
         :rtype: ``str``
 
         This method returns either ``.bashrc`` (which will later be edited for
-        your current user), or ``activate`` which symbolises activate script of
+        the current user), or ``activate`` which symbolises activate script of
         your virtualenv.
         """
         if os.getenv('VIRTUAL_ENV'):

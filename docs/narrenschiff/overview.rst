@@ -1,7 +1,7 @@
 General Overview
 ================
 
-Basic unit of ``narrenschiff`` is ``course`` or ``courses`` i.e. file or files storing task that are to performed in sequential order. ``course`` is YAML file e.g.:
+Basic unit of ``narrenschiff`` is a ``course`` i.e. file or group of files storing tasks that are to be performed in sequential order. ``course`` is YAML file e.g.:
 
 .. code-block:: yaml
 
@@ -21,9 +21,9 @@ Basic unit of ``narrenschiff`` is ``course`` or ``courses`` i.e. file or files s
 
 Each YAML file in the project is treated as a template file i.e. each ``course`` can have template variables. Template language that is powering Narrenschiff is Jinja2_.
 
-File paths are referenced relative to the ``files/`` directory in the *course project* root. ``files/`` is reserved for Jinja2 templates of Kubernetes manifest files.
+File paths are referenced relative to the ``files/`` directory in the *course project* root. ``files/`` is reserved for Jinja2 templates of Kubernetes manifests.
 
-The basic directory layout of the should resemble something like this::
+The basic directory layout should resemble something like this::
 
   infrastructure/  <-- root project (all commands are executed from here)
   ├── .narrenschiff.yaml  <-- root project configuration
@@ -37,10 +37,10 @@ The basic directory layout of the should resemble something like this::
       │   │   └── secret.yaml
       │   ├── namespaces.yaml
       │   └── rbac.yaml
-      ├── chest  <-- directory with arbitrary nesting may be used instead of chest.yaml
+      ├── chest  <-- directory with arbitrary nesting may be used in addition to chest.yaml
       │   ├── database.yaml
       │   └── secrets.yaml
-      ├── vars  <-- directory with arbitrary nesting may be used instead of vars.yaml
+      ├── vars  <-- directory with arbitrary nesting may be used in addition to vars.yaml
       │   ├── common.yaml
       │   ├── domains.yaml
       │   └── apps
@@ -50,22 +50,22 @@ The basic directory layout of the should resemble something like this::
       ├── tasks.yaml  <-- course file describing the deployment process
       ├── secretmap.yaml  <-- paths to encrypted files
       ├── chest.yaml  <-- encrypted variables
-      └── vars.yaml  <-- non encrypted variables
+      └── vars.yaml  <-- cleartext variables
 
-``files/`` directory is a directory reserved for your Kubernetes manifest files. With ``narrenschiff`` you can use Jinja2 templating language to inject variables into the manifests.
+``files/`` directory is a directory reserved for your Kubernetes manifests. With ``narrenschiff`` you can use Jinja2 templating language to inject variables into the manifests.
 
-You can use ``vars.yaml`` and ``chest.yaml`` to define variables for you project. ``vars.yaml`` file or ``vars/`` directory contain unencrypted variables. ``chest.yaml`` file or ``chest/`` directory is a place to stash your *treasures* (i.e. keys, secrets, passwords, etc.). Both ``vars/`` and ``chest/`` directories can have arbitrary nesting and files within them can have arbitrary names. However, all variable names contained across these files **must** be unique! All boolean values must be quoted.
+You can use ``vars.yaml`` and ``chest.yaml`` to define variables for you project. ``vars.yaml`` or ``vars/`` directory contains unencrypted variables. ``chest.yaml`` or ``chest/`` directory is a place to stash your *treasures* (i.e. keys, secrets, passwords, etc.). Both ``vars/`` and ``chest/`` directories can have arbitrary nesting and files within them can have arbitrary names. However, all variable names contained across these files **must** be unique! All boolean values must be quoted.
 
-You can also encrypt files and bring them into your source code. Files are encrypted, and stored at desired location, and relative path to the file is saved in ``secretmap.yaml`` file. For example, when you deploy Helm chart, it is often common to override default ``values.yaml``. However, this is unencrypted file which can be used to configure secrets. You can stash your ``values.yaml`` override as a secretmap, and commit it to the source code without any worry of passwords and secrets leaking.
+You can also encrypt files and commit them to your source code safely. Files are encrypted, and stored at desired location, and relative paths to the files are saved in ``secretmap.yaml``. For example, when you deploy a Helm chart, it is often common to override default ``values.yaml``. However, this is unencrypted file which can be used to configure secrets. You can stash your ``values.yaml`` override as a secretmap, and commit it to the source code without any worry of passwords and secrets leaking.
 
 Chest files have flat dictionary structure. No nesting of the keys is allowed:
 
 .. code-block:: yaml
 
-  db_password: 6Wziywgso3YsosQNfMeufodDZxEaOyujHM+ch9Pxe5u1u2ZO5e7G9bPOhEIVYo8n
-  hash_key: uSn/rKMdbMArR0SnWcbtP1Z64/Y8LI8LNOZGbVZUmm5ioFLV/NwP6OcyTNGgMSGi
+  dbPassword: 6Wziywgso3YsosQNfMeufodDZxEaOyujHM+ch9Pxe5u1u2ZO5e7G9bPOhEIVYo8n
+  hashKey: uSn/rKMdbMArR0SnWcbtP1Z64/Y8LI8LNOZGbVZUmm5ioFLV/NwP6OcyTNGgMSGi
 
-The app is deployed using as:
+The app is deployed as:
 
 .. code-block:: sh
 
@@ -141,6 +141,9 @@ Glossary
 
   course
     Templated YAML file containing list of tasks to be performed.
+
+  course project
+    Directory in which the main course is located. This directory also contains ``vars.yaml``, ``chest.yaml``, ``secretmap.yaml``, and other files needed to run the course.
 
   treasure
     Sensitive information, keys, secrets, and passwords are stored

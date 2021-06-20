@@ -5,15 +5,14 @@ from contextlib import suppress
 
 
 class AmbiguousConfiguration(Exception):
-    """Warn that something is wrong with configuration."""
+    """Give warning that something is wrong with configuration."""
 
     pass
 
 
 class Singleton(type):
     """
-    Define an Instance operation that lets clients access its unique
-    instance.
+    Define the Singleton.
     """
 
     def __init__(cls, name, bases, attrs, **kwargs):

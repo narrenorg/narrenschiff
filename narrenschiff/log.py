@@ -25,7 +25,7 @@ logging.config.dictConfig(LOGGING)
 
 
 class NarrenschiffLogger(metaclass=Singleton):
-    """Set narrenschiff log level and prit to STDOUT."""
+    """Set narrenschiff log level and print to STDOUT."""
 
     LOG_LEVEL = {
         5: logging.DEBUG,

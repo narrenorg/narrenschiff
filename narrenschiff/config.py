@@ -12,7 +12,7 @@ logger = NarrenschiffLogger()
 
 
 class ConfigurationException(Exception):
-    """Use when something goes wrong with the configuration."""
+    """Use this when something goes wrong with the configuration."""
 
     pass
 
@@ -24,7 +24,7 @@ class NarrenschiffConfiguration:
     This class should never be called directly, nor it should be inherited
     from. Other classes should use it by composition principle (see
     implementation of e.g. :class:`narrenschiff.config.Keychain`). This should
-    make classes, that depend on subset of config, easier to test.
+    make classes that depend on subset of config easier to test.
     """
 
     def __init__(self):

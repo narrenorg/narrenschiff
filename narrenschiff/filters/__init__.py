@@ -11,7 +11,7 @@ def b64enc(value):
     :return: Encoded text
     :rtype: ``str``
 
-    Use this filter for k8s secrets. Values for the secrets need to be encoded
+    Use this filter for k8s secrets. Values for secrets need to be encoded
     before the ``Secret`` resource is deployed to k8s.
     """
     return base64.b64encode(value.encode('utf-8')).decode('ASCII')

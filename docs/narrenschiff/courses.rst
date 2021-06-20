@@ -19,7 +19,7 @@ This is a general anatomy of a task:
     beacons:  # tags for alternative execution path (optional)
       - dev  # chose whatever value ("always" is a reserved becaon)
 
-``name`` of the task describes what task should do, and with module you're actaully writing what the task is doing. Names are required, so your infrastructure configuration becomes a self-documenting repo. Name is an arbitraty description. Module, however, can only be whatever is implemented in Narrenschiff. At this moment, there are several modules available to use:
+``name`` of the task describes what task should do. On the other hand, the module you are writing describes what the task is actaully doing. Names are required, so your infrastructure configuration becomes a self-documenting repo. Name is an arbitraty description. Module, however, can only be whatever is implemented in Narrenschiff. At this moment, there are several modules available to use:
 
 * ``kubectl``
 * ``helm``
@@ -27,13 +27,13 @@ This is a general anatomy of a task:
 * ``kustomization``
 * ``wait_for_pod``
 
-At this point, all modules are considered to be experimental and in beta.
+For more info about modules, visit the Modules_ section.
 
 Everything nested under module (in this case command, args, filename, namespace) is unique to the module. These options are covered in the module documentation.
 
 ``beacons`` are optional, and they provide you a way for alternative execution path of your course. In other words, you can choose which part of the course you want to execute using becaons. Since they are optional, if you don't need them, don't add them. See `Beacons`_ for detailed overview.
 
-Tasks in a course are executed sequentially. When you execute a course with ``narrenschiff sail`` all variables are gathered, templates rendered, and task collected in ordered list, and executed one by one.
+Tasks in a course are executed sequentially. When you execute a course with ``narrenschiff sail`` all variables are gathered, templates rendered, tasks collected in ordered list, and executed one by one.
 
 You can combine multiple courses in a single course using an import feature. For example, you may want to separate your cluster creation from cluster configuration:
 
@@ -75,4 +75,5 @@ And in one of the courses, you can import the task as:
   # other tasks
   [...]
 
-.. _`Beacons`: beacons.html
+.. _Modules: modules/index.html
+.. _Beacons: beacons.html

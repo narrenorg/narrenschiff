@@ -244,9 +244,10 @@ class Template(metaclass=Singleton):
         2. Load all files from the ``vars/`` directory if it exists
         3. Load and decrypt all variables from ``chest.yaml``
         4. Load all files from the ``chest/`` directory if it exists
-        5. Merge all files
+        5. Load all variables from ``secretmap.yaml``
+        6. Merge all files
 
-        **Important:** Files must not contain duplicate values!
+        **Important:** Files must not contain duplicate variable names!
         """
         logger.info('Load vars into templates from all var types')
         vars = [

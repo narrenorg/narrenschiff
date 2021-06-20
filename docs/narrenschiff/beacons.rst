@@ -5,7 +5,7 @@ If you only want to execute a part of the course, then you should use beacons. B
 
 .. note::
 
-  We advise you to test all the example using Minikube. You can find instructions on how to setup Minikube here_ and also in the `official documentation`_.
+  We advise you to test the example using Minikube. You can find instructions on how to setup Minikube here_ and also in the `official documentation`_.
 
 Let's look at simple example:
 
@@ -54,7 +54,7 @@ Beacons are passed to ``narrenschiff`` with ``--follow-beacons`` flag, like so:
   NAME                        READY   STATUS    RESTARTS   AGE
   postgres-7bf8d6b875-hp58b   1/1     Running   1          2d15h
 
-What happened? ``always`` is a reserved beacon in Narrenschiff. When you executed a course, if you have any task tagged with ``always`` it will always execute in addition to the tasks targeted by supplied beacon. In this case, we chose to execute only those tasks marked with ``default`` i.e. ``--follow-beacons default``.
+What happened? ``always`` is a reserved beacon in Narrenschiff. When you execute a course, if you have any task tagged with ``always`` it will always execute in addition to the tasks targeted by supplied beacon. In this case, we chose to execute only those tasks marked with ``default`` i.e. ``--follow-beacons default``.
 
 A task can be marked with multiple becaons e.g.
 
@@ -71,7 +71,7 @@ And you can also select multiple becaons from the command line:
 
   $ narrenschiff sail --follow-beacons dev,stage --set-course course.yaml
 
-Here's a practical example. If you are using Helm to manage you applications, you can pack the upgrade instructions in a one course, but separate environments using becaons.
+Here's a practical example. If you are using Helm to manage you applications, you can pack the upgrade instructions in a single course, but separate environments using becaons.
 
 .. code-block:: yaml
 
@@ -139,7 +139,7 @@ Here's a practical example. If you are using Helm to manage you applications, yo
     beacons:
       - prod
 
-Now, if you only want to upgrade your service on the development environment, you can do this without executing other tasks in the course:
+Now, if you want to upgrade only your service on the development environment, you can do this without executing other tasks in the course:
 
 .. code-block:: sh
 

@@ -1,7 +1,9 @@
 ``.narrenschiff.yaml``
 ======================
 
-Every project needs to contain ``.narrenschiff.yaml`` configuration file. This file is used to point to password, and salt files, as well as to define the cluster context. This file should be commited to the source control of your project.
+Every project needs to contain ``.narrenschiff.yaml`` configuration file. This file is used to point to the password, and the salt, as well as to define the cluster context. This file should be commited to the source code of your project.
+
+Files containing password, and salt, should never be commited to the source code!
 
 .. code-block:: yaml
 
@@ -25,7 +27,7 @@ Every project needs to contain ``.narrenschiff.yaml`` configuration file. This f
   #
   # context.name is the name of the context [default: undefined]
   # context.use defines whether to use context switching before executing tasks
-  #   value is boolean or quoted boolean string [default: "false"]
+  #   value is (quoted) boolean string [default: "false"]
   context:
     name: cloud_provider_project_id_region_zone_project_title
     use: "false"

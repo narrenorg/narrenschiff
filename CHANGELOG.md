@@ -1,3 +1,13 @@
+# Unreleased
+
+## Added
+
+* License files
+
+## Changed
+
+* Updated all source code files with the license notice
+
 # 3.3.0 - 18.5.2021.
 
 ## Added

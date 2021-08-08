@@ -17,7 +17,7 @@ setup(
     long_description=README,
     url='https://example.com',
     maintainer='Petar Nikolovski',
-    maintainer_email='nikolovski@brainshuttle.com',
+    maintainer_email='petar.nikolovski@protonmail.com',
     install_requires=[
         'click', 'PyYAML', 'Jinja2', 'cryptography', 'colorlog'
     ],

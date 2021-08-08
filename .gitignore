@@ -1,9 +1,15 @@
+# GNU/Linux
 *.*~
 *.swp
+
+# IDE
+.vscode
+
+# Python
 *.egg-info
-_build/
+__pycache__
 dist/
+_build/
 .coverage
 htmlcov/
-__pycache__
-.vscode
+licenses-report.html

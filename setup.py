@@ -31,7 +31,7 @@ setup(
     long_description=README,
     license_files=('LICENSE',),
     license='Apache License, Version 2.0',
-    url='https://example.com',
+    url='https://docs.narrenschiff.xyz',
     maintainer='Petar Nikolovski',
     maintainer_email='petar.nikolovski@protonmail.com',
     install_requires=[

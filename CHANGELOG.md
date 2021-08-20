@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - License files
+- Documentation on Read the Docs
 
 ### Changed
 

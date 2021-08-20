@@ -1,7 +1,11 @@
+-e .
 flake8
 sphinx
+ipdb
 sphinx-rtd-theme
+coverage
 click
 pyyaml
 jinja2
 cryptography
+colorlog

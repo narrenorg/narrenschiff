@@ -84,5 +84,10 @@ $ narrenschiff sail --set-course postgres/course.yaml
 
 That's it! Secret is now deployed to your cluster. Head over to [General Overview][1] to get familiar with Narrenschiff terminology, or to [Getting Started][2] to learn how to make your first project.
 
+### Acknowledgements
+
+I want to personally give thanks to [brainshuttle LLC][3], the company I've worked for years. If it wasn't for their creative atmosphere, and enthusiasm to give space to new ideas, this project would not come to fruition.
+
 [1]: https://narrenschiff.readthedocs.io/en/latest/overview.html
 [2]: https://narrenschiff.readthedocs.io/en/latest/getting_started.html
+[3]: https://brainshuttle.com/

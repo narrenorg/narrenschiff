@@ -262,4 +262,4 @@ Copy and paste the URL to your web browser, and you can complete the wordpress i
 .. _`CC BY 4.0`: https://creativecommons.org/licenses/by/4.0/deed.ast
 .. _`official documentation`: https://kubernetes.io/docs/tasks/tools/install-minikube/
 .. _`getting started`: ../getting_started.html
-.. _repo: https://github.com/petarGitNik/narrenschiff
+.. _repo: https://github.com/petarnikolovski/narrenschiff

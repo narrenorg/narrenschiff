@@ -41,7 +41,7 @@ If you followed the previously described setup, then you can easily keep your fo
 
 .. code-block:: sh
 
-    git remote add upstream https://github.com/narrenschiff/narrenschiff.git
+    git remote add upstream https://github.com/petarnikolovski/narrenschiff
 
 Then, you can fetch changes made to the master, and push them to your fork:
 

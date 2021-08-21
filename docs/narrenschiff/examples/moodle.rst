@@ -220,4 +220,4 @@ Use ``minikube stop && minikube delete`` to stop and delete the cluster.
 
 .. _`official documentation`: https://kubernetes.io/docs/tasks/tools/install-minikube/
 .. _`getting started`: ../getting_started.html
-.. _repo: https://github.com/petarGitNik/narrenschiff
+.. _repo: https://github.com/petarnikolovski/narrenschiff

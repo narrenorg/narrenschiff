@@ -148,7 +148,7 @@ class NarrenschiffModule(ABC):
             stderr=subprocess.PIPE
         )
 
-        output = process.stdout if process.stdout else process.stderr
+        output = process.stderr if process.stderr else process.stdout
 
         logger.info(f'Command "{cmd}" executed')
 

@@ -29,11 +29,24 @@ setup(
     packages=find_packages(),
     description='k8s deployment and configuration management tool',
     long_description=README,
+    long_description_content_type='text/markdown',
     license_files=('LICENSE',),
     license='Apache License, Version 2.0',
     url='https://docs.narrenschiff.xyz',
     maintainer='Petar Nikolovski',
     maintainer_email='petar.nikolovski@protonmail.com',
+    author='Petar Nikolovski',
+    author_email='petar.nikolovski@protonmail.com',
+    classifiers=[
+        'Environment :: Console',
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Operating System :: POSIX',
+        'Topic :: Utilities'
+    ],
     install_requires=[
         'click', 'PyYAML', 'Jinja2', 'cryptography', 'colorlog'
     ],

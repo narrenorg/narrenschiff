@@ -18,6 +18,20 @@ jobs:
       - name: Lint
         run: flake8 .
 
+  pylint:
+    name: Lint code with pylint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install pylint
+        run: pip install pylint
+      - name: Run pylint and generate report
+        run: 'pylint --exit-zero -r n --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" **/*.py | tee pylint.txt'
+
   unit-test:
     name: Run unit tests
     runs-on: ubuntu-latest

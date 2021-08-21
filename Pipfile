@@ -10,6 +10,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 ipdb = "*"
 coverage = "*"
+coveralls = "*"
 
 [packages]
 click = "*"

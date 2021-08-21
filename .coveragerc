@@ -1,11 +1,11 @@
-[coverage:run]
+[run]
 branch = true
 source = .
 omit =
   */tests*
   setup.py
 
-[coverage:report]
+[report]
 precision = 2
 exclude_lines =
   pragma: no cover

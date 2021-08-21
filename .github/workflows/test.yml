@@ -1,0 +1,31 @@
+name: Test Code
+
+on: push
+
+jobs:
+  lint:
+    name: Test Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install pipenv
+        run: pip install pipenv
+      - name: Install project dependencies
+        run: pipenv install --dev
+      - name: Run unit tests
+        run: pipenv run coverage run -m unittest discover
+      - name: Generate coverage reports
+        run: |
+          pipenv run coverage report -m
+          pipenv run coverage html
+          pipenv run coverage xml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-artifact
+          path: |
+            htmlcov/
+            coverage.xml

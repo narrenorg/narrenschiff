@@ -151,6 +151,7 @@ Before deployment, we have to write the course:
 
 .. code-block:: yaml
 
+  # moodle/course.yaml
   ---
   - name: Add bitnami repo
     helm:

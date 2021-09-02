@@ -21,8 +21,8 @@ sys.path.insert(0, os.path.abspath('../'))
 # -- Project information -----------------------------------------------------
 
 project = 'narrenschiff'
-copyright = '{}, Petar Nikolovski'.format(datetime.now().year)
-author = 'Petar Nikolovski'
+copyright = '{}, The Narrenschiff Authors'.format(datetime.now().year)
+author = 'The Narrenschiff Authors'
 
 # The full version, including alpha/beta/rc tags
 release = narrenschiff.__version__

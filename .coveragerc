@@ -2,6 +2,7 @@
 branch = true
 source = .
 omit =
+  .venv/*
   */tests*
   setup.py
 

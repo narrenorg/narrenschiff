@@ -24,6 +24,10 @@ docs:
 	$(RUN) sphinx-build -b coverage docs/ docs/_build/coverage/
 	cat docs/_build/coverage/python.txt
 
+.PHONY: clean
+clean:
+	rm -rf docs/_build
+
 .PHONY: sdist
 sdist: pipenv
 	$(PYTHON) setup.py sdist

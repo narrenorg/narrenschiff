@@ -100,7 +100,7 @@ I want to personally give thanks to [brainshuttle LLC][3], the company I've work
 [10]: https://img.shields.io/pypi/pyversions/narrenschiff
 [11]: https://docs.python.org/3.6/
 [12]: https://img.shields.io/github/license/petarnikolovski/narrenschiff
-[13]: https://github.com/petarnikolovski/narrenschiff/blob/main/LICENSE
+[13]: https://github.com/narrenorg/narrenschiff/blob/main/LICENSE
 [14]: https://img.shields.io/pypi/dm/narrenschiff
 [15]: https://pypi.org/project/narrenschiff/
 [16]: https://bestpractices.coreinfrastructure.org/projects/5183/badge

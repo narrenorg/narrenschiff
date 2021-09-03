@@ -35,7 +35,7 @@ setup(
     url='https://narrenschiff.xyz',
     project_urls={
         'Documentation': 'https://docs.narrenschiff.xyz',
-        'Source': 'https://github.com/petarnikolovski/narrenschiff',
+        'Source': 'https://github.com/narrenorg/narrenschiff',
     },
     maintainer='Petar Nikolovski',
     maintainer_email='petar.nikolovski@protonmail.com',

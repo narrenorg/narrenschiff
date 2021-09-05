@@ -15,9 +15,9 @@
 import os
 import uuid
 import shutil
+import tempfile
 
 import yaml
-
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
@@ -314,7 +314,7 @@ class Template(metaclass=Singleton):
         Templates are copied to ``/tmp`` and location of rendered templates
         is saved in ``self.tmp``.
         """
-        self.tmp = os.path.join('/tmp', str(uuid.uuid4()))
+        self.tmp = os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
         os.makedirs(self.tmp)
         files_root = os.path.join(self.template_directory, 'files')
         for root, dirs, files in os.walk(files_root):

@@ -18,6 +18,7 @@ import sys
 import uuid
 import shutil
 import difflib
+import tempfile
 import subprocess
 from contextlib import suppress
 
@@ -64,7 +65,7 @@ class Secretmap(metaclass=Singleton):
 
         self.filepath = os.path.join(directory, Secretmap.FILENAME)
         self.keychain = keychain
-        self.tmp = os.path.join('/tmp', str(uuid.uuid4()))
+        self.tmp = os.path.join(tempfile.gettempdir(), str(uuid.uuid4()))
 
     def upsert(self, src, dest, treasure):
         """
@@ -220,7 +221,7 @@ class Secretmap(metaclass=Singleton):
         """
         config = self._read_config()
         filename = os.path.basename(config[treasure])
-        destination = os.path.join('/tmp', filename)
+        destination = os.path.join(tempfile.gettempdir(), filename)
         self.decrypt(destination, treasure)
 
         editor = os.getenv('EDITOR', 'vi')

@@ -93,8 +93,8 @@ I want to personally give thanks to [brainshuttle LLC][3], the company I've work
 [3]: https://brainshuttle.com/
 [4]: https://readthedocs.org/projects/narrenschiff/badge/?version=latest
 [5]: https://docs.narrenschiff.xyz/en/latest/?badge=latest
-[6]: https://coveralls.io/repos/github/petarnikolovski/narrenschiff/badge.svg?branch=main
-[7]: https://coveralls.io/github/petarnikolovski/narrenschiff?branch=main
+[6]: https://coveralls.io/repos/github/narrenorg/narrenschiff/badge.svg?branch=main
+[7]: https://coveralls.io/github/narrenorg/narrenschiff?branch=main
 [8]: https://img.shields.io/pypi/v/narrenschiff
 [9]: https://pypi.org/project/narrenschiff/
 [10]: https://img.shields.io/pypi/pyversions/narrenschiff

@@ -272,7 +272,7 @@ class Secretmap(metaclass=Singleton):
         """
         try:
             with open(self.filepath, 'r') as f:
-                config = yaml.load(f, Loader=yaml.FullLoader)
+                config = yaml.safe_load(f)
         except FileNotFoundError:
             click.secho(f'File {self.filepath} not found', fg='red')
             sys.exit(1)

@@ -126,5 +126,5 @@ def _import_current_tasks(course, template):
     :rtype: ``list`` of ``dict``
     """
     tasks_raw = template.render(course)
-    tasks_yaml = yaml.load(tasks_raw, Loader=yaml.FullLoader)
+    tasks_yaml = yaml.safe_load(tasks_raw)
     return tasks_yaml

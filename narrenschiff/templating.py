@@ -135,7 +135,7 @@ class Vars:
         vars = []
         for filepath in filepaths:
             with open(filepath, 'r') as f:
-                vars.append(yaml.load(f, Loader=yaml.FullLoader))
+                vars.append(yaml.safe_load(f))
         return [var for var in vars if var]
 
     def load_vars(self):

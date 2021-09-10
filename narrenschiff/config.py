@@ -77,7 +77,7 @@ class NarrenschiffConfiguration:
         """
         path = self._get_configuration_path()
         with open(path, 'r') as f:
-            conf = yaml.load(f, Loader=yaml.FullLoader)
+            conf = yaml.safe_load(f)
         return conf
 
     def _get_configuration_path(self):

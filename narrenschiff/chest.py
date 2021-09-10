@@ -132,7 +132,7 @@ class Chest:
         :rtype: ``dict``
         """
         with open(self.path, 'r') as f:
-            chest = yaml.load(f, Loader=yaml.FullLoader)
+            chest = yaml.safe_load(f)
         return chest if chest else {}
 
     def update(self, variable, value):

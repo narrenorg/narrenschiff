@@ -1,0 +1,14 @@
+---
+skips:
+  # [B404:blacklist]
+  # subprocess is the integral part of the project
+  - B404
+  # [B701:jinja2_autoescape_false]
+  # narrenschiff should not be vulnerable to XSS attack: courses and templated
+  # manifests are not parsed to HTML. Even if one of the variables contains
+  # HTML it may be some custom file that is mounted through a ConfigMap - if
+  # user needs HTML in that case, they probably need it unescaped.
+  - B701
+
+try_except_pass:
+  check_typed_exception: False

@@ -1,5 +1,0 @@
----
-skips: ['B404']
-
-try_except_pass:
-  check_typed_exception: False

@@ -12,6 +12,10 @@ pipenv:
 flake8:
 	$(RUN) flake8 .
 
+.PHONY: bandit
+bandit:
+	$(RUN) bandit -c .bandit.yaml -r narrenschiff/
+
 .PHONY: test
 test:
 	$(RUN) coverage run -m unittest discover

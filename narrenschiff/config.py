@@ -55,7 +55,6 @@ class NarrenschiffConfiguration:
         :param path: Path to the file
         :type path: ``str``
         """
-        secret = ''
         try:
             with open(os.path.expanduser(path), 'r') as f:
                 secret = f.readlines()[0].rstrip()
@@ -68,6 +67,11 @@ class NarrenschiffConfiguration:
                 f'Please check or configure paths in {self._get_configuration_path()}',  # noqa
                 fg='red'
             )
+            sys.exit(1)
+
+        if not secret:
+            click.secho(f'Secret cannot be blank, please inspect {path}',
+                        fg='red')
             sys.exit(1)
         return secret
 

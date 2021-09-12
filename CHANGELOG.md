@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Master password and salt cannot be empty strings anymore
 - Security issue `[B107: hardcoded_password_default]` (Severity: Low)
+- Add missing `"yes"` option when parsing `context.use`
 
 ## [3.4.3] - 2021-09-11
 ### Fixed
@@ -210,6 +211,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Cannot load keys and salts from paths that use `~`
 
+[3.4.4]: https://github.com/narrenorg/narrenschiff/compare/3.4.3...3.4.4
 [3.4.3]: https://github.com/narrenorg/narrenschiff/compare/3.4.2...3.4.3
 [3.4.2]: https://github.com/narrenorg/narrenschiff/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/narrenorg/narrenschiff/compare/3.4.0...3.4.1

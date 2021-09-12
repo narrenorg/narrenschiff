@@ -150,7 +150,7 @@ class KubectlContext:
 
     def _sanitize_boolean(self, value):
         if isinstance(value, str):
-            if value == 'true':
+            if value == 'true' or value == 'yes':
                 return True
         if isinstance(value, bool):
             return value

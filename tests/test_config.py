@@ -85,6 +85,26 @@ class KubectlContextTestCase(unittest.TestCase):
     @mock.patch(
         'narrenschiff.config.NarrenschiffConfiguration',
         mock.MagicMock(
+            return_value=type('C', (), {'context': {'use': 'no'}})
+        )
+    )
+    def test_use_is_false_for_string_no(self):
+        context = KubectlContext()
+        self.assertFalse(context.use)
+
+    @mock.patch(
+        'narrenschiff.config.NarrenschiffConfiguration',
+        mock.MagicMock(
+            return_value=type('C', (), {'context': {'use': 'yes'}})
+        )
+    )
+    def test_use_is_true_for_string_yes(self):
+        context = KubectlContext()
+        self.assertTrue(context.use)
+
+    @mock.patch(
+        'narrenschiff.config.NarrenschiffConfiguration',
+        mock.MagicMock(
             return_value=type('C', (), {'context': {'use': 0}})
         )
     )

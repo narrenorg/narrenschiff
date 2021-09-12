@@ -8,6 +8,7 @@ User Guide
    quickstart
    overview
    getting_started
+   origins
    courses
    vars_files
    beacons

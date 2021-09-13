@@ -64,7 +64,7 @@ class DeleteFile:
 
     def _placebo_delete(self, passes=1):
         """
-        Overwrite file before deletaion. This is executed in case the OS
+        Overwrite file before deletion. This is executed in case the OS
         does not have the ``shred`` command line utility. This may not work for
         modern systems that use journaling file systems, copy-on-write file
         systems, wear leveling, or similar.

@@ -9,6 +9,12 @@ skips:
   # HTML it may be some custom file that is mounted through a ConfigMap - if
   # user needs HTML in that case, they probably need it unescaped.
   - B701
+  # [B603:subprocess_without_shell_equals_true]
+  # This kind of input does not pose a threat for shell injection attackts -
+  # however code should be manually reviewed for untrusted user input. Remove
+  # this rule from here after [B607:start_process_with_partial_path] have been
+  # fixed
+  - B603
 
 try_except_pass:
   check_typed_exception: False

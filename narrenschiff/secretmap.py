@@ -16,6 +16,7 @@ import os
 import re
 import sys
 import uuid
+import shlex
 import shutil
 import difflib
 import tempfile
@@ -226,7 +227,7 @@ class Secretmap(metaclass=Singleton):
 
         editor = os.getenv('EDITOR', 'vi')
         cmd = '{} {}'.format(editor, destination)
-        subprocess.run(cmd, shell=True)
+        subprocess.run(shlex.split(cmd))
 
         with open(destination, 'r') as f:
             tmp_file_content = f.read()

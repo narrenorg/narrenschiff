@@ -5,9 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.4.5] - 2021-09-13
 ### Fixed
 - Security issue `[B603:subprocess_without_shell_equals_true]` (Severity: Low)
+- Security issue `[B602:subprocess_popen_with_shell_equals_true]` (Severity: High) - `narrenschiff.secretmap.Secretmap.edit` method, and `narrenschiff.cli.env._check_cmd` function are not vulnerable to `B602` issue anymore
 
 ## [3.4.4] - 2021-09-12
 ### Fixed
@@ -215,6 +216,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Cannot load keys and salts from paths that use `~`
 
+[3.4.5]: https://github.com/narrenorg/narrenschiff/compare/3.4.4...3.4.5
 [3.4.4]: https://github.com/narrenorg/narrenschiff/compare/3.4.3...3.4.4
 [3.4.3]: https://github.com/narrenorg/narrenschiff/compare/3.4.2...3.4.3
 [3.4.2]: https://github.com/narrenorg/narrenschiff/compare/3.4.1...3.4.2

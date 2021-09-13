@@ -16,6 +16,7 @@ import click
 
 import os
 import re
+import shlex
 import platform
 import subprocess
 from shutil import which
@@ -31,7 +32,7 @@ def _check_cmd(cmd, subcommand, formatted):
         click.echo(f'* {cmd}')
         if formatted:
             click.echo('```')
-        subprocess.run(f'{cmd} {subcommand}', shell=True)
+        subprocess.run(shlex.split(f'{cmd} {subcommand}'))
         if formatted:
             click.echo('```')
 

@@ -148,11 +148,17 @@ class NarrenschiffModule(ABC):
             stderr=subprocess.PIPE
         )
 
-        output = process.stderr if process.stderr else process.stdout
+        if process.stdout and process.stderr:
+            stdout = process.stdout.decode('utf-8')
+            stderr = process.stderr.decode('utf-8')
+            output = f'{stderr}\n{stdout}'
+        else:
+            output = process.stderr if process.stderr else process.stdout
+            output = output.decode('utf-8')
 
         logger.info(f'Command "{cmd}" executed')
 
-        return output.decode('utf-8'), process.returncode
+        return output, process.returncode
 
     def echo(self, output, rc):
         """

@@ -68,11 +68,11 @@ $ cat > postgres/course.yaml << EOF
 ---
 - name: Add secret to default namespace
   kubectl:
-  command: apply
-  args:
-    filename:
-      - secret.yaml
-  namespace: "default"
+    command: apply
+    args:
+      filename:
+        - secret.yaml
+      namespace: "default"
 EOF
 ```
 

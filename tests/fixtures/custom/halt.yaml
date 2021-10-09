@@ -1,0 +1,4 @@
+---
+- name: Fail to laod custom module
+  fail_to_load:
+    command: custom module

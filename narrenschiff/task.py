@@ -12,9 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import subprocess
+import os
+import sys
 import datetime
+import subprocess
+import importlib.util
+
 import click
+
+from narrenschiff.env import Env
+from narrenschiff.log import NarrenschiffLogger
+
+
+logger = NarrenschiffLogger()
 
 
 class AmbiguousOptions(Exception):
@@ -76,8 +86,47 @@ class Task:
         klass = ''.join(
             '{}{}'.format(s[0].capitalize(), s[1:]) for s in module.split('_')
         )
-        mod = __import__(path, fromlist=[klass])
-        return getattr(mod, klass)
+
+        logger.debug(
+            f'Trying to load module "{module}" from "narrenschiff.modules"'
+        )
+
+        try:
+            mod = __import__(path, fromlist=[klass])
+        except ModuleNotFoundError:
+            logger.debug(
+                f'Failed loading "{module}" from "narrenschiff.modules"'
+            )
+
+        if Env.NARRENSCHIFF_PATH:
+            logger.debug('Searching on NARRENSCHIFF_PATH')
+            paths = Env.NARRENSCHIFF_PATH.split(os.pathsep)
+
+            for custom_path in paths:
+                logger.debug(
+                    f'Trying to load module "{module}" '
+                    f'from "{custom_path}"'
+                )
+
+                spec = importlib.util.spec_from_file_location(
+                    f"narrenschiff.custom.{module}",
+                    os.path.join(custom_path, f'{module.lower()}.py')
+                )
+                mod = importlib.util.module_from_spec(spec)
+
+                try:
+                    spec.loader.exec_module(mod)
+                    break
+                except FileNotFoundError:
+                    logger.debug(
+                        f'Failed loading "{module}.py" from "{custom_path}"'
+                    )
+
+        try:
+            return getattr(mod, klass)
+        except (UnboundLocalError, AttributeError):
+            click.secho(f'No module "{module}" found', fg='red')
+            sys.exit(1)
 
 
 class TasksEngine:

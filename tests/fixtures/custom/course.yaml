@@ -1,0 +1,6 @@
+---
+# Modules are loaded from narrenschiff.modules Python package. Otherwise,
+# they are serached on paths defined with NARRENSCHIFF_PATH env var.
+- name: Load and execute custom modules
+  echo:
+    command: "Ahoy, Matey!"

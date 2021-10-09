@@ -1,4 +1,5 @@
 export PIPENV_VENV_IN_PROJECT = 1
+export NARRENSCHIFF_PATH = ./tests/fixtures/custom/modules:/tmp/narrenmod
 
 PIPENV = pipenv
 RUN = $(PIPENV) run

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2021-10-11
+### Added
+- Load custom modules using `NARRENSCHIFF_PATH` environment variable
+
 ## [3.4.6] - 2021-10-04
 ### Fixed
 - STDERR gets printed even in the case when it is only emitted as a warning, narrenschiff now defaults to printing both STDOUT and STDERR if both exists
@@ -220,6 +224,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Cannot load keys and salts from paths that use `~`
 
+[3.5.0]: https://github.com/narrenorg/narrenschiff/compare/3.4.6...3.5.0
 [3.4.6]: https://github.com/narrenorg/narrenschiff/compare/3.4.5...3.4.6
 [3.4.5]: https://github.com/narrenorg/narrenschiff/compare/3.4.4...3.4.5
 [3.4.4]: https://github.com/narrenorg/narrenschiff/compare/3.4.3...3.4.4

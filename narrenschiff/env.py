@@ -12,5 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from os import getenv
 
-__version__ = "3.5.0"
+
+class Env:
+    """
+    Bundle all environment variables.
+
+    This class bundles up all environment variables used by Narrenschiff. It
+    is just a convenience class so developers can find environment variables
+    easy.
+    """
+
+    NARRENSCHIFF_PATH = getenv('NARRENSCHIFF_PATH', '')
